@@ -1,0 +1,1 @@
+wmic /output:.\R10Versions.txt product where "vendor like '%%NCR Corporation%%'" get name,version

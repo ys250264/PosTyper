@@ -1,0 +1,66 @@
+
+==============================================================================================================
+	Understanding this command
+==============================================================================================================
+	for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
+		if %%a gtr 3 goto done
+		copy /y "%%b" %dest%\SRVLOG
+	)
+
+
+	==============================================================================================================
+		[A] dir
+	==============================================================================================================
+		dir /o-d /a-d-h /b * ^
+			/o-d 	-> Sort by, Date & Time Last to first
+			/a-d-h	-> File Attributes, Not folder and Not Hidden
+			/b		-> Bare format (no heading, file sizes or summary)
+			*		-> Match any characters
+
+		^|
+			^ is escape symbol
+			
+		dir /o-d /a-d-h /b * ^ EXAMPLE:
+
+			Retalix.R10BusinessLog_WILYS250264-7AU.log
+			GPOSWebService_WILYS250264-7AU.log
+			Retalix.R10BusinessLog_WILYS250264-7AU.log20230412
+			GPOSWebService_WILYS250264-7AU.log20230412
+		
+
+	==============================================================================================================
+		[B] findstr
+	==============================================================================================================
+		findstr /n "^"
+			/n		-> Print the line number before each line that matches.
+			"^"		-> ^ is Beginning of the line on Regex. find "^" equals to find any string.
+
+	
+	==============================================================================================================
+		[C] dir piped to findstr
+	==============================================================================================================
+		dir /o-d /a-d-h /b * | findstr /n "^" EXAMPLE:
+			
+			1:Retalix.R10BusinessLog_WILYS250264-7AU.log
+			2:GPOSWebService_WILYS250264-7AU.log
+			3:Retalix.R10BusinessLog_WILYS250264-7AU.log20230412
+			4:GPOSWebService_WILYS250264-7AU.log20230412
+			
+		for /f "tokens=1,* delims=:" %%a in
+			- FOR /F ["options"] %%parameter IN (filenameset) DO command -> Loop command: against a set of files - conditionally perform a command against each item.
+			- tokens=1,*	-> process first item, and the all subsequent items 
+			- delims=:		-> : is delimiter, thus %%a holds linenumber, and %%b holds filename
+
+
+==============================================================================================================
+	Conclusion:
+==============================================================================================================
+	for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
+		if %%a gtr 3 goto done
+		copy /y "%%b" %dest%\SRVLOG
+	)	
+
+	dir - list all non-folder non-hidden files sorted by date desc																-> GPOS*, Retalix.R10BusinessLog*
+	findstr - adds to each file "linenumber" followed by ":" prefix																-> 2:GPOSWebService_WILYS250264-7AU.log
+	for - for each of 3 first lines, it breaks line_number:file_name pair, and uses file_name to copy to destination folder		-> copy /y "GPOSWebService_WILYS250264-7AU.log" %dest%\SRVLOG
+	

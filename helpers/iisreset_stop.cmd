@@ -1,0 +1,1 @@
+C:\Windows\System32\iisreset.exe /stop
