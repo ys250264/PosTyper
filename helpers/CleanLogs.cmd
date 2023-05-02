@@ -40,6 +40,7 @@ del /S %OfficePath%\Logs\*.log*
 IF not exist %POSPath%\Logs\*.log* goto POSLOGE
 echo Clean POS Logs...
 del %POSPath%\Logs\*.log*
+rmdir /s /q %POSPath%\Logs\EPS
 del C:\WinEpts\traces\*.txt
 :POSLOGE
 
