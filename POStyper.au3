@@ -633,7 +633,7 @@ Func Scenario()
 					$sText = ControlGetText($hWndSCR,"","[CLASS:Edit; INSTANCE:3]")
 					If $sText = "Claimed,Enabled" Then	ExitLoop
 				Next
-				
+				WinActivate("R10PosClient")		
 			ElseIf $arrItems[$i][0] = "button" Then
 				if $arrItems[$i][1] = "QTY" Then
 				   PressX()
