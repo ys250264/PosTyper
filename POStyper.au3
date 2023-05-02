@@ -614,7 +614,8 @@ EndFunc
 Func Scenario()
 	FileChangeDir($PostyperDir)
     Local $sFileOpenDialog = FileOpenDialog("Select input file", $ScenariosDir & "\", "All (*.ini)",1)
-    If @error Then
+    
+	If @error Then
         MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
         ; Change the working directory (@WorkingDir) back to the location of the script directory as FileOpenDialog sets it to the last accessed folder.
         FileChangeDir($PostyperDir)
@@ -625,105 +626,110 @@ Func Scenario()
 	If WinExists("R10PosClient") == 1 Then
 		WinActivate("R10PosClient")
     EndIf
-		$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	
 
-		For $i = 1 To $arrItems[0][0]
-;~             MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
-			If $arrItems[$i][0] = "item" Then
-;~ 			   MsgBox($MB_SYSTEMMODAL, "", "Item")
-			   ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-	           ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
-	           ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
-		       For $j = 1 To 10
-		       Sleep (500)
-               $sText = ControlGetText($hWndSCR,"","[CLASS:Edit; INSTANCE:3]")
-		  If $sText = "Claimed,Enabled" Then ExitLoop
-          Next
-			ElseIf $arrItems[$i][0] = "button" Then
-				if $arrItems[$i][1] = "QTY" Then
-				   PressX()
-				EndIf
-				if $arrItems[$i][1] = "ENTER" Then
-				   PressEnter()
-				EndIf
-				if $arrItems[$i][1] = "DIALOGMIDOK" Then
-				   MouseClick("left",520,520,1,1)
-			   EndIf
-				if $arrItems[$i][1] = "ADDCUSTOMERTOSKIP" Then
-					SkipAddCustomer()					
-				EndIf			   			   
-				if $arrItems[$i][1] = "DIALOGZIPTOSKIP" Then
-					SkipZipCodeDialog()					
-				EndIf			   
-				if $arrItems[$i][1] = "DYNA1" Then
-				   MouseClick("left",930,110,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA2" Then
-				   MouseClick("left",930,170,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA3" Then
-				   MouseClick("left",930,240,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA4" Then
-				   MouseClick("left",930,310,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA5" Then
-				   MouseClick("left",930,370,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA6" Then
-				   MouseClick("left",930,440,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA7" Then
-				   MouseClick("left",930,510,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNAUP" Then
-				   MouseClick("left",910,580,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNADOWN" Then
-				   MouseClick("left",960,580,1,1)
-				EndIf
-					if $arrItems[$i][1] = "DYNABACK" Then
-				   MouseClick("left",930,630,1,1)
-					EndIf
-				if $arrItems[$i][1] = "CLOSECHANGE" Then
-				   MouseClick("left",730,535,1,1)
-				EndIf
+	For $i = 1 To $arrItems[0][0]
+		
+		WinActivate("R10PosClient")		
+        ;MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
 
-	if $arrItems[$i][1] = '0' Then
-	  Press0()
-    EndIf
-	if $arrItems[$i][1] = '1' Then
-	  Press1()
-    EndIf
-	if $arrItems[$i][1] = '2' Then
-	  Press2()
-    EndIf
-	if $arrItems[$i][1] = '3' Then
-	  Press3()
-    EndIf
-	if $arrItems[$i][1] = '4' Then
-	  Press4()
-    EndIf
-	if $arrItems[$i][1] = '5' Then
-	  Press5()
-    EndIf
-	if $arrItems[$i][1] = '6' Then
-	  Press6()
-    EndIf
-	if $arrItems[$i][1] = '7' Then
-	  Press7()
-    EndIf
-	if $arrItems[$i][1] = '8' Then
-	  Press8()
-    EndIf
-	if $arrItems[$i][1] = '9' Then
-	  Press9()
-    EndIf
-			ElseIf $arrItems[$i][0] = "wait" Then
+		If $arrItems[$i][0] = "item" Then
+			;MsgBox($MB_SYSTEMMODAL, "", "Item")
+			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+		   ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+		   ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
+		   ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
+
+			For $j = 1 To 10
+				Sleep (50)
+				$sText = ControlGetText($hWndSCR,"","[CLASS:Edit; INSTANCE:3]")
+				If $sText = "Claimed,Enabled" Then	ExitLoop
+			Next
+			
+		ElseIf $arrItems[$i][0] = "button" Then
+			if $arrItems[$i][1] = "QTY" Then
+			   PressX()
+			EndIf
+			if $arrItems[$i][1] = "ENTER" Then
+			   PressEnter()
+			EndIf
+			if $arrItems[$i][1] = "DIALOGMIDOK" Then
+			   MouseClick("left",520,520,1,1)
+		   EndIf
+			if $arrItems[$i][1] = "ADDCUSTOMERTOSKIP" Then
+				SkipAddCustomer()					
+			EndIf			   			   
+			if $arrItems[$i][1] = "DIALOGZIPTOSKIP" Then
+				SkipZipCodeDialog()					
+			EndIf			   
+			if $arrItems[$i][1] = "DYNA1" Then
+			   MouseClick("left",930,110,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA2" Then
+			   MouseClick("left",930,170,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA3" Then
+			   MouseClick("left",930,240,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA4" Then
+			   MouseClick("left",930,310,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA5" Then
+			   MouseClick("left",930,370,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA6" Then
+			   MouseClick("left",930,440,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA7" Then
+			   MouseClick("left",930,510,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNAUP" Then
+			   MouseClick("left",910,580,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNADOWN" Then
+			   MouseClick("left",960,580,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNABACK" Then
+			   MouseClick("left",930,630,1,1)
+			EndIf
+			if $arrItems[$i][1] = "CLOSECHANGE" Then
+			   MouseClick("left",730,535,1,1)
+			EndIf
+			if $arrItems[$i][1] = '0' Then
+			  Press0()
+			EndIf
+			if $arrItems[$i][1] = '1' Then
+			  Press1()
+			EndIf
+			if $arrItems[$i][1] = '2' Then
+			  Press2()
+			EndIf
+			if $arrItems[$i][1] = '3' Then
+			  Press3()
+			EndIf
+			if $arrItems[$i][1] = '4' Then
+			  Press4()
+			EndIf
+			if $arrItems[$i][1] = '5' Then
+			  Press5()
+			EndIf
+			if $arrItems[$i][1] = '6' Then
+			  Press6()
+			EndIf
+			if $arrItems[$i][1] = '7' Then
+			  Press7()
+			EndIf
+			if $arrItems[$i][1] = '8' Then
+			  Press8()
+			EndIf
+			if $arrItems[$i][1] = '9' Then
+			  Press9()
+			EndIf
+		ElseIf $arrItems[$i][0] = "wait" Then
 ;~ 				MsgBox($MB_SYSTEMMODAL, "", "Wait")
-				Sleep($arrItems[$i][1])
-		    EndIf
-        Next
+			Sleep($arrItems[$i][1])
+		EndIf
+	Next
 
 
 ;~ 		For $i = 1 to $arrItems[0][0]
