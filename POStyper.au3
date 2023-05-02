@@ -79,12 +79,13 @@ global $CFG_UPB_EMU_X							= 47
 global $CFG_UPB_EMU_Y							= 48
 
 global $arrCONFIG
+
 If _Singleton("POStyper", 1) = 0 Then
     MsgBox(4096, "Warning", "PosTyper is already running")
     Exit
 EndIf
-_readItemFile()
 
+_readItemFile()
 
 Main()
 
@@ -107,21 +108,21 @@ Func Main()
 		GUICtrlSetData($idComboBox, $arrItems[$i][1], $arrItems[1][1])
 	Next
 
-	Local $ROW_0	=	10
-	Local $ROW_1	=	45
-	Local $ROW_2	=	75
-	Local $ROW_3	=	105
-	Local $ROW_4	=	135
-	Local $ROW_5	=	165
-	Local $ROW_6	=	195
-	Local $ROW_7	=	225
-	Local $ROW_8	=	255
-	Local $ROW_9	=	285
-
-	Local $Col_1		=	10
-	Local $Col_2		=	90
-	Local $Col_3		=	170
-	Local $Col_4		=	250
+	Local $ROW_0		=	10
+	Local $ROW_1		=	45
+	Local $ROW_2		=	75
+	Local $ROW_3		=	105
+	Local $ROW_4		=	135
+	Local $ROW_5		=	165
+	Local $ROW_6		=	195
+	Local $ROW_7		=	225
+	Local $ROW_8		=	255
+	Local $ROW_9		=	285
+	
+	Local $Col_1			=	10
+	Local $Col_2			=	90
+	Local $Col_3			=	170
+	Local $Col_4			=	250
 
 	Local $BtnWidthS	=	45
 	Local $BtnWidthL	=	70
@@ -462,7 +463,6 @@ Func Arrange()
 EndFunc
 
 Func SQLMgmt()
-	;~ Run("C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\VSShell\Common7\IDE\Ssms.exe")
 	Run($arrCONFIG[$CFG_SQLMGR][1])
 EndFunc
 
@@ -494,7 +494,6 @@ EndFunc
 
 Func IISReset()
 	ShellExecute($HelpersDir & "\iisreset.cmd","","","",@SW_MAXIMIZE)
-	;ShellExecute("C:\Windows\System32\iisreset.exe ")
 EndFunc
 
 Func IISStop()
@@ -503,17 +502,14 @@ EndFunc
 
 Func IISStart()
 	ShellExecute($HelpersDir & "\iisreset_start.cmd","","","",@SW_MAXIMIZE)
-	;ShellExecute("C:\Windows\System32\iisreset.exe ","/start")
 EndFunc
 
 Func CMDOpen()
-   ;~  ShellExecute("C:\Windows\System32\cmd.exe ","/k")
    Run("C:\Windows\System32\cmd.exe",$arrCONFIG[$CFG_CMD_PATH][1])
 EndFunc
 
 Func POSStart()
     If WinExists("R10PosClient") == 0 Then
-		;~ Run("C:\Retalix\StoreServices\PosClient\Retalix.Client.POS.Shell.exe","C:\Retalix\StoreServices\PosClient")
 		Run($arrCONFIG[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe",$arrCONFIG[$CFG_POS_PATH][1])
     EndIf
 	Sleep(500)
@@ -521,22 +517,18 @@ Func POSStart()
 EndFunc
 
 Func ExpLogs()
-	
 	$TLogs = $arrCONFIG[$CFG_TLOG_PATH][1]
   	if FileExists($TLogs) Then
 	     ShellExecute("C:\Windows\explorer.exe",$TLogs)
 	EndIf
-
 	$PosLogs = $arrCONFIG[$CFG_POS_PATH][1] & "\Logs"
   	if FileExists($PosLogs) Then
 	     ShellExecute("C:\Windows\explorer.exe",$PosLogs)
 	EndIf
-
 	$ServerLogs = $arrCONFIG[$CFG_SERVER_PATH][1] & "\Logs"
 	if FileExists($ServerLogs) Then
 	      ShellExecute("C:\Windows\explorer.exe",$ServerLogs)
 	  EndIf
-	  
 EndFunc
 	
 Func CleanLogs()
@@ -554,11 +546,9 @@ Func CleanLogs()
 EndFunc
 
 Func CollectLogs()
-    
 	If Not FileExists($CollectedDir) Then
 		DirCreate($CollectedDir)
 	EndIf	
-
 	$cmd = $HelpersDir & "\CollectLogs.cmd"
 	$arg1 = $CollectedDir & " "
 	$arg2 = $arrCONFIG[$CFG_SERVER_PATH][1] & " "
@@ -572,14 +562,17 @@ Func CollectLogs()
 	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8 & $arg9
 	ShellExecute($cmd, $arguments,"","",@SW_MAXIMIZE)
 EndFunc
+
 Func Services()
 	ShellExecute("C:\Windows\System32\services.msc")
 EndFunc
+
 Func ReceiptDebug()
 	FileChangeDir($HelpersDir)
 	ShellExecute($HelpersDir & "\receiptdebug.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
 	FileChangeDir(@Scriptdir)
 EndFunc
+
 Func ReceiptDebugOff()
 	FileChangeDir($HelpersDir)
 	ShellExecute($HelpersDir & "\receiptdebugoff.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
@@ -589,12 +582,14 @@ EndFunc
 Func KillPOS()
 	ShellExecute($HelpersDir & "\killPOS.cmd","","","",@SW_MINIMIZE)
 EndFunc
+
 Func ResetLoy()
 	ShellExecute($HelpersDir & "\resetloy.cmd","","","",@SW_MINIMIZE)
 EndFunc
+
 Func ScanLoy()
-$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
-;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
+	$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
+	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrCONFIG[$CFG_LOYCARD][1])
@@ -602,14 +597,9 @@ $Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
 	WinActivate("R10PosClient")
 EndFunc
 
-
-
 Func FLDiag()
 	ShellExecute($HelpersDir & "\FLDiag.cmd","","","",@SW_MAXIMIZE)
 EndFunc
-
-
-
 
 Func Scenario()
 	FileChangeDir($PostyperDir)
@@ -617,131 +607,117 @@ Func Scenario()
     
 	If @error Then
         MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
-        ; Change the working directory (@WorkingDir) back to the location of the script directory as FileOpenDialog sets it to the last accessed folder.
         FileChangeDir($PostyperDir)
     Else
-        ; Change the working directory (@WorkingDir) back to the location of the script directory as FileOpenDialog sets it to the last accessed folder.
         FileChangeDir($PostyperDir)
 		$arrItems=IniReadSection($sFileOpenDialog,"ITEMS")
-	If WinExists("R10PosClient") == 1 Then
-		WinActivate("R10PosClient")
-    EndIf
 	
-
-	For $i = 1 To $arrItems[0][0]
-		
-		WinActivate("R10PosClient")		
-        ;MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
-
-		If $arrItems[$i][0] = "item" Then
-			;MsgBox($MB_SYSTEMMODAL, "", "Item")
-			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
-		   ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-		   ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
-		   ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
-
-			For $j = 1 To 10
-				Sleep (50)
-				$sText = ControlGetText($hWndSCR,"","[CLASS:Edit; INSTANCE:3]")
-				If $sText = "Claimed,Enabled" Then	ExitLoop
-			Next
-			
-		ElseIf $arrItems[$i][0] = "button" Then
-			if $arrItems[$i][1] = "QTY" Then
-			   PressX()
-			EndIf
-			if $arrItems[$i][1] = "ENTER" Then
-			   PressEnter()
-			EndIf
-			if $arrItems[$i][1] = "DIALOGMIDOK" Then
-			   MouseClick("left",520,520,1,1)
-		   EndIf
-			if $arrItems[$i][1] = "ADDCUSTOMERTOSKIP" Then
-				SkipAddCustomer()					
-			EndIf			   			   
-			if $arrItems[$i][1] = "DIALOGZIPTOSKIP" Then
-				SkipZipCodeDialog()					
-			EndIf			   
-			if $arrItems[$i][1] = "DYNA1" Then
-			   MouseClick("left",930,110,1,1)
-			EndIf
-			if $arrItems[$i][1] = "DYNA2" Then
-			   MouseClick("left",930,170,1,1)
-			EndIf
-			if $arrItems[$i][1] = "DYNA3" Then
-			   MouseClick("left",930,240,1,1)
-			EndIf
-			if $arrItems[$i][1] = "DYNA4" Then
-			   MouseClick("left",930,310,1,1)
-			EndIf
-			if $arrItems[$i][1] = "DYNA5" Then
-			   MouseClick("left",930,370,1,1)
-			EndIf
-			if $arrItems[$i][1] = "DYNA6" Then
-			   MouseClick("left",930,440,1,1)
-			EndIf
-			if $arrItems[$i][1] = "DYNA7" Then
-			   MouseClick("left",930,510,1,1)
-			EndIf
-			if $arrItems[$i][1] = "DYNAUP" Then
-			   MouseClick("left",910,580,1,1)
-			EndIf
-			if $arrItems[$i][1] = "DYNADOWN" Then
-			   MouseClick("left",960,580,1,1)
-			EndIf
-			if $arrItems[$i][1] = "DYNABACK" Then
-			   MouseClick("left",930,630,1,1)
-			EndIf
-			if $arrItems[$i][1] = "CLOSECHANGE" Then
-			   MouseClick("left",730,535,1,1)
-			EndIf
-			if $arrItems[$i][1] = '0' Then
-			  Press0()
-			EndIf
-			if $arrItems[$i][1] = '1' Then
-			  Press1()
-			EndIf
-			if $arrItems[$i][1] = '2' Then
-			  Press2()
-			EndIf
-			if $arrItems[$i][1] = '3' Then
-			  Press3()
-			EndIf
-			if $arrItems[$i][1] = '4' Then
-			  Press4()
-			EndIf
-			if $arrItems[$i][1] = '5' Then
-			  Press5()
-			EndIf
-			if $arrItems[$i][1] = '6' Then
-			  Press6()
-			EndIf
-			if $arrItems[$i][1] = '7' Then
-			  Press7()
-			EndIf
-			if $arrItems[$i][1] = '8' Then
-			  Press8()
-			EndIf
-			if $arrItems[$i][1] = '9' Then
-			  Press9()
-			EndIf
-		ElseIf $arrItems[$i][0] = "wait" Then
-;~ 				MsgBox($MB_SYSTEMMODAL, "", "Wait")
-			Sleep($arrItems[$i][1])
+		If WinExists("R10PosClient") == 1 Then
+			WinActivate("R10PosClient")
 		EndIf
-	Next
 
+		For $i = 1 To $arrItems[0][0]
+			
+			WinActivate("R10PosClient")		
+			;MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
 
-;~ 		For $i = 1 to $arrItems[0][0]
-;~ 		ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-;~ 	    ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
-;~ 	    ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:4]")
-;~ 		  For $j = 1 To 10
-;~ 		  Sleep (500)
-;~           $sText = ControlGetText($hWndSCR,"","[CLASS:Edit; INSTANCE:3]")
-;~ 		  If $sText = "Claimed,Enabled" Then ExitLoop
-;~           Next
-;~ 	    Next
+			If $arrItems[$i][0] = "item" Then
+				;MsgBox($MB_SYSTEMMODAL, "", "Item")
+				$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+				ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+				ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
+				ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
+
+				For $j = 1 To 10
+					Sleep (50)
+					$sText = ControlGetText($hWndSCR,"","[CLASS:Edit; INSTANCE:3]")
+					If $sText = "Claimed,Enabled" Then	ExitLoop
+				Next
+				
+			ElseIf $arrItems[$i][0] = "button" Then
+				if $arrItems[$i][1] = "QTY" Then
+				   PressX()
+				EndIf
+				if $arrItems[$i][1] = "ENTER" Then
+				   PressEnter()
+				EndIf
+				if $arrItems[$i][1] = "DIALOGMIDOK" Then
+				   MouseClick("left",520,520,1,1)
+			   EndIf
+				if $arrItems[$i][1] = "ADDCUSTOMERTOSKIP" Then
+					SkipAddCustomer()					
+				EndIf			   			   
+				if $arrItems[$i][1] = "DIALOGZIPTOSKIP" Then
+					SkipZipCodeDialog()					
+				EndIf			   
+				if $arrItems[$i][1] = "DYNA1" Then
+				   MouseClick("left",930,110,1,1)
+				EndIf
+				if $arrItems[$i][1] = "DYNA2" Then
+				   MouseClick("left",930,170,1,1)
+				EndIf
+				if $arrItems[$i][1] = "DYNA3" Then
+				   MouseClick("left",930,240,1,1)
+				EndIf
+				if $arrItems[$i][1] = "DYNA4" Then
+				   MouseClick("left",930,310,1,1)
+				EndIf
+				if $arrItems[$i][1] = "DYNA5" Then
+				   MouseClick("left",930,370,1,1)
+				EndIf
+				if $arrItems[$i][1] = "DYNA6" Then
+				   MouseClick("left",930,440,1,1)
+				EndIf
+				if $arrItems[$i][1] = "DYNA7" Then
+				   MouseClick("left",930,510,1,1)
+				EndIf
+				if $arrItems[$i][1] = "DYNAUP" Then
+				   MouseClick("left",910,580,1,1)
+				EndIf
+				if $arrItems[$i][1] = "DYNADOWN" Then
+				   MouseClick("left",960,580,1,1)
+				EndIf
+				if $arrItems[$i][1] = "DYNABACK" Then
+				   MouseClick("left",930,630,1,1)
+				EndIf
+				if $arrItems[$i][1] = "CLOSECHANGE" Then
+				   MouseClick("left",730,535,1,1)
+				EndIf
+				if $arrItems[$i][1] = '0' Then
+				  Press0()
+				EndIf
+				if $arrItems[$i][1] = '1' Then
+				  Press1()
+				EndIf
+				if $arrItems[$i][1] = '2' Then
+				  Press2()
+				EndIf
+				if $arrItems[$i][1] = '3' Then
+				  Press3()
+				EndIf
+				if $arrItems[$i][1] = '4' Then
+				  Press4()
+				EndIf
+				if $arrItems[$i][1] = '5' Then
+				  Press5()
+				EndIf
+				if $arrItems[$i][1] = '6' Then
+				  Press6()
+				EndIf
+				if $arrItems[$i][1] = '7' Then
+				  Press7()
+				EndIf
+				if $arrItems[$i][1] = '8' Then
+				  Press8()
+				EndIf
+				if $arrItems[$i][1] = '9' Then
+				  Press9()
+				EndIf
+			ElseIf $arrItems[$i][0] = "wait" Then
+				Sleep($arrItems[$i][1])
+			EndIf
+			
+		Next
     EndIf
 EndFunc
 
@@ -749,10 +725,8 @@ Func ViewSlip()
     Local $sFileOpenDialog = FileOpenDialog("Select input file", $arrCONFIG[$CFG_TLOG_PATH][1], "TLOG (RetailTransactionLog*.xml)",1)
     If @error Then
         MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
-        ; Change the working directory (@WorkingDir) back to the location of the script directory as FileOpenDialog sets it to the last accessed folder.
         FileChangeDir(@Scriptdir)
     Else
-        ; Change the working directory (@WorkingDir) back to the location of the script directory as FileOpenDialog sets it to the last accessed folder.
         FileChangeDir($HelpersDir)
 		ShellExecute($HelpersDir & "\ReceiptView.exe",$sFileOpenDialog & " " & $HelpersDir,"","",@SW_MAXIMIZE)
 		Sleep(1500)
@@ -776,6 +750,7 @@ Func Screenshot()
 	ShellExecute($ImageName)
 	WinActivate("POStyper")
 EndFunc
+
 Func POSSnip()
     If Not FileExists($CaptureDir) Then
 		DirCreate($CaptureDir)
@@ -790,19 +765,23 @@ Func POSSnip()
 	ShellExecute($ImageName)
 	WinActivate("POStyper")
 EndFunc
+
 Func DebugOn()
     FileChangeDir($HelpersDir)
 	$WebLoggerConfig = $arrCONFIG[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
 	ShellExecute($HelpersDir & "\SetLogger.exe",$WebLoggerConfig & " DEBUG","","",@SW_MAXIMIZE)
     FileChangeDir(@Scriptdir)
 EndFunc
+
 Func DebugOff()
 	$WebLoggerConfig = $arrCONFIG[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
 	ShellExecute($HelpersDir & "\SetLogger.exe",$WebLoggerConfig & " ERROR","","",@SW_MAXIMIZE)
 EndFunc
+
 Func Msg3On()
 	ShellExecute($HelpersDir & "\msg3.bat","","","",@SW_MAXIMIZE)
 EndFunc
+
 Func Msg3Off()
 	ShellExecute($HelpersDir & "\nomsg3.bat","","","",@SW_MAXIMIZE)
 EndFunc
@@ -818,12 +797,9 @@ Func Snoop()
 	ShellExecute($arrCONFIG[$CFG_SNOOP][1],"")
 EndFunc
 
-
 Func _readItemFile()
  	$arrItems=IniReadSection($iniFile,"ITEMS")
 	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
-
-;~  	_arraydisplay($arrItems)
 EndFunc
 
 Func CopyServerExtToCust()
@@ -850,41 +826,32 @@ Func CopyOfficeExtToCust()
 	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
 EndFunc
 
-
 Func SkipAddCustomer()
-
-WinActivate("R10PosClient")	
+	WinActivate("R10PosClient")	
 	$oP1=_UIA_getObjectByFindAll($UIA_oDesktop, "Title:=R10PosClient;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
-
 	$oBtnAnnuleren=_UIA_getObjectByFindAll($oP1, "title:=Annuleren;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
 	If isobj($oBtnAnnuleren) Then
 		_UIA_action($oBtnAnnuleren,"click")
 	EndIf
-
 	$oBtnBack=_UIA_getObjectByFindAll($oP1, "title:=Back;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree) 
 	If isobj($oBtnBack) Then
 		_UIA_action($oBtnBack,"click")
 	EndIf
-
 EndFunc
 
 
 Func SkipZipCodeDialog()
-	
 	WinActivate("R10PosClient")	
 	$oP1=_UIA_getObjectByFindAll($UIA_oDesktop, "Title:=Retalix.Jumbo.Client.POS.Presentation.ViewModels.ViewModels.BRM.ZipCodeViewModel;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
 	$oP0=_UIA_getObjectByFindAll($oP1, "Title:=;controltype:=UIA_CustomControlTypeId;class:=ZipCodeView", $treescope_children)
-	
 	$oBtnOverslaan=_UIA_getObjectByFindAll($oP0, "title:=Overslaan;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
 	If isobj($oBtnOverslaan) Then
 		_UIA_action($oBtnOverslaan,"click")
 	EndIf
-
 	$oBtnToSkip=_UIA_getObjectByFindAll($oP0, "title:=To skip;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
 	If isobj($oBtnToSkip) Then
 		_UIA_action($oBtnToSkip,"click")
 	EndIf
-	
 EndFunc
 
 Func SelectCash()
@@ -908,12 +875,10 @@ Func OpenSSMS()
 EndFunc
 
 Func BrowseServer()
-	;~ShellExecute("chrome.exe", "http://rtfm.com --new-window --start-fullscreen")
 	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_SERVER_WEBSITE][1])
 EndFunc
 
 Func BrowseRabbit()
-	;~ShellExecute("chrome.exe", "http://rtfm.com --new-window --start-fullscreen")
 	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_RABBITMQ_WEBSITE][1])
 EndFunc
 	
