@@ -40,9 +40,16 @@ del /S %OfficePath%\Logs\*.log*
 IF not exist %POSPath%\Logs\*.log* goto POSLOGE
 echo Clean POS Logs...
 del %POSPath%\Logs\*.log*
-rmdir /s /q %POSPath%\Logs\EPS
-del C:\WinEpts\traces\*.txt
+del %POSPath%\Logs\EPS\*.log*
+del %POSPath%\Logs\*.stf*
 :POSLOGE
+
+:EPSLOG
+IF not exist %WinEPTSPath%\traces\*.txt goto EPSLOGE
+echo Clean EPS Logs...
+del %WinEPTSPath%\traces\*.txt
+:EPSLOGE
+
 
 :IISSTART
 Echo **********   Starting IIS
