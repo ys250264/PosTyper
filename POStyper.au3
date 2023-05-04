@@ -150,12 +150,13 @@ Func Main()
 
 	Local $idBtnDebugOn =   			GUICtrlCreateButton("Gpos DBG"		, $Col_1, $ROW_4, $BtnWidthL, $BtnHeight)
 	Local $idBtnDebugOff = 		    	GUICtrlCreateButton("Gpos ERR"			, $Col_2, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnExpLogs = 				GUICtrlCreateButton("Expose Logs"		, $Col_3, $ROW_4, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeLogs = 			GUICtrlCreateButton("Expose Logs"		, $Col_3, $ROW_4, $BtnWidthL, $BtnHeight)
 	Local $idBtnCollectLogs = 			GUICtrlCreateButton("Collect Logs"		, $Col_4, $ROW_4, $BtnWidthL, $BtnHeight)
 
 	Local $idBtnReceiptDebug = 		GUICtrlCreateButton("Slip Dbg"			, $Col_1, $ROW_5, $BtnWidthL, $BtnHeight)
 	Local $idBtnReceiptDebugOff = 	GUICtrlCreateButton("No Slip Dbg"		, $Col_2, $ROW_5, $BtnWidthL, $BtnHeight)
 	Local $idBtnViewSlip = 				GUICtrlCreateButton("View Slip"			, $Col_3, $ROW_5, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeTLog = 			GUICtrlCreateButton("Expose Tlog"		, $Col_4, $ROW_5, $BtnWidthL, $BtnHeight)
 	
 	Local $idBtnPOSSnip =	 			GUICtrlCreateButton("Pos Capture"    	, $Col_1, $ROW_6, $BtnWidthL, $BtnHeight)	
 	Local $idBtnScreenshot = 			GUICtrlCreateButton("Scrn Capture"	, $Col_2, $ROW_6, $BtnWidthL, $BtnHeight)		
@@ -227,8 +228,10 @@ Func Main()
 					Arrange()
 			Case $idBtnScenario
 					Scenario()
-			Case $idBtnExpLogs
-				    ExpLogs()
+			Case $idBtnExposeLogs
+				    ExposeLogs()
+			Case $idBtnExposeTLog
+				    ExposeTLog()
 			Case $idBtnCleanLogs
 				    CleanLogs()
 			Case $idBtnCollectLogs
@@ -516,11 +519,7 @@ Func POSStart()
 	WinActivate("R10PosClient")
 EndFunc
 
-Func ExpLogs()
-	$TLogs = $arrCONFIG[$CFG_TLOG_PATH][1]
-  	if FileExists($TLogs) Then
-	     ShellExecute("C:\Windows\explorer.exe",$TLogs)
-	EndIf
+Func ExposeLogs()
 	$PosLogs = $arrCONFIG[$CFG_POS_PATH][1] & "\Logs"
   	if FileExists($PosLogs) Then
 	     ShellExecute("C:\Windows\explorer.exe",$PosLogs)
@@ -530,7 +529,14 @@ Func ExpLogs()
 	      ShellExecute("C:\Windows\explorer.exe",$ServerLogs)
 	  EndIf
 EndFunc
-	
+
+Func ExposeTLog()
+	$TLogs = $arrCONFIG[$CFG_TLOG_PATH][1]
+  	if FileExists($TLogs) Then
+	     ShellExecute("C:\Windows\explorer.exe",$TLogs)
+	EndIf
+  EndFunc
+  
 Func CleanLogs()
 	$cmd = $HelpersDir & "\CleanLogs.cmd"
 	$arg1 = $arrCONFIG[$CFG_SERVER_PATH][1] & " "
