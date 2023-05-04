@@ -1,2 +1,2 @@
-copy "C:\Temp\postyper\environments\my_pc\JumboTrunk\Release\POStyper_Release.ini" "C:\Temp\postyper\POStyper.ini"
+copy "C:\Git\postyper\envs\my_pc\JumboTrunk\Release\POStyper_Release.ini" "C:\Git\postyper\POStyper.ini"
 rem pause
