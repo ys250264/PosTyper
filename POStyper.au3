@@ -103,7 +103,7 @@ Func Main()
 	GUISetIcon($icoFile)
 	
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
-	Global $idComboBox = GUICtrlCreateCombo("", 10, 10, 150, 20)
+	Global $idComboBox = GUICtrlCreateCombo("", 10, 10, 235, 20)
     for $i = 1 to $arrItems[0][0]
 		GUICtrlSetData($idComboBox, $arrItems[$i][1], $arrItems[1][1])
 	Next
@@ -124,19 +124,20 @@ Func Main()
 	Local $Col_3			=	170
 	Local $Col_4			=	250
 
-	Local $BtnWidthS	=	45
+	Local $BtnWidthS	=	35
+	Local $BtnHeightS	=	23
 	Local $BtnWidthL	=	70
 	Local $BtnHeight	=	20
 
-	Local $idBtnScan = 					GUICtrlCreateButton("Scan"				, 163, 9, 40, 23)
-	Local $idBtnCD = 						GUICtrlCreateButton("CD"					, 225, $ROW_0, $BtnWidthS, $BtnHeight)
-	Local $idBtnOK = 						GUICtrlCreateButton("Ok"					, 275, $ROW_0, $BtnWidthS, $BtnHeight)
-	;~	Local $idBtnAuto = 				GUICtrlCreateButton("Gal"					, 170, $ROW_0, $BtnWidthS, $BtnHeight)
+	Local $idBtnScan = 					GUICtrlCreateButton("Scan"				, 250, $ROW_0 - 1,  $BtnWidthS, $BtnHeightS)
+	;Local $idBtnCD = 						GUICtrlCreateButton("CD"					, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Local $idBtnOK = 						GUICtrlCreateButton("Type"				, 285, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	;~	Local $idBtnAuto = 				GUICtrlCreateButton("Gal"					, 170, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 	
 	Local $idBtnPOS = 					GUICtrlCreateButton("Start POS"			, $Col_1, $ROW_1, $BtnWidthL, $BtnHeight)
 	Local $idBtnLogin = 					GUICtrlCreateButton("Login"				, $Col_2, $ROW_1, $BtnWidthL, $BtnHeight)
 	Local $idBtnEmuarrange = 			GUICtrlCreateButton("Move Emu"		, $Col_3, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnScanLoy = 		    	GUICtrlCreateButton("Scan Loyalty"	, $Col_4, $ROW_1, $BtnWidthL, $BtnHeight)
+	Local $idBtnScanLoyaltyCard = 	GUICtrlCreateButton("Scan Loyalty"	, $Col_4, $ROW_1, $BtnWidthL, $BtnHeight)
 	
 	Local $idBtnScenario = 				GUICtrlCreateButton("Scenario"			, $Col_1, $ROW_2, $BtnWidthL, $BtnHeight)
 	Local $idBtnTendering = 			GUICtrlCreateButton("Tendering"			, $Col_2, $ROW_2, $BtnWidthL, $BtnHeight)
@@ -200,8 +201,8 @@ Func Main()
                 ExitLoop
             Case $idBtnOK
 				Type()
-            Case $idBtnCD
-				Checkdigit()
+            ;Case $idBtnCD
+			;	Checkdigit()
             Case $idBtnLogin
 				Login()
 			Case $idBtnUnlock
@@ -254,8 +255,8 @@ Func Main()
 				    DebugOff()
             Case $idBtnKillPOS
 				    KillPOS()
-            Case $idBtnScanLoy
-				    ScanLoy()
+            Case $idBtnScanLoyaltyCard
+				    ScanLoyaltyCard()
 	;~		Case $idBtnResetLoy
 	;~			    ResetLoy()
 	;~		Case $idBtnFLDiag
@@ -360,11 +361,8 @@ func Type()
 	WinActivate("R10PosClient")
 	sleep(200)
 
-;~     $STR_STRIPLEADING (1) = strip leading white space
-;~     $STR_STRIPTRAILING (2) = strip trailing white space
-;~     $STR_STRIPSPACES (4) = strip double (or more) spaces between words
-;~     $STR_STRIPALL (8) = strip all spaces (over-rides all other flags)
- 	$keys = StringSplit(StringStripWS(GUICtrlRead($idComboBox),8),"")
+	$Item = GetItemNumberFromCombo()
+ 	$keys = StringSplit($Item,"")
     MouseClick("left",560,350,2,1)
 	sleep(200)
 	For $i = 1 To $keys[0]
@@ -375,8 +373,17 @@ func Type()
 	MouseMove($pos[0],$pos[1],1)
 EndFunc
 
+Func GetItemNumberFromCombo()
+	$SelectedItem = StringStripWS(GUICtrlRead($idComboBox), $STR_STRIPALL)
+	$Tokens = StringSplit($SelectedItem, "-")
+	$Item = StringStripWS($Tokens[1], $STR_STRIPALL)
+	$Desc = StringStripWS($Tokens[2], $STR_STRIPALL)	
+	return $Item
+EndFunc
+
 func Scan()
-$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
+;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
+$Scanme = GetItemNumberFromCombo()
 ;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
@@ -593,7 +600,7 @@ Func ResetLoy()
 	ShellExecute($HelpersDir & "\resetloy.cmd","","","",@SW_MINIMIZE)
 EndFunc
 
-Func ScanLoy()
+Func ScanLoyaltyCard()
 	$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
 	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
