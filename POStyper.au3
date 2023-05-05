@@ -34,51 +34,52 @@ global $CFG_DIALOG_CAPTION					= 1
 global $CFG_DIALOG_X								= 2
 global $CFG_DIALOG_Y								= 3
 global $CFG_DIALOG_STATUS_BAR				= 4
-global $CFG_CMD_PATH								= 5
-global $CFG_RETAIL_DB_NAME					= 6
-global $CFG_SERVER_WEBSITE					= 7
-global $CFG_RABBITMQ_WEBSITE				= 8
-global $CFG_SERVER_PATH						= 9
-global $CFG_POS_PATH								= 10
-global $CFG_OFFICE_PATH							= 11
-global $CFG_TLOG_PATH							= 12
-global $CFG_DMS_PATH								= 13
-global $CFG_SPOOKY_PATH						= 14
-global $CFG_ARSGATEWAY_PATH				= 15
-global $CFG_RETAILGATEWAY_PATH			= 16
-global $CFG_STOREGATEWAY_PATH			= 17
-global $CFG_WINEPTS_PATH						= 18
-global $CFG_SERVER_DBG_CUST_PATH		= 19
-global $CFG_SERVER_DBG_EXT_PATH			= 20
-global $CFG_POS_DBG_CUST_PATH			= 21
-global $CFG_POS_DBG_EXT_PATH				= 22
-global $CFG_OFFICE_DBG_CUST_PATH		= 23
-global $CFG_OFFICE_DBG_EXT_PATH			= 24
-global $CFG_SQLMGR									= 25
-global $CFG_EDITOR									= 26
-global $CFG_BROWSER								= 27
-global $CFG_SNOOP									= 28
-global $CFG_USER										= 29
-global $CFG_PASSWORD							= 30
-global $CFG_LOYCARD								= 31
-global $CFG_SCANNER_EMU						= 32
-global $CFG_SCANNER_EMU_X					= 33
-global $CFG_SCANNER_EMU_Y					= 34
-global $CFG_PRINTER_EMU						= 35
-global $CFG_PRINTER_EMU_X						= 36
-global $CFG_PRINTER_EMU_Y						= 37
-global $CFG_SCALE_EMU							= 38
-global $CFG_SCALE_EMU_X						= 39
-global $CFG_SCALE_EMU_Y						= 40
-global $CFG_DRAWER_EMU						= 41
-global $CFG_DRAWER_EMU_X						= 42
-global $CFG_DRAWER_EMU_Y						= 43
-global $CFG_WINEPTS_EMU						= 44
-global $CFG_WINEPTS_EMU_X					= 45
-global $CFG_WINEPTS_EMU_Y					= 46
-global $CFG_UPB_EMU								= 47
-global $CFG_UPB_EMU_X							= 48
-global $CFG_UPB_EMU_Y							= 49
+global $CFG_DIALOG_EXT_DEVELOPER		= 5
+global $CFG_CMD_PATH								= 6
+global $CFG_RETAIL_DB_NAME					= 7
+global $CFG_SERVER_WEBSITE					= 8
+global $CFG_RABBITMQ_WEBSITE				= 9
+global $CFG_SERVER_PATH						= 10
+global $CFG_POS_PATH								= 11
+global $CFG_OFFICE_PATH							= 12
+global $CFG_TLOG_PATH							= 13
+global $CFG_DMS_PATH								= 14
+global $CFG_SPOOKY_PATH						= 15
+global $CFG_ARSGATEWAY_PATH				= 16
+global $CFG_RETAILGATEWAY_PATH			= 17
+global $CFG_STOREGATEWAY_PATH			= 18
+global $CFG_WINEPTS_PATH						= 19
+global $CFG_SERVER_DBG_CUST_PATH		= 20
+global $CFG_SERVER_DBG_EXT_PATH			= 21
+global $CFG_POS_DBG_CUST_PATH			= 22
+global $CFG_POS_DBG_EXT_PATH				= 23
+global $CFG_OFFICE_DBG_CUST_PATH		= 24
+global $CFG_OFFICE_DBG_EXT_PATH			= 25
+global $CFG_SQLMGR									= 26
+global $CFG_EDITOR									= 27
+global $CFG_BROWSER								= 28
+global $CFG_SNOOP									= 29
+global $CFG_USER										= 30
+global $CFG_PASSWORD							= 31
+global $CFG_LOYCARD								= 32
+global $CFG_SCANNER_EMU						= 33
+global $CFG_SCANNER_EMU_X					= 34
+global $CFG_SCANNER_EMU_Y					= 35
+global $CFG_PRINTER_EMU						= 36
+global $CFG_PRINTER_EMU_X						= 37
+global $CFG_PRINTER_EMU_Y						= 38
+global $CFG_SCALE_EMU							= 39
+global $CFG_SCALE_EMU_X						= 40
+global $CFG_SCALE_EMU_Y						= 41
+global $CFG_DRAWER_EMU						= 42
+global $CFG_DRAWER_EMU_X						= 43
+global $CFG_DRAWER_EMU_Y						= 44
+global $CFG_WINEPTS_EMU						= 45
+global $CFG_WINEPTS_EMU_X					= 46
+global $CFG_WINEPTS_EMU_Y					= 47
+global $CFG_UPB_EMU								= 48
+global $CFG_UPB_EMU_X							= 49
+global $CFG_UPB_EMU_Y							= 50
 
 global $arrCONFIG
 
@@ -101,6 +102,15 @@ Func Main()
 	Global $StatusBarOn = False
 	If (StringLower(StringStripWS($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1], $STR_STRIPALL)) == "true") Then
 		$StatusBarOn = True
+	EndIf
+
+	Global $ExtDeveloper = False
+	If (StringLower(StringStripWS($arrCONFIG[$CFG_DIALOG_EXT_DEVELOPER][1], $STR_STRIPALL)) == "true") Then
+		$ExtDeveloper = True
+	EndIf
+	
+	if ( Not $ExtDeveloper ) Then
+		$PosTyperDialogHeight -= 30
 	EndIf
 	
 	If ($StatusBarOn) Then		
@@ -132,6 +142,10 @@ Func Main()
 	Local $ROW_7		=	225
 	Local $ROW_8		=	255
 	Local $ROW_9		=	285
+	
+	if (Not $ExtDeveloper) Then
+		$ROW_9 = -100
+	EndIf
 	
 	Local $Col_1			=	10
 	Local $Col_2			=	90
