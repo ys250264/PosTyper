@@ -132,6 +132,62 @@ Func Main()
 		GUICtrlSetData($idComboBox, $arrItems[$i][1], $arrItems[1][1])
 	Next
 
+
+	Local $captionScan = 					"Scan"
+	;Local $captionCD = 						"CD"
+	Local $captionOK = 						"Type"
+	;Local $captionAuto = 					"Gal"
+	
+	Local $captionPOS = 						"Start POS"
+	Local $captionLogin = 					"Login"
+	Local $captionEmuarrange = 			"Move Emu"
+	Local $captionScanLoyaltyCard = 	"Scan Loyalty"
+	
+	Local $captionScenario = 				"Scenario"
+	Local $captionTendering = 				"Tendering"
+	Local $captionUnlock = 					"Unlock"
+	Local $captionKillPOS =	 				"Kill POS"
+	
+	Local $captionCleanLogs = 				"Clean Logs"
+	Local $captionBrowseServer =		"Browse Srv"
+	Local $captionMonitoSrvLog =			"View Gpos"
+	Local $captionEditIni = 					"Edit Ini"
+
+	Local $captionDebugOn =   			"Gpos DBG"
+	Local $captionDebugOff = 		    	"Gpos ERR"
+	Local $captionExposeLogs = 			"Expose Logs"
+	Local $captionCollectLogs = 			"Collect Logs"
+
+	Local $captionReceiptDebug = 		"Slip Dbg"
+	Local $captionReceiptDebugOff = 	"No Slip Dbg"
+	Local $captionViewSlip = 				"View Slip"
+	Local $captionExposeTLog = 			"Expose Tlog"
+	
+	Local $captionPOSSnip =	 			"Pos Capture"
+	Local $captionScreenshot = 			"Scrn Capture"
+	Local $captionCleanScanner = 		"Clean Scan"
+	Local $captionBrowseRabbit =			"Rabbit"
+	
+	Local $captionIISReset = 				"IISReset"
+	Local $captionIISStop = 				"IISStop"
+	Local $captionIISStart = 				"IISStart"
+	Local $captionCMD = 						"CMD"
+			
+	Local $captionWebClient = 				"Spooky"
+	Local $captionServices = 				"Services"
+	Local $captionSQLMgmt = 				"SQL Mgmt"
+	Local $captionSnoop = 					"Snoop"
+	
+	Local $captionCopySrvExt =			"Copy SrvExt"
+	Local $captionCopyPOSExt =			"Copy PosExt"
+	Local $captionCopyOffExt =			"Copy OfcExt"
+	
+	;Local $captionResetLoy =	 			"Reset Loy"
+	;Local $captionMsg3On =   		    "MSG3"
+	;Local $captionMsg3Off = 		    	"NO MSG3"
+	;Local $captionFLDiag = 		   		"FLDiag"
+
+
 	Local $ROW_0		=	10
 	Local $ROW_1		=	45
 	Local $ROW_2		=	75
@@ -157,59 +213,65 @@ Func Main()
 	Local $BtnWidthL	=	70
 	Local $BtnHeight	=	20
 
-	Local $idBtnScan = 					GUICtrlCreateButton("Scan"				, 250, $ROW_0 - 1,  $BtnWidthS, $BtnHeightS)
-	;Local $idBtnCD = 						GUICtrlCreateButton("CD"					, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	Local $idBtnOK = 						GUICtrlCreateButton("Type"				, 285, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	;~	Local $idBtnAuto = 				GUICtrlCreateButton("Gal"					, 170, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	
-	Local $idBtnPOS = 					GUICtrlCreateButton("Start POS"			, $Col_1, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnLogin = 					GUICtrlCreateButton("Login"				, $Col_2, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnEmuarrange = 			GUICtrlCreateButton("Move Emu"		, $Col_3, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnScanLoyaltyCard = 	GUICtrlCreateButton("Scan Loyalty"	, $Col_4, $ROW_1, $BtnWidthL, $BtnHeight)
-	
-	Local $idBtnScenario = 				GUICtrlCreateButton("Scenario"			, $Col_1, $ROW_2, $BtnWidthL, $BtnHeight)
-	Local $idBtnTendering = 			GUICtrlCreateButton("Tendering"			, $Col_2, $ROW_2, $BtnWidthL, $BtnHeight)
-	Local $idBtnUnlock = 					GUICtrlCreateButton("Unlock"				, $Col_3, $ROW_2, $BtnWidthL, $BtnHeight)
-	Local $idBtnKillPOS =	 				GUICtrlCreateButton("Kill POS" 	    	, $Col_4, $ROW_2, $BtnWidthL, $BtnHeight)
-	
-	Local $idBtnCleanLogs = 			GUICtrlCreateButton("Clean Logs"		, $Col_1, $ROW_3, $BtnWidthL, $BtnHeight)
-	Local $idBtnBrowseServer =		GUICtrlCreateButton("Browse Srv"		, $Col_2, $ROW_3, $BtnWidthL, $BtnHeight)
-	Local $idBtnMonitoSrvLog =		GUICtrlCreateButton("View Gpos"		, $Col_3, $ROW_3, $BtnWidthL, $BtnHeight)
-	Local $idBtnEditIni = 					GUICtrlCreateButton("Edit Ini"			, $Col_4, $ROW_3, $BtnWidthL, $BtnHeight)
 
-	Local $idBtnDebugOn =   			GUICtrlCreateButton("Gpos DBG"		, $Col_1, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnDebugOff = 		    	GUICtrlCreateButton("Gpos ERR"			, $Col_2, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnExposeLogs = 			GUICtrlCreateButton("Expose Logs"		, $Col_3, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnCollectLogs = 			GUICtrlCreateButton("Collect Logs"		, $Col_4, $ROW_4, $BtnWidthL, $BtnHeight)
 
-	Local $idBtnReceiptDebug = 		GUICtrlCreateButton("Slip Dbg"			, $Col_1, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnReceiptDebugOff = 	GUICtrlCreateButton("No Slip Dbg"		, $Col_2, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnViewSlip = 				GUICtrlCreateButton("View Slip"			, $Col_3, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnExposeTLog = 			GUICtrlCreateButton("Expose Tlog"		, $Col_4, $ROW_5, $BtnWidthL, $BtnHeight)
+	Local $idBtnScan = 					GUICtrlCreateButton($captionScan					, 250, $ROW_0 - 1,  $BtnWidthS, $BtnHeightS)
+	;Local $idBtnCD = 						GUICtrlCreateButton($captionCD						, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Local $idBtnOK = 						GUICtrlCreateButton($captionOK						, 285, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	;Local $idBtnAuto = 					GUICtrlCreateButton($captionAuto					, 170, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 	
-	Local $idBtnPOSSnip =	 			GUICtrlCreateButton("Pos Capture"    	, $Col_1, $ROW_6, $BtnWidthL, $BtnHeight)	
-	Local $idBtnScreenshot = 			GUICtrlCreateButton("Scrn Capture"	, $Col_2, $ROW_6, $BtnWidthL, $BtnHeight)		
-	Local $idBtnCleanScanner = 		GUICtrlCreateButton("Clean Scan"		, $Col_3, $ROW_6, $BtnWidthL, $BtnHeight)
-	Local $idBtnBrowseRabbit =		GUICtrlCreateButton("Rabbit"				, $Col_4, $ROW_6, $BtnWidthL, $BtnHeight)
+	Local $idBtnPOS = 					GUICtrlCreateButton($captionPOS					, $Col_1, $ROW_1, $BtnWidthL, $BtnHeight)
+	Local $idBtnLogin = 					GUICtrlCreateButton($captionLogin					, $Col_2, $ROW_1, $BtnWidthL, $BtnHeight)
+	Local $idBtnEmuarrange = 			GUICtrlCreateButton($captionEmuarrange		, $Col_3, $ROW_1, $BtnWidthL, $BtnHeight)
+	Local $idBtnScanLoyaltyCard = 	GUICtrlCreateButton($captionScanLoyaltyCard	, $Col_4, $ROW_1, $BtnWidthL, $BtnHeight)
+
+	Local $idBtnScenario = 				GUICtrlCreateButton($captionScenario				, $Col_1, $ROW_2, $BtnWidthL, $BtnHeight)
+	Local $idBtnTendering = 			GUICtrlCreateButton($captionTendering			, $Col_2, $ROW_2, $BtnWidthL, $BtnHeight)
+	Local $idBtnUnlock = 					GUICtrlCreateButton($captionUnlock				, $Col_3, $ROW_2, $BtnWidthL, $BtnHeight)
+	Local $idBtnKillPOS =	 				GUICtrlCreateButton($captionKillPOS 	    		, $Col_4, $ROW_2, $BtnWidthL, $BtnHeight)
 	
-	Local $idBtnIISReset = 				GUICtrlCreateButton("IISReset"			, $Col_1, $ROW_7, $BtnWidthL, $BtnHeight)
-	Local $idBtnIISStop = 				GUICtrlCreateButton("IISStop"			, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
-	Local $idBtnIISStart = 				GUICtrlCreateButton("IISStart"			, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
-	Local $idBtnCMD = 					GUICtrlCreateButton("CMD"				, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
-			
-	Local $idBtnWebClient = 			GUICtrlCreateButton("Spooky"			, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
-	Local $idBtnServices = 				GUICtrlCreateButton("Services"			, $Col_2, $ROW_8, $BtnWidthL, $BtnHeight)		
-	Local $idBtnSQLMgmt = 			GUICtrlCreateButton("SQL Mgmt"		, $Col_3, $ROW_8, $BtnWidthL, $BtnHeight)
-	Local $idBtnSnoop = 					GUICtrlCreateButton("Snoop"				, $Col_4, $ROW_8, $BtnWidthL, $BtnHeight)
+	Local $idBtnCleanLogs = 			GUICtrlCreateButton($captionCleanLogs			, $Col_1, $ROW_3, $BtnWidthL, $BtnHeight)
+	Local $idBtnBrowseServer =		GUICtrlCreateButton($captionBrowseServer		, $Col_2, $ROW_3, $BtnWidthL, $BtnHeight)
+	Local $idBtnMonitoSrvLog =		GUICtrlCreateButton($captionMonitoSrvLog		, $Col_3, $ROW_3, $BtnWidthL, $BtnHeight)
+	Local $idBtnEditIni = 					GUICtrlCreateButton($captionEditIni				, $Col_4, $ROW_3, $BtnWidthL, $BtnHeight)
+
+
+	Local $idBtnDebugOn =   			GUICtrlCreateButton($captionDebugOn			, $Col_1, $ROW_4, $BtnWidthL, $BtnHeight)
+	Local $idBtnDebugOff = 		    	GUICtrlCreateButton($captionDebugOff			, $Col_2, $ROW_4, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeLogs = 			GUICtrlCreateButton($captionExposeLogs		, $Col_3, $ROW_4, $BtnWidthL, $BtnHeight)
+	Local $idBtnCollectLogs = 			GUICtrlCreateButton($captionCollectLogs			, $Col_4, $ROW_4, $BtnWidthL, $BtnHeight)
+
+	Local $idBtnReceiptDebug = 		GUICtrlCreateButton($captionReceiptDebug		, $Col_1, $ROW_5, $BtnWidthL, $BtnHeight)
+	Local $idBtnReceiptDebugOff = 	GUICtrlCreateButton($captionReceiptDebugOff	, $Col_2, $ROW_5, $BtnWidthL, $BtnHeight)
+	Local $idBtnViewSlip = 				GUICtrlCreateButton($captionViewSlip				, $Col_3, $ROW_5, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeTLog = 			GUICtrlCreateButton($captionExposeTLog		, $Col_4, $ROW_5, $BtnWidthL, $BtnHeight)
+
+
+	Local $idBtnPOSSnip =	 			GUICtrlCreateButton($captionPOSSnip   			, $Col_1, $ROW_6, $BtnWidthL, $BtnHeight)	
+	Local $idBtnScreenshot = 			GUICtrlCreateButton($captionScreenshot			, $Col_2, $ROW_6, $BtnWidthL, $BtnHeight)		
+	Local $idBtnCleanScanner = 		GUICtrlCreateButton($captionCleanScanner		, $Col_3, $ROW_6, $BtnWidthL, $BtnHeight)
+	Local $idBtnBrowseRabbit =		GUICtrlCreateButton($captionBrowseRabbit		, $Col_4, $ROW_6, $BtnWidthL, $BtnHeight)
 	
-	Local $idBtnCopySrvExt =			GUICtrlCreateButton("Copy SrvExt"		, $Col_1, $ROW_9, $BtnWidthL, $BtnHeight)
-	Local $idBtnCopyPOSExt =			GUICtrlCreateButton("Copy PosExt"		, $Col_2, $ROW_9, $BtnWidthL, $BtnHeight)
-	Local $idBtnCopyOffExt =			GUICtrlCreateButton("Copy OfcExt"		, $Col_3, $ROW_9, $BtnWidthL, $BtnHeight)
-	
-	;~	Local $idBtnResetLoy =	 		GUICtrlCreateButton("Reset Loy"     , $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
-	;~ 	Local $idBtnMsg3On =   		    GUICtrlCreateButton("MSG3"      	, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
-	;~ 	Local $idBtnMsg3Off = 		    GUICtrlCreateButton("NO MSG3"     , $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
-	;~	Local $idBtnFLDiag = 		   		GUICtrlCreateButton("FLDiag"         , $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
+	Local $idBtnIISReset = 				GUICtrlCreateButton($captionIISReset				, $Col_1, $ROW_7, $BtnWidthL, $BtnHeight)
+	Local $idBtnIISStop = 				GUICtrlCreateButton($captionIISStop				, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
+	Local $idBtnIISStart = 				GUICtrlCreateButton($captionIISStart				, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
+	Local $idBtnCMD = 					GUICtrlCreateButton($captionCMD					, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
+
+
+	Local $idBtnWebClient = 			GUICtrlCreateButton($captionWebClient			, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
+	Local $idBtnServices = 				GUICtrlCreateButton($captionServices				, $Col_2, $ROW_8, $BtnWidthL, $BtnHeight)		
+	Local $idBtnSQLMgmt = 			GUICtrlCreateButton($captionSQLMgmt			, $Col_3, $ROW_8, $BtnWidthL, $BtnHeight)
+	Local $idBtnSnoop = 					GUICtrlCreateButton($captionSnoop				, $Col_4, $ROW_8, $BtnWidthL, $BtnHeight)
+
+	Local $idBtnCopySrvExt =			GUICtrlCreateButton($captionCopySrvExt		, $Col_1, $ROW_9, $BtnWidthL, $BtnHeight)
+	Local $idBtnCopyPOSExt =			GUICtrlCreateButton($captionCopyPOSExt		, $Col_2, $ROW_9, $BtnWidthL, $BtnHeight)
+	Local $idBtnCopyOffExt =			GUICtrlCreateButton($captionCopyOffExt			, $Col_3, $ROW_9, $BtnWidthL, $BtnHeight)
+
+
+	;~	Local $idBtnResetLoy =	 		GUICtrlCreateButton($captionResetLoy		, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
+	;~ 	Local $idBtnMsg3On =   		    GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
+	;~ 	Local $idBtnMsg3Off = 		    GUICtrlCreateButton($captionMsg3Off			, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
+	;~	Local $idBtnFLDiag = 		   		GUICtrlCreateButton($captionFLDiag			, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
 
 	GUICtrlSetColor($idBtnPOS , 0x000088)
 	GUICtrlSetColor($idBtnKillPOS, 0xFF0000)
@@ -229,91 +291,91 @@ Func Main()
             Case $GUI_EVENT_CLOSE
                 ExitLoop
             Case $idBtnOK
-				FuncWrapper($Btn, Type)
+				FuncWrapper($Btn, $captionOK, Type)
             ;Case $idBtnCD
-			;	FuncWrapper($Btn, Checkdigit)
+			;	FuncWrapper($Btn, $caption, Checkdigit)
 			Case $idBtnLogin
-				FuncWrapper($Btn, Login, True)
+				FuncWrapper($Btn, $captionLogin, Login, True)
 			Case $idBtnUnlock
-				FuncWrapper($Btn, Unlock, True)
+				FuncWrapper($Btn, $captionUnlock, Unlock, True)
 			Case $idBtnTendering
-				FuncWrapper($Btn, Tendering, True)
+				FuncWrapper($Btn, $captionTendering, Tendering, True)
 			Case $idBtnEditIni
-				FuncWrapper($Btn, EditIni)
+				FuncWrapper($Btn, $captionEditIni, EditIni)
 			Case $idBtnSnoop
-				FuncWrapper($Btn, Snoop)
+				FuncWrapper($Btn, $captionSnoop, Snoop)
 			Case $idBtnWebClient
-				FuncWrapper($Btn, WebClient)
+				FuncWrapper($Btn, $captionWebClient, WebClient)
 			Case $idBtnIISReset
-				FuncWrapper($Btn, IISReset, True)
+				FuncWrapper($Btn, $captionIISReset, IISReset, True)
 			Case $idBtnIISStart
-				FuncWrapper($Btn, IISStart, True)
+				FuncWrapper($Btn, $captionIISStart, IISStart, True)
 			Case $idBtnIISStop
-				FuncWrapper($Btn, IISStop, True)
+				FuncWrapper($Btn, $captionIISStop, IISStop, True)
 			Case $idBtnPOS
-				FuncWrapper($Btn, POSStart)
+				FuncWrapper($Btn, $captionPOS, POSStart)
 			;~Case $idBtnCMD
-			;~	FuncWrapper($Btn, CMDOpen)
+			;~	FuncWrapper($Btn, $captionCMD, CMDOpen)
             Case $idBtnEmuarrange
-				FuncWrapper($Btn, Arrange, True)
+				FuncWrapper($Btn, $captionEmuarrange, Arrange, True)
 			Case $idBtnScenario
-				FuncWrapper($Btn, Scenario, True)
+				FuncWrapper($Btn, $captionScenario, Scenario, True)
 			Case $idBtnExposeLogs
-				FuncWrapper($Btn, ExposeLogs)
+				FuncWrapper($Btn, $captionExposeLogs, ExposeLogs)
 			Case $idBtnExposeTLog
-				FuncWrapper($Btn, ExposeTLog)
+				FuncWrapper($Btn, $captionExposeTLog, ExposeTLog)
 			Case $idBtnCleanLogs
-				FuncWrapper($Btn, CleanLogs, True)
+				FuncWrapper($Btn, $captionCleanLogs, CleanLogs, True)
 			Case $idBtnCollectLogs
-				FuncWrapper($Btn, CollectLogs, True)
+				FuncWrapper($Btn, $captionCollectLogs, CollectLogs, True)
 			Case $idBtnServices
-				FuncWrapper($Btn, Services)
+				FuncWrapper($Btn, $captionServices, Services)
 			Case $idBtnReceiptDebug
-				FuncWrapper($Btn, ReceiptDebug, True)
+				FuncWrapper($Btn, $captionReceiptDebug, ReceiptDebug, True)
 			Case $idBtnReceiptDebugOff
-				FuncWrapper($Btn, ReceiptDebugOff, True)
+				FuncWrapper($Btn, $captionReceiptDebugOff, ReceiptDebugOff, True)
 			Case $idBtnViewSlip
-				FuncWrapper($Btn, ViewSlip)
+				FuncWrapper($Btn, $captionViewSlip, ViewSlip)
 			Case $idBtnScreenshot
-				FuncWrapper($Btn, Screenshot)
+				FuncWrapper($Btn, $captionScreenshot, Screenshot)
 			Case $idBtnPOSSnip
-				FuncWrapper($Btn, POSSnip)
+				FuncWrapper($Btn, $captionPOSSnip, POSSnip)
 			Case $idBtnDebugOn
-				FuncWrapper($Btn, DebugOn)
+				FuncWrapper($Btn, $captionDebugOn, DebugOn)
 			Case $idBtnDebugOff
-				FuncWrapper($Btn, DebugOff)
+				FuncWrapper($Btn, $captionDebugOff, DebugOff)
             Case $idBtnKillPOS
-				FuncWrapper($Btn, KillPOS)
+				FuncWrapper($Btn, $captionKillPOS, KillPOS)
             Case $idBtnScanLoyaltyCard
-				FuncWrapper($Btn, ScanLoyaltyCard)
+				FuncWrapper($Btn, $captionScanLoyaltyCard, ScanLoyaltyCard)
 	;~		Case $idBtnResetLoy
-	;~			FuncWrapper($Btn, ResetLoy)
+	;~			FuncWrapper($Btn, $captionResetLoy, ResetLoy)
 	;~		Case $idBtnFLDiag
-	;~			FuncWrapper($Btn, FLDiag)
+	;~			FuncWrapper($Btn, $captionFLDiag, FLDiag)
             Case $idBtnScan
-				FuncWrapper($Btn, Scan)
+				FuncWrapper($Btn, $captionScan, Scan)
             Case $idBtnCleanScanner
-				FuncWrapper($Btn, CleanScanner,)
+				FuncWrapper($Btn, $captionCleanScanner, CleanScanner,)
 ;~ 	Case $idBtnAuto
-				;~ FuncWrapper($Btn, Autmation)
+				;~ FuncWrapper($Btn, $captionAuto, Autmation)
 ;~ 			Case $idBtnMsg3On
-;~				FuncWrapper($Btn, Msg3On)
+;~				FuncWrapper($Btn, $captionMsg3On, Msg3On)
 ;~ 			Case $idBtnMsg3Off
-;~				FuncWrapper($Btn, Msg3off)
+;~				FuncWrapper($Btn, $captionMsg3Off, Msg3off)
 			Case $idBtnCopySrvExt
-					FuncWrapper($Btn, CopyServerExtToCust, True)
+					FuncWrapper($Btn, $captionCopySrvExt, CopyServerExtToCust, True)
 		Case $idBtnCopyPOSExt
-				FuncWrapper($Btn, CopyPosExtToCust, True)
+				FuncWrapper($Btn, $captionCopyPOSExt, CopyPosExtToCust, True)
             Case $idBtnCopyOffExt
-				FuncWrapper($Btn, CopyOfficeExtToCust, True)
+				FuncWrapper($Btn, $captionCopyOffExt, CopyOfficeExtToCust, True)
 			Case $idBtnMonitoSrvLog
-				FuncWrapper($Btn, MonitorSrvLog)
+				FuncWrapper($Btn, $captionMonitoSrvLog, MonitorSrvLog)
 			Case $idBtnSQLMgmt
-				FuncWrapper($Btn, OpenSSMS)
+				FuncWrapper($Btn, $captionSQLMgmt, OpenSSMS)
 			Case $idBtnBrowseServer
-				FuncWrapper($Btn, BrowseServer)
+				FuncWrapper($Btn, $captionBrowseServer, BrowseServer)
 			Case $idBtnBrowseRabbit
-				FuncWrapper($Btn, BrowseRabbit)
+				FuncWrapper($Btn, $captionBrowseRabbit, BrowseRabbit)
         EndSwitch
     WEnd
 
@@ -946,8 +1008,8 @@ Func EmptyStatusBar($Sleep)
 	EndIf
 EndFunc
 
-Func FuncWrapper($Button, $FuncName, $Disable = False)
-	WriteToStatusBar(FuncName($FuncName))
+Func FuncWrapper($Button, $BtnCaption, $FuncName, $Disable = False)
+	WriteToStatusBar($BtnCaption)
 	If ($Disable) Then
 		GUICtrlSetState ($Button,$GUI_DISABLE)
 	EndIf
