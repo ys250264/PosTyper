@@ -210,95 +210,96 @@ Func Main()
     Global $do = 1;
 
     While $do
-        Switch GUIGetMsg()
+		$Btn = GUIGetMsg()
+        Switch $Btn
             Case $GUI_EVENT_CLOSE
                 ExitLoop
             Case $idBtnOK
-				FuncWrapper($idBtnOK, Type)
+				FuncWrapper($Btn, Type)
             ;Case $idBtnCD
-			;	FuncWrapper($idBtnCD, Checkdigit)
+			;	FuncWrapper($Btn, Checkdigit)
 			Case $idBtnLogin
-				FuncWrapper($idBtnLogin, Login, True)
+				FuncWrapper($Btn, Login, True)
 			Case $idBtnUnlock
-				FuncWrapper($idBtnUnlock, Unlock, True)
+				FuncWrapper($Btn, Unlock, True)
 			Case $idBtnTendering
-				FuncWrapper($idBtnTendering, Tendering, True)
+				FuncWrapper($Btn, Tendering, True)
 			Case $idBtnEditIni
-				FuncWrapper($idBtnEditIni, EditIni)
+				FuncWrapper($Btn, EditIni)
 			Case $idBtnSnoop
-				FuncWrapper($idBtnSnoop, Snoop)
+				FuncWrapper($Btn, Snoop)
 			Case $idBtnWebClient
-				FuncWrapper($idBtnWebClient, WebClient)
+				FuncWrapper($Btn, WebClient)
 			Case $idBtnIISReset
-				FuncWrapper($idBtnIISReset, IISReset, True)
+				FuncWrapper($Btn, IISReset, True)
 			Case $idBtnIISStart
-				FuncWrapper($idBtnIISStart, IISStart, True)
+				FuncWrapper($Btn, IISStart, True)
 			Case $idBtnIISStop
-				FuncWrapper($idBtnIISStop, IISStop, True)
+				FuncWrapper($Btn, IISStop, True)
 			Case $idBtnPOS
-				FuncWrapper($idBtnPOS, POSStart)
+				FuncWrapper($Btn, POSStart)
 			;~Case $idBtnCMD
-			;~	FuncWrapper($idBtnCMD, CMDOpen)
+			;~	FuncWrapper($Btn, CMDOpen)
             Case $idBtnEmuarrange
-				FuncWrapper($idBtnEmuarrange, Arrange, True)
+				FuncWrapper($Btn, Arrange, True)
 			Case $idBtnScenario
-				FuncWrapper($idBtnScenario, Scenario, True)
+				FuncWrapper($Btn, Scenario, True)
 			Case $idBtnExposeLogs
-				FuncWrapper($idBtnExposeLogs, ExposeLogs)
+				FuncWrapper($Btn, ExposeLogs)
 			Case $idBtnExposeTLog
-				FuncWrapper($idBtnExposeTLog, ExposeTLog)
+				FuncWrapper($Btn, ExposeTLog)
 			Case $idBtnCleanLogs
-				FuncWrapper($idBtnCleanLogs, CleanLogs, True)
+				FuncWrapper($Btn, CleanLogs, True)
 			Case $idBtnCollectLogs
-				FuncWrapper($idBtnCollectLogs, CollectLogs, True)
+				FuncWrapper($Btn, CollectLogs, True)
 			Case $idBtnServices
-				FuncWrapper($idBtnServices, Services)
+				FuncWrapper($Btn, Services)
 			Case $idBtnReceiptDebug
-				FuncWrapper($idBtnReceiptDebug, ReceiptDebug, True)
+				FuncWrapper($Btn, ReceiptDebug, True)
 			Case $idBtnReceiptDebugOff
-				FuncWrapper($idBtnReceiptDebugOff, ReceiptDebugOff, True)
+				FuncWrapper($Btn, ReceiptDebugOff, True)
 			Case $idBtnViewSlip
-				FuncWrapper($idBtnViewSlip, ViewSlip)
+				FuncWrapper($Btn, ViewSlip)
 			Case $idBtnScreenshot
-				FuncWrapper($idBtnScreenshot, Screenshot)
+				FuncWrapper($Btn, Screenshot)
 			Case $idBtnPOSSnip
-				FuncWrapper($idBtnPOSSnip, POSSnip)
+				FuncWrapper($Btn, POSSnip)
 			Case $idBtnDebugOn
-				FuncWrapper($idBtnDebugOn, DebugOn)
+				FuncWrapper($Btn, DebugOn)
 			Case $idBtnDebugOff
-				FuncWrapper($idBtnDebugOff, DebugOff)
+				FuncWrapper($Btn, DebugOff)
             Case $idBtnKillPOS
-				FuncWrapper($idBtnKillPOS, KillPOS)
+				FuncWrapper($Btn, KillPOS)
             Case $idBtnScanLoyaltyCard
-				FuncWrapper($idBtnScanLoyaltyCard, ScanLoyaltyCard)
+				FuncWrapper($Btn, ScanLoyaltyCard)
 	;~		Case $idBtnResetLoy
-	;~			FuncWrapper($idBtnResetLoy, ResetLoy)
+	;~			FuncWrapper($Btn, ResetLoy)
 	;~		Case $idBtnFLDiag
-	;~			FuncWrapper($idBtnFLDiag, FLDiag)
+	;~			FuncWrapper($Btn, FLDiag)
             Case $idBtnScan
-				FuncWrapper($idBtnScan, Scan)
+				FuncWrapper($Btn, Scan)
             Case $idBtnCleanScanner
-				FuncWrapper($idBtnCleanScanner, CleanScanner,)
+				FuncWrapper($Btn, CleanScanner,)
 ;~ 	Case $idBtnAuto
-				;~ FuncWrapper($idBtnAuto, Autmation)
+				;~ FuncWrapper($Btn, Autmation)
 ;~ 			Case $idBtnMsg3On
-;~				FuncWrapper($idBtnMsg3On, Msg3On)
+;~				FuncWrapper($Btn, Msg3On)
 ;~ 			Case $idBtnMsg3Off
-;~				FuncWrapper($idBtnMsg3Off, Msg3off)
+;~				FuncWrapper($Btn, Msg3off)
 			Case $idBtnCopySrvExt
-					FuncWrapper($idBtnCopySrvExt, CopyServerExtToCust, True)
+					FuncWrapper($Btn, CopyServerExtToCust, True)
 		Case $idBtnCopyPOSExt
-				FuncWrapper($idBtnCopyPOSExt, CopyPosExtToCust, True)
+				FuncWrapper($Btn, CopyPosExtToCust, True)
             Case $idBtnCopyOffExt
-				FuncWrapper($idBtnCopyOffExt, CopyOfficeExtToCust, True)
+				FuncWrapper($Btn, CopyOfficeExtToCust, True)
 			Case $idBtnMonitoSrvLog
-				FuncWrapper($idBtnMonitoSrvLog, MonitorSrvLog)
+				FuncWrapper($Btn, MonitorSrvLog)
 			Case $idBtnSQLMgmt
-				FuncWrapper($idBtnSQLMgmt, OpenSSMS)
+				FuncWrapper($Btn, OpenSSMS)
 			Case $idBtnBrowseServer
-				FuncWrapper($idBtnBrowseServer, BrowseServer)
+				FuncWrapper($Btn, BrowseServer)
 			Case $idBtnBrowseRabbit
-				FuncWrapper($idBtnBrowseRabbit, BrowseRabbit)
+				FuncWrapper($Btn, BrowseRabbit)
         EndSwitch
     WEnd
 
