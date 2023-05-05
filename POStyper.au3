@@ -214,91 +214,91 @@ Func Main()
             Case $GUI_EVENT_CLOSE
                 ExitLoop
             Case $idBtnOK
-				Type()
+				FuncWrapper($idBtnOK, Type)
             ;Case $idBtnCD
-			;	Checkdigit()
-            Case $idBtnLogin
-				Login()
+			;	FuncWrapper($idBtnCD, Checkdigit)
+			Case $idBtnLogin
+				FuncWrapper($idBtnLogin, Login, True)
 			Case $idBtnUnlock
-				   Unlock()
+				FuncWrapper($idBtnUnlock, Unlock, True)
 			Case $idBtnTendering
-				   Tendering()
+				FuncWrapper($idBtnTendering, Tendering, True)
 			Case $idBtnEditIni
-				    EditIni()
+				FuncWrapper($idBtnEditIni, EditIni)
 			Case $idBtnSnoop
-				    Snoop()
+				FuncWrapper($idBtnSnoop, Snoop)
 			Case $idBtnWebClient
-					WebClient()
+				FuncWrapper($idBtnWebClient, WebClient)
 			Case $idBtnIISReset
-  	                IISReset()
+				FuncWrapper($idBtnIISReset, IISReset, True)
 			Case $idBtnIISStart
-                    IISStart()
+				FuncWrapper($idBtnIISStart, IISStart, True)
 			Case $idBtnIISStop
-                    IISStop()
+				FuncWrapper($idBtnIISStop, IISStop, True)
 			Case $idBtnPOS
-					POSStart()
+				FuncWrapper($idBtnPOS, POSStart)
 			;~Case $idBtnCMD
-             ;~       CMDOpen()
+			;~	FuncWrapper($idBtnCMD, CMDOpen)
             Case $idBtnEmuarrange
-					Arrange()
+				FuncWrapper($idBtnEmuarrange, Arrange, True)
 			Case $idBtnScenario
-					Scenario()
+				FuncWrapper($idBtnScenario, Scenario, True)
 			Case $idBtnExposeLogs
-				    ExposeLogs()
+				FuncWrapper($idBtnExposeLogs, ExposeLogs)
 			Case $idBtnExposeTLog
-				    ExposeTLog()
+				FuncWrapper($idBtnExposeTLog, ExposeTLog)
 			Case $idBtnCleanLogs
-				    CleanLogs()
+				FuncWrapper($idBtnCleanLogs, CleanLogs, True)
 			Case $idBtnCollectLogs
-				    CollectLogs()
+				FuncWrapper($idBtnCollectLogs, CollectLogs, True)
 			Case $idBtnServices
-				    Services()
+				FuncWrapper($idBtnServices, Services)
 			Case $idBtnReceiptDebug
-				    ReceiptDebug()
+				FuncWrapper($idBtnReceiptDebug, ReceiptDebug, True)
 			Case $idBtnReceiptDebugOff
-				    ReceiptDebugOff()
+				FuncWrapper($idBtnReceiptDebugOff, ReceiptDebugOff, True)
 			Case $idBtnViewSlip
-				    ViewSlip()
+				FuncWrapper($idBtnViewSlip, ViewSlip)
 			Case $idBtnScreenshot
-				    Screenshot()
+				FuncWrapper($idBtnScreenshot, Screenshot)
 			Case $idBtnPOSSnip
-				    POSSnip()
+				FuncWrapper($idBtnPOSSnip, POSSnip)
 			Case $idBtnDebugOn
-				    DebugOn()
+				FuncWrapper($idBtnDebugOn, DebugOn)
 			Case $idBtnDebugOff
-				    DebugOff()
+				FuncWrapper($idBtnDebugOff, DebugOff)
             Case $idBtnKillPOS
-				    KillPOS()
+				FuncWrapper($idBtnKillPOS, KillPOS)
             Case $idBtnScanLoyaltyCard
-				    ScanLoyaltyCard()
+				FuncWrapper($idBtnScanLoyaltyCard, ScanLoyaltyCard)
 	;~		Case $idBtnResetLoy
-	;~			    ResetLoy()
+	;~			FuncWrapper($idBtnResetLoy, ResetLoy)
 	;~		Case $idBtnFLDiag
-	;~			FLDiag()
+	;~			FuncWrapper($idBtnFLDiag, FLDiag)
             Case $idBtnScan
-                    Scan()
+				FuncWrapper($idBtnScan, Scan)
             Case $idBtnCleanScanner
-					CleanScanner()
+				FuncWrapper($idBtnCleanScanner, CleanScanner,)
 ;~ 	Case $idBtnAuto
-                    ;~ Autmation()
+				;~ FuncWrapper($idBtnAuto, Autmation)
 ;~ 			Case $idBtnMsg3On
-;~ 					Msg3On()
+;~				FuncWrapper($idBtnMsg3On, Msg3On)
 ;~ 			Case $idBtnMsg3Off
-;~ 					Msg3off()
+;~				FuncWrapper($idBtnMsg3Off, Msg3off)
 			Case $idBtnCopySrvExt
-				    CopyServerExtToCust()
-			Case $idBtnCopyPOSExt
-				    CopyPosExtToCust()
+					FuncWrapper($idBtnCopySrvExt, CopyServerExtToCust, True)
+		Case $idBtnCopyPOSExt
+				FuncWrapper($idBtnCopyPOSExt, CopyPosExtToCust, True)
             Case $idBtnCopyOffExt
-				    CopyOfficeExtToCust()
+				FuncWrapper($idBtnCopyOffExt, CopyOfficeExtToCust, True)
 			Case $idBtnMonitoSrvLog
-					MonitorSrvLog()
+				FuncWrapper($idBtnMonitoSrvLog, MonitorSrvLog)
 			Case $idBtnSQLMgmt
-					OpenSSMS()
+				FuncWrapper($idBtnSQLMgmt, OpenSSMS)
 			Case $idBtnBrowseServer
-					BrowseServer()
+				FuncWrapper($idBtnBrowseServer, BrowseServer)
 			Case $idBtnBrowseRabbit
-					BrowseRabbit()
+				FuncWrapper($idBtnBrowseRabbit, BrowseRabbit)
         EndSwitch
     WEnd
 
@@ -920,7 +920,7 @@ Func AddStatusBar()
 	EndIf
 EndFunc
 
-Func WriteToStatusBar($MethodName, $Txt)
+Func WriteToStatusBar($MethodName, $Txt = "")
 	If ($StatusBarOn) Then		
 		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "  " & $MethodName & ": " & $Txt)
 	EndIf
@@ -930,5 +930,16 @@ Func EmptyStatusBar($Sleep)
 	If ($StatusBarOn) Then		
 		Sleep($Sleep)
 		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "")
+	EndIf
+EndFunc
+
+Func FuncWrapper($Button, $FuncName, $Disable = False)
+	WriteToStatusBar(FuncName($FuncName))
+	If ($Disable) Then
+		GUICtrlSetState ($Button,$GUI_DISABLE)
+	EndIf
+	$FuncName()
+	If ($Disable) Then
+		GUICtrlSetState ($Button,$GUI_ENABLE)
 	EndIf
 EndFunc
