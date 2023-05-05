@@ -772,14 +772,13 @@ Func Screenshot()
 		DirCreate($CaptureDir)
 	EndIf	
 	Local $hBmp
-	$hWndSCR = WinActivate("POStyper")
-	WinSetState ( $hWndSCR, "", @SW_MINIMIZE )
+	WinActivate($g_hPosTyper)
+	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
 	Sleep (250)
 	$hBmp = _ScreenCapture_Capture("")
 	$ImageName = $CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
     _ScreenCapture_SaveImage($ImageName, $hBmp)
 	ShellExecute($ImageName)
-	WinActivate("POStyper")
 EndFunc
 
 Func POSSnip()
@@ -787,14 +786,13 @@ Func POSSnip()
 		DirCreate($CaptureDir)
 	EndIf	
 	Local $hBmp
-	$hWndSCR = WinActivate("POStyper")
-	WinSetState ( $hWndSCR, "", @SW_MINIMIZE )
+	WinActivate($g_hPosTyper)
+	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
 	Sleep (250)
 	$hBmp = _ScreenCapture_Capture("",0,0,1024,768)
 	$ImageName = $CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
     _ScreenCapture_SaveImage($CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg", $hBmp)
 	ShellExecute($ImageName)
-	WinActivate("POStyper")
 EndFunc
 
 Func DebugOn()
@@ -943,4 +941,5 @@ Func FuncWrapper($Button, $FuncName, $Disable = False)
 	If ($Disable) Then
 		GUICtrlSetState ($Button,$GUI_ENABLE)
 	EndIf
+	WinActivate($g_hPosTyper)	
 EndFunc
