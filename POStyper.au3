@@ -10,6 +10,7 @@
 #include <ScreenCapture.au3>
 #include <Date.au3>
 #include <GuiComboBox.au3>
+#include <GuiStatusBar.au3>
 #include ".\lib\UIAWrappers.au3"
 
 #RequireAdmin
@@ -32,51 +33,52 @@ global $arrItems
 global $CFG_DIALOG_CAPTION					= 1
 global $CFG_DIALOG_X								= 2
 global $CFG_DIALOG_Y								= 3
-global $CFG_CMD_PATH								= 4
-global $CFG_RETAIL_DB_NAME					= 5
-global $CFG_SERVER_WEBSITE					= 6
-global $CFG_RABBITMQ_WEBSITE				= 7
-global $CFG_SERVER_PATH						= 8
-global $CFG_POS_PATH								= 9
-global $CFG_OFFICE_PATH							= 10
-global $CFG_TLOG_PATH							= 11
-global $CFG_DMS_PATH								= 12
-global $CFG_SPOOKY_PATH						= 13
-global $CFG_ARSGATEWAY_PATH				= 14
-global $CFG_RETAILGATEWAY_PATH			= 15
-global $CFG_STOREGATEWAY_PATH			= 16
-global $CFG_WINEPTS_PATH						= 17
-global $CFG_SERVER_DBG_CUST_PATH		= 18
-global $CFG_SERVER_DBG_EXT_PATH			= 19
-global $CFG_POS_DBG_CUST_PATH			= 20
-global $CFG_POS_DBG_EXT_PATH				= 21
-global $CFG_OFFICE_DBG_CUST_PATH		= 22
-global $CFG_OFFICE_DBG_EXT_PATH			= 23
-global $CFG_SQLMGR									= 24
-global $CFG_EDITOR									= 25
-global $CFG_BROWSER								= 26
-global $CFG_SNOOP									= 27
-global $CFG_USER										= 28
-global $CFG_PASSWORD							= 29
-global $CFG_LOYCARD								= 30
-global $CFG_SCANNER_EMU						= 31
-global $CFG_SCANNER_EMU_X					= 32
-global $CFG_SCANNER_EMU_Y					= 33
-global $CFG_PRINTER_EMU						= 34
-global $CFG_PRINTER_EMU_X						= 35
-global $CFG_PRINTER_EMU_Y						= 36
-global $CFG_SCALE_EMU							= 37
-global $CFG_SCALE_EMU_X						= 38
-global $CFG_SCALE_EMU_Y						= 39
-global $CFG_DRAWER_EMU						= 40
-global $CFG_DRAWER_EMU_X						= 41
-global $CFG_DRAWER_EMU_Y						= 42
-global $CFG_WINEPTS_EMU						= 43
-global $CFG_WINEPTS_EMU_X					= 44
-global $CFG_WINEPTS_EMU_Y					= 45
-global $CFG_UPB_EMU								= 46
-global $CFG_UPB_EMU_X							= 47
-global $CFG_UPB_EMU_Y							= 48
+global $CFG_DIALOG_STATUS_BAR				= 4
+global $CFG_CMD_PATH								= 5
+global $CFG_RETAIL_DB_NAME					= 6
+global $CFG_SERVER_WEBSITE					= 7
+global $CFG_RABBITMQ_WEBSITE				= 8
+global $CFG_SERVER_PATH						= 9
+global $CFG_POS_PATH								= 10
+global $CFG_OFFICE_PATH							= 11
+global $CFG_TLOG_PATH							= 12
+global $CFG_DMS_PATH								= 13
+global $CFG_SPOOKY_PATH						= 14
+global $CFG_ARSGATEWAY_PATH				= 15
+global $CFG_RETAILGATEWAY_PATH			= 16
+global $CFG_STOREGATEWAY_PATH			= 17
+global $CFG_WINEPTS_PATH						= 18
+global $CFG_SERVER_DBG_CUST_PATH		= 19
+global $CFG_SERVER_DBG_EXT_PATH			= 20
+global $CFG_POS_DBG_CUST_PATH			= 21
+global $CFG_POS_DBG_EXT_PATH				= 22
+global $CFG_OFFICE_DBG_CUST_PATH		= 23
+global $CFG_OFFICE_DBG_EXT_PATH			= 24
+global $CFG_SQLMGR									= 25
+global $CFG_EDITOR									= 26
+global $CFG_BROWSER								= 27
+global $CFG_SNOOP									= 28
+global $CFG_USER										= 29
+global $CFG_PASSWORD							= 30
+global $CFG_LOYCARD								= 31
+global $CFG_SCANNER_EMU						= 32
+global $CFG_SCANNER_EMU_X					= 33
+global $CFG_SCANNER_EMU_Y					= 34
+global $CFG_PRINTER_EMU						= 35
+global $CFG_PRINTER_EMU_X						= 36
+global $CFG_PRINTER_EMU_Y						= 37
+global $CFG_SCALE_EMU							= 38
+global $CFG_SCALE_EMU_X						= 39
+global $CFG_SCALE_EMU_Y						= 40
+global $CFG_DRAWER_EMU						= 41
+global $CFG_DRAWER_EMU_X						= 42
+global $CFG_DRAWER_EMU_Y						= 43
+global $CFG_WINEPTS_EMU						= 44
+global $CFG_WINEPTS_EMU_X					= 45
+global $CFG_WINEPTS_EMU_Y					= 46
+global $CFG_UPB_EMU								= 47
+global $CFG_UPB_EMU_X							= 48
+global $CFG_UPB_EMU_Y							= 49
 
 global $arrCONFIG
 
@@ -93,14 +95,26 @@ Func Main()
 	
 	$PosTyperDialogX = @DesktopWidth - 333
 	$PosTyperDialogY = 0
+	$PosTyperDialogWidth = 333
+	$PosTyperDialogHeight = 315
+	
+	Global $StatusBarOn = False
+	If (StringLower(StringStripWS($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1], $STR_STRIPALL)) == "true") Then
+		$StatusBarOn = True
+	EndIf
+	
+	If ($StatusBarOn) Then		
+		$PosTyperDialogHeight += 20
+	EndIf
 	
 	If ($arrCONFIG[$CFG_DIALOG_X][1] >= 0 And $arrCONFIG[$CFG_DIALOG_Y][1] >= 0) Then
 		$PosTyperDialogX = $arrCONFIG[$CFG_DIALOG_X][1]
 		$PosTyperDialogY = $arrCONFIG[$CFG_DIALOG_Y][1]
 	EndIf
 	
-    GUICreate($arrCONFIG[$CFG_DIALOG_CAPTION][1], 333, 320, $PosTyperDialogX, $PosTyperDialogY, -1, $WS_EX_ACCEPTFILES)
+    Global $g_hPosTyper = GUICreate($arrCONFIG[$CFG_DIALOG_CAPTION][1], $PosTyperDialogWidth, $PosTyperDialogHeight, $PosTyperDialogX, $PosTyperDialogY, -1, $WS_EX_ACCEPTFILES)
 	GUISetIcon($icoFile)
+	AddStatusBar()
 	
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
 	Global $idComboBox = GUICtrlCreateCombo("", 10, 10, 235, 20)
@@ -634,6 +648,8 @@ Func Scenario()
 			WinActivate("R10PosClient")		
 			;MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
 
+			WriteToStatusBar("Scenario", $arrItems[$i][0] & " = " & $arrItems[$i][1])
+			
 			If $arrItems[$i][0] = "item" Then
 				;MsgBox($MB_SYSTEMMODAL, "", "Item")
 				$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
@@ -732,6 +748,7 @@ Func Scenario()
 			
 		Next
     EndIf
+	EmptyStatusBar(2000)
 EndFunc
 
 Func ViewSlip()
@@ -895,3 +912,23 @@ Func BrowseRabbit()
 	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_RABBITMQ_WEBSITE][1])
 EndFunc
 	
+	
+Func AddStatusBar()
+	Global $g_hPosTyperStatusBar
+	If ($StatusBarOn) Then		
+		$g_hPosTyperStatusBar = _GUICtrlStatusBar_Create($g_hPosTyper)
+	EndIf
+EndFunc
+
+Func WriteToStatusBar($MethodName, $Txt)
+	If ($StatusBarOn) Then		
+		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "  " & $MethodName & ": " & $Txt)
+	EndIf
+EndFunc
+
+Func EmptyStatusBar($Sleep)
+	If ($StatusBarOn) Then		
+		Sleep($Sleep)
+		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "")
+	EndIf
+EndFunc
