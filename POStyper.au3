@@ -103,9 +103,9 @@ Func Main()
 	Global $StatusBarOn	= StringIsTrue($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1])
 	Global $ExtDeveloper	= StringIsTrue($arrCONFIG[$CFG_DIALOG_EXT_DEVELOPER][1])
 	
-	$HeightOfOneButtonsLine = 30
-	if ( Not $ExtDeveloper ) Then
-		$PosTyperDialogHeight -= (2*$HeightOfOneButtonsLine)
+	$RowHeight = 30
+	if (Not $ExtDeveloper) Then
+		$PosTyperDialogHeight -= (2*$RowHeight)
 	EndIf
 	
 	$HeightOfStatusBar = 20
@@ -191,16 +191,16 @@ Func Main()
 	;Local $captionFLDiag = 		   		"FLDiag"
 
 	Local $ROW_0	=	10
-	Local $ROW_1	=	$ROW_0 + 35
-	Local $ROW_2	=	$ROW_1 + 30
-	Local $ROW_3	=	$ROW_2 + 30
-	Local $ROW_4	=	$ROW_3 + 30
-	Local $ROW_5	=	$ROW_4 + 30
-	Local $ROW_6	=	$ROW_5 + 30
-	Local $ROW_7	=	$ROW_6 + 30
-	Local $ROW_8	=	$ROW_7 + 30
-	Local $ROW_9	=	$ROW_8 + 30
-	Local $ROW_10	=	$ROW_9 + 30
+	Local $ROW_1	=	$ROW_0 + $RowHeight
+	Local $ROW_2	=	$ROW_1 + $RowHeight
+	Local $ROW_3	=	$ROW_2 + $RowHeight
+	Local $ROW_4	=	$ROW_3 + $RowHeight
+	Local $ROW_5	=	$ROW_4 + $RowHeight
+	Local $ROW_6	=	$ROW_5 + $RowHeight
+	Local $ROW_7	=	$ROW_6 + $RowHeight
+	Local $ROW_8	=	$ROW_7 + $RowHeight
+	Local $ROW_9	=	$ROW_8 + $RowHeight
+	Local $ROW_10	=	$ROW_9 + $RowHeight
 	
 	Local $INVALID_HEIGHT	=	-1
 	if (Not $ExtDeveloper) Then
@@ -208,17 +208,18 @@ Func Main()
 		$ROW_10 = $INVALID_HEIGHT
 	EndIf
 	
+	$ColWidth = 80
 	Local $Col_1	=	10
-	Local $Col_2	=	$Col_1 + 80
-	Local $Col_3	=	$Col_2 + 80
-	Local $Col_4	=	$Col_3 + 80
+	Local $Col_2	=	$Col_1 + $ColWidth
+	Local $Col_3	=	$Col_2 + $ColWidth
+	Local $Col_4	=	$Col_3 + $ColWidth
 
 	Local $BtnWidthS	=	35
 	Local $BtnHeightS	=	23
 	Local $BtnWidthL	=	70
 	Local $BtnHeight	=	20
 
-	Local $idBtnScan = 						GUICtrlCreateButton($captionScan						, 250, $ROW_0 - 1,  $BtnWidthS, $BtnHeightS)
+	Local $idBtnScan = 						GUICtrlCreateButton($captionScan						, 250, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 	;Local $idBtnCD = 							GUICtrlCreateButton($captionCD							, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 	Local $idBtnType = 						GUICtrlCreateButton($captionType						, 285, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 	;Local $idBtnAuto = 						GUICtrlCreateButton($captionAuto						, 170, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
@@ -393,7 +394,6 @@ Func Type()
 	Local $pos = MouseGetPos()
 	WinActivate("R10PosClient")
 	sleep(200)
-
 	$Item = GetItemNumberFromCombo()
  	$keys = StringSplit($Item,"")
     MouseClick("left",560,350,2,1)
@@ -430,7 +430,7 @@ EndFunc
 
 Func Login()
 	If Not IsPosClientRunning() Then
-		return;
+		return
 	Endif
 	WinActivate("R10PosClient")
 	Local $pos = MouseGetPos()
@@ -501,7 +501,6 @@ Func Scenario()
 	Endif
 	FileChangeDir($PostyperDir)
     Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosDir & "\", "All (*.ini)",1)
-    
 	If @error Then
         MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
         FileChangeDir($PostyperDir)
@@ -513,7 +512,7 @@ EndFunc
 
 Func Tendering()
 	If Not IsPosClientRunning() Then
-		return;
+		return
 	Endif
 	ScenarioAutomation($TenderngIniFile)
 EndFunc
@@ -521,7 +520,7 @@ EndFunc
 
 Func Unlock()
 	If Not IsPosClientRunning() Then
-		return;
+		return
 	Endif	
 	WinActivate("R10PosClient")
 	Local $pos = MouseGetPos()
@@ -532,7 +531,7 @@ Func Unlock()
 	Send ("{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
  	$keys = StringSplit($arrCONFIG[$CFG_PASSWORD][1],"")
 	For $i = 1 To $keys[0]
-	  Send($keys[$i])
+		Send($keys[$i])
     Next
 	MouseClick("left",920,220,1,1)
 	BlockInput(0)
@@ -660,7 +659,7 @@ EndFunc
 Func ExposeTLog()
 	$TLogs = $arrCONFIG[$CFG_TLOG_PATH][1]
   	if FileExists($TLogs) Then
-	     ShellExecute("C:\Windows\explorer.exe",$TLogs)
+		ShellExecute("C:\Windows\explorer.exe",$TLogs)
 	EndIf
 EndFunc
   
@@ -700,7 +699,7 @@ EndFunc
 
 Func CleanScanner()
 	If Not IsPosClientRunning() Then
-		return;
+		return
 	Endif
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
@@ -862,7 +861,7 @@ Func GetItemNumberFromCombo()
 EndFunc
 
 
-Func Press0 ()
+Func Press0()
 	MouseClick("left",580,625,1,1)
 EndFunc
 
@@ -870,44 +869,43 @@ Func Press1()
 	MouseClick("left",580,555,1,1)
 EndFunc
 
-Func Press2 ()
+Func Press2()
 	MouseClick("left",650,555,1,1)
 EndFunc
 
-Func Press3 ()
+Func Press3()
 	MouseClick("left",730,555,1,1)
 EndFunc
 
-Func Press4 ()
+Func Press4()
 	MouseClick("left",580,480,1,1)
 EndFunc
 
-Func Press5 ()
+Func Press5()
 	MouseClick("left",650,480,1,1)
 EndFunc
 
-Func Press6 ()
+Func Press6()
 	MouseClick("left",730,480,1,1)
 EndFunc
 
-Func Press7 ()
+Func Press7()
 	MouseClick("left",580,405,1,1)
 EndFunc
 
-Func Press8 ()
+Func Press8()
 	MouseClick("left",650,405,1,1)
 EndFunc
 
-Func Press9 ()
+Func Press9()
 	MouseClick("left",730,405,1,1)
 EndFunc
 
-Func PressX ()
+Func PressX()
 	MouseClick("left",800,480,1,1)
 EndFunc
 
 Func PressEnter()
-	WinActivate("R10PosClient")
 	Sleep(500)
 	MouseClick("left",800,630,1,1)
 	;~ MsgBox($MB_SYSTEMMODAL, "", "enter:")
