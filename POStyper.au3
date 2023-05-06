@@ -854,8 +854,18 @@ EndFunc
 Func GetItemNumberFromCombo()
 	$SelectedItem = StringStripWS(GUICtrlRead($idComboBox), $STR_STRIPALL)
 	$Tokens = StringSplit($SelectedItem, "-")
+	$numberOfTokens = $Tokens[0]
+	if ($numberOfTokens < 1) Then
+		return
+	EndIf
 	$Item = StringStripWS($Tokens[1], $STR_STRIPALL)
-	$Desc = StringStripWS($Tokens[2], $STR_STRIPALL)	
+	$ItemIsNumber = StringRegExp($Item,"^\d+$")
+	If (Not $ItemIsNumber) Then
+        MsgBox($MB_SYSTEMMODAL, "", $Item & " is not a number")				
+	EndIf
+	if ($numberOfTokens > 1) Then
+		$Desc = StringStripWS($Tokens[2], $STR_STRIPALL)	
+	EndIf
 	return $Item
 EndFunc
 
