@@ -31,6 +31,7 @@ global $cfgFile = @Scriptdir & "\POStyper.ini"
 global $icoFile = @Scriptdir & "\POStyper.ico"
 
 global $arrItems
+global $arrCONFIG
 
 global $CFG_DIALOG_CAPTION					= 1
 global $CFG_DIALOG_X								= 2
@@ -83,8 +84,6 @@ global $CFG_UPB_EMU								= 48
 global $CFG_UPB_EMU_X							= 49
 global $CFG_UPB_EMU_Y							= 50
 
-global $arrCONFIG
-
 If _Singleton("POStyper", 1) = 0 Then
     MsgBox(4096, "Warning", "PosTyper is already running")
     Exit
@@ -101,15 +100,8 @@ Func Main()
 	$PosTyperDialogWidth = 333
 	$PosTyperDialogHeight = 345
 	
-	Global $StatusBarOn = False
-	If (StringLower(StringStripWS($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1], $STR_STRIPALL)) == "true") Then
-		$StatusBarOn = True
-	EndIf
-
-	Global $ExtDeveloper = False
-	If (StringLower(StringStripWS($arrCONFIG[$CFG_DIALOG_EXT_DEVELOPER][1], $STR_STRIPALL)) == "true") Then
-		$ExtDeveloper = True
-	EndIf
+	Global $StatusBarOn	= StringIsTrue($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1])
+	Global $ExtDeveloper	= StringIsTrue($arrCONFIG[$CFG_DIALOG_EXT_DEVELOPER][1])
 	
 	$HeightOfOneButtonsLine = 30
 	if ( Not $ExtDeveloper ) Then
@@ -127,6 +119,7 @@ Func Main()
 	EndIf
 	
     Global $g_hPosTyper = GUICreate($arrCONFIG[$CFG_DIALOG_CAPTION][1], $PosTyperDialogWidth, $PosTyperDialogHeight, $PosTyperDialogX, $PosTyperDialogY, -1, $WS_EX_ACCEPTFILES)
+	
 	GUISetIcon($icoFile)
 	
 	Global $g_hPosTyperStatusBar
@@ -197,29 +190,28 @@ Func Main()
 	;Local $captionMsg3Off = 		    	"NO MSG3"
 	;Local $captionFLDiag = 		   		"FLDiag"
 
-	Local $ROW_0		=	10
-	Local $ROW_1		=	45
-	Local $ROW_2		=	75
-	Local $ROW_3		=	105
-	Local $ROW_4		=	135
-	Local $ROW_5		=	165
-	Local $ROW_6		=	195
-	Local $ROW_7		=	225
-	Local $ROW_8		=	255
-	Local $ROW_9		=	285
-	Local $ROW_10		=	315
+	Local $ROW_0	=	10
+	Local $ROW_1	=	$ROW_0 + 35
+	Local $ROW_2	=	$ROW_1 + 30
+	Local $ROW_3	=	$ROW_2 + 30
+	Local $ROW_4	=	$ROW_3 + 30
+	Local $ROW_5	=	$ROW_4 + 30
+	Local $ROW_6	=	$ROW_5 + 30
+	Local $ROW_7	=	$ROW_6 + 30
+	Local $ROW_8	=	$ROW_7 + 30
+	Local $ROW_9	=	$ROW_8 + 30
+	Local $ROW_10	=	$ROW_9 + 30
 	
 	Local $INVALID_HEIGHT	=	-1
-	
 	if (Not $ExtDeveloper) Then
 		$ROW_9 = $INVALID_HEIGHT
 		$ROW_10 = $INVALID_HEIGHT
 	EndIf
 	
-	Local $Col_1			=	10
-	Local $Col_2			=	90
-	Local $Col_3			=	170
-	Local $Col_4			=	250
+	Local $Col_1	=	10
+	Local $Col_2	=	$Col_1 + 80
+	Local $Col_3	=	$Col_2 + 80
+	Local $Col_4	=	$Col_3 + 80
 
 	Local $BtnWidthS	=	35
 	Local $BtnHeightS	=	23
@@ -285,10 +277,9 @@ Func Main()
 
 	GUICtrlSetColor($idBtnStartPOS , 0x000088)
 	GUICtrlSetColor($idBtnKillPOS, 0xFF0000)
-	;~	GUICtrlSetColor($idBtnResetLoy, 0x008000)
 
     GUISetState(@SW_SHOW)
-    If WinExists("R10PosClient") == 1 Then
+    If (WinExists("R10PosClient")) Then
 		WinActivate("R10PosClient")
     EndIf
 	Sleep(500)
@@ -429,7 +420,7 @@ EndFunc
 
 
 Func StartPOS()
-    If WinExists("R10PosClient") == 0 Then
+    If (Not WinExists("R10PosClient")) Then
 		Run($arrCONFIG[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe",$arrCONFIG[$CFG_POS_PATH][1])
     EndIf
 	Sleep(500)
@@ -928,7 +919,7 @@ Func ScenarioAutomation($sFileName)
 	FileChangeDir($PostyperDir)
 	$arrItems=IniReadSection($sFileName,"ITEMS")
 
-	If WinExists("R10PosClient") == 1 Then
+	If (WinExists("R10PosClient")) Then
 		WinActivate("R10PosClient")
 	EndIf
 
@@ -1111,4 +1102,8 @@ Func IsPosClientRunning()
 		return False
     EndIf
 	return True
+EndFunc
+
+Func StringIsTrue($BoolString)
+	return StringLower(StringStripWS($BoolString, $STR_STRIPALL)) == "true"
 EndFunc
