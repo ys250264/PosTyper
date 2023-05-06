@@ -614,7 +614,7 @@ Func IISStart()
 EndFunc
 
 Func CMDOpen()
-   Run("C:\Windows\System32\cmd.exe",$arrCONFIG[$CFG_CMD][1])
+   Run($arrCONFIG[$CFG_CMD][1])
 EndFunc
 
 Func POSStart()
