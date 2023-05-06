@@ -93,6 +93,11 @@ _readItemFile()
 
 Main()
 
+Func _readItemFile()
+ 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
+	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
+EndFunc
+
 Func Main()
 	
 	$PosTyperDialogX = @DesktopWidth - 333
@@ -399,7 +404,7 @@ Func Type()
     MouseClick("left",560,350,2,1)
 	sleep(200)
 	For $i = 1 To $keys[0]
-	  Send($keys[$i])
+		Send($keys[$i])
 	Next
     MouseClick("left",800,630,1,1)
 	sleep(200)
@@ -459,7 +464,7 @@ EndFunc
 
 Func ArrangeEmulators()
 	If Not IsPosClientRunning() Then
-		return;
+		return
 	Endif
 	WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	WinMove($arrCONFIG[$CFG_SCANNER_EMU][1],"",$arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
@@ -483,7 +488,7 @@ EndFunc
 
 Func ScanLoyaltyCard()
 	If Not IsPosClientRunning() Then
-		return;
+		return
 	Endif
 	$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
 	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
@@ -497,7 +502,7 @@ EndFunc
 
 Func Scenario()
 	If Not IsPosClientRunning() Then
-		return;
+		return
 	Endif
 	FileChangeDir($PostyperDir)
     Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosDir & "\", "All (*.ini)",1)
@@ -844,12 +849,6 @@ EndFunc
 
 
 ; === Helper Functions ==============================================================================================
-
-
-Func _readItemFile()
- 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
-	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
-EndFunc
 
 
 Func GetItemNumberFromCombo()
