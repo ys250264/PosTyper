@@ -281,6 +281,8 @@ Func Main()
 	;~ 	Local $idBtnMsg3Off = 		    GUICtrlCreateButton($captionMsg3Off					, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
 	;~	Local $idBtnFLDiag = 		   		GUICtrlCreateButton($captionFLDiag					, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
 
+	DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
+	
 	GUICtrlSetColor($idBtnStartPOS , 0x000088)
 	GUICtrlSetColor($idBtnKillPOS, 0xFF0000)
 
@@ -1092,12 +1094,12 @@ EndFunc
 Func FuncWrapper($Button, $BtnCaption, $FuncName, $Disable = False)
 	WriteToStatusBar($BtnCaption)
 	If ($Disable) Then
-		GUICtrlSetState ($Button,$GUI_DISABLE)
+		GUICtrlSetState ($Button, $GUI_DISABLE)
 		Sleep(200)
 	EndIf
 	$FuncName()
 	If ($Disable) Then
-		GUICtrlSetState ($Button,$GUI_ENABLE)
+		GUICtrlSetState ($Button, $GUI_ENABLE)
 	EndIf
 	WinActivate($g_hPosTyper)	
 EndFunc
@@ -1111,6 +1113,37 @@ Func IsPosClientRunning()
 	return True
 EndFunc
 
+
 Func StringIsTrue($BoolString)
 	return StringLower(StringStripWS($BoolString, $STR_STRIPALL)) == "true"
+EndFunc
+
+
+Func IsEnglishBackupDbTablesExist()
+	FileChangeDir($HelpersDir)
+	EnvSet("RETAIL_DB_NAME_TEMP_VAR", $arrCONFIG[$CFG_RETAIL_DB_NAME][1])
+	$retCode = RunWait($HelpersDir & "\jumbo_test_english_exists.cmd", "", @SW_HIDE)
+	$BackupExists = $retCode == 1
+	FileChangeDir(@Scriptdir)
+	return $BackupExists
+EndFunc
+
+
+Func IsDutchBackupDbTablesExist()
+	FileChangeDir($HelpersDir)
+	EnvSet("RETAIL_DB_NAME_TEMP_VAR", $arrCONFIG[$CFG_RETAIL_DB_NAME][1])
+	$retCode = RunWait($HelpersDir & "\jumbo_test_dutch_exists.cmd", "", @SW_HIDE)
+	$BackupExists = $retCode == 1
+	FileChangeDir(@Scriptdir)
+	return $BackupExists
+EndFunc
+
+
+Func DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
+	If (Not IsEnglishBackupDbTablesExist()) Then
+		GUICtrlSetState ($idBtnToEnglish, $GUI_DISABLE)
+	EndIf	
+	If (Not IsDutchBackupDbTablesExist()) Then
+		GUICtrlSetState ($idBtnToDutch, $GUI_DISABLE)
+	EndIf
 EndFunc
