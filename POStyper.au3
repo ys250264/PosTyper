@@ -142,10 +142,10 @@ Func Main()
 
 	Local $captionScan = 					"Scan"
 	;Local $captionCD = 						"CD"
-	Local $captionOK = 						"Type"
+	Local $captionType = 						"Type"
 	;Local $captionAuto = 					"Gal"
 	
-	Local $captionPOS = 						"Start POS"
+	Local $captionStartPOS = 				"Start POS"
 	Local $captionLogin = 					"Login"
 	Local $captionEmuArrange = 			"Move Emu"
 	Local $captionScanLoyaltyCard = 	"Scan Loyalty"
@@ -165,12 +165,12 @@ Func Main()
 	Local $captionExposeLogs = 			"Expose Logs"
 	Local $captionCollectLogs = 			"Collect Logs"
 
-	Local $captionReceiptDebug = 		"Slip Dbg"
+	Local $captionReceiptDebugOn = 	"Slip Dbg"
 	Local $captionReceiptDebugOff = 	"No Slip Dbg"
 	Local $captionViewSlip = 				"View Slip"
 	Local $captionExposeTLog = 			"Expose Tlog"
 	
-	Local $captionPOSSnip =	 			"Pos Capture"
+	Local $captionSnipPos =	 				"Pos Capture"
 	Local $captionScreenshot = 			"Scrn Capture"
 	Local $captionCleanScanner = 		"Clean Scan"
 	Local $captionBrowseRabbit =			"Rabbit"
@@ -178,16 +178,16 @@ Func Main()
 	Local $captionIISReset = 				"IISReset"
 	Local $captionIISStop = 				"IISStop"
 	Local $captionIISStart = 				"IISStart"
-	Local $captionCMD = 						"CMD"
+	Local $captionOpenCMD = 				"CMD"
 			
-	Local $captionWebClient = 				"Spooky"
-	Local $captionServices = 				"Services"
+	Local $captionOpenSpooky = 			"Spooky"
+	Local $captionOpenServices = 		"Services"
 	Local $captionSQLMgmt = 				"SQL Mgmt"
-	Local $captionSnoop = 					"Snoop"
+	Local $captionOpenSnoop = 			"Snoop"
 	
-	Local $captionCopySrvExt =			"Copy SrvExt"
-	Local $captionCopyPOSExt =			"Copy PosExt"
-	Local $captionCopyOffExt =			"Copy OfcExt"
+	Local $captionCopySrvExtToCust =	"Copy SrvExt"
+	Local $captionCopyPOSExtToCust =	"Copy PosExt"
+	Local $captionCopyOffExtToCust =	"Copy OfcExt"
 	
 	Local $captionToEnglish =				"To English"
 	Local $captionToDutch =					"To Dutch"
@@ -226,67 +226,64 @@ Func Main()
 	Local $BtnWidthL	=	70
 	Local $BtnHeight	=	20
 
-	Local $idBtnScan = 					GUICtrlCreateButton($captionScan					, 250, $ROW_0 - 1,  $BtnWidthS, $BtnHeightS)
-	;Local $idBtnCD = 						GUICtrlCreateButton($captionCD						, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	Local $idBtnOK = 						GUICtrlCreateButton($captionOK						, 285, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	;Local $idBtnAuto = 					GUICtrlCreateButton($captionAuto					, 170, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Local $idBtnScan = 						GUICtrlCreateButton($captionScan						, 250, $ROW_0 - 1,  $BtnWidthS, $BtnHeightS)
+	;Local $idBtnCD = 							GUICtrlCreateButton($captionCD							, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Local $idBtnType = 						GUICtrlCreateButton($captionType						, 285, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	;Local $idBtnAuto = 						GUICtrlCreateButton($captionAuto						, 170, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+			
+	Local $idBtnStartPOS = 					GUICtrlCreateButton($captionStartPOS				, $Col_1, $ROW_1, $BtnWidthL, $BtnHeight)
+	Local $idBtnLogin = 						GUICtrlCreateButton($captionLogin						, $Col_2, $ROW_1, $BtnWidthL, $BtnHeight)
+	Local $idBtnEmuArrange = 				GUICtrlCreateButton($captionEmuArrange			, $Col_3, $ROW_1, $BtnWidthL, $BtnHeight)
+	Local $idBtnScanLoyaltyCard = 		GUICtrlCreateButton($captionScanLoyaltyCard		, $Col_4, $ROW_1, $BtnWidthL, $BtnHeight)
+		
+	Local $idBtnScenario = 					GUICtrlCreateButton($captionScenario					, $Col_1, $ROW_2, $BtnWidthL, $BtnHeight)
+	Local $idBtnTendering = 				GUICtrlCreateButton($captionTendering				, $Col_2, $ROW_2, $BtnWidthL, $BtnHeight)
+	Local $idBtnUnlock = 						GUICtrlCreateButton($captionUnlock					, $Col_3, $ROW_2, $BtnWidthL, $BtnHeight)
+	Local $idBtnKillPOS =	 					GUICtrlCreateButton($captionKillPOS 	    			, $Col_4, $ROW_2, $BtnWidthL, $BtnHeight)
+			
+	Local $idBtnCleanLogs = 				GUICtrlCreateButton($captionCleanLogs				, $Col_1, $ROW_3, $BtnWidthL, $BtnHeight)
+	Local $idBtnBrowseServer =			GUICtrlCreateButton($captionBrowseServer			, $Col_2, $ROW_3, $BtnWidthL, $BtnHeight)
+	Local $idBtnMonitoSrvLog =			GUICtrlCreateButton($captionMonitoSrvLog			, $Col_3, $ROW_3, $BtnWidthL, $BtnHeight)
+	Local $idBtnEditIni = 						GUICtrlCreateButton($captionEditIni					, $Col_4, $ROW_3, $BtnWidthL, $BtnHeight)
+		
+	Local $idBtnDebugOn =   				GUICtrlCreateButton($captionDebugOn				, $Col_1, $ROW_4, $BtnWidthL, $BtnHeight)
+	Local $idBtnDebugOff = 		    		GUICtrlCreateButton($captionDebugOff				, $Col_2, $ROW_4, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeLogs = 				GUICtrlCreateButton($captionExposeLogs			, $Col_3, $ROW_4, $BtnWidthL, $BtnHeight)
+	Local $idBtnCollectLogs = 				GUICtrlCreateButton($captionCollectLogs				, $Col_4, $ROW_4, $BtnWidthL, $BtnHeight)
+		
+	Local $idBtnReceiptDebugOn = 		GUICtrlCreateButton($captionReceiptDebugOn		, $Col_1, $ROW_5, $BtnWidthL, $BtnHeight)
+	Local $idBtnReceiptDebugOff = 		GUICtrlCreateButton($captionReceiptDebugOff		, $Col_2, $ROW_5, $BtnWidthL, $BtnHeight)
+	Local $idBtnViewSlip = 					GUICtrlCreateButton($captionViewSlip					, $Col_3, $ROW_5, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeTLog = 				GUICtrlCreateButton($captionExposeTLog			, $Col_4, $ROW_5, $BtnWidthL, $BtnHeight)
+		
+	Local $idBtnSnipPos =	 				GUICtrlCreateButton($captionSnipPos   				, $Col_1, $ROW_6, $BtnWidthL, $BtnHeight)	
+	Local $idBtnScreenshot = 				GUICtrlCreateButton($captionScreenshot				, $Col_2, $ROW_6, $BtnWidthL, $BtnHeight)		
+	Local $idBtnCleanScanner = 			GUICtrlCreateButton($captionCleanScanner			, $Col_3, $ROW_6, $BtnWidthL, $BtnHeight)
+	Local $idBtnBrowseRabbit =			GUICtrlCreateButton($captionBrowseRabbit			, $Col_4, $ROW_6, $BtnWidthL, $BtnHeight)
+			
+	Local $idBtnIISReset = 					GUICtrlCreateButton($captionIISReset					, $Col_1, $ROW_7, $BtnWidthL, $BtnHeight)
+	Local $idBtnIISStop = 					GUICtrlCreateButton($captionIISStop					, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
+	Local $idBtnIISStart = 					GUICtrlCreateButton($captionIISStart					, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
+	Local $idBtnOpenCMD = 				GUICtrlCreateButton($captionOpenCMD				, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
+		
+	Local $idBtnOpenSpooky = 			GUICtrlCreateButton($captionOpenSpooky			, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
+	Local $idBtnOpenServices = 			GUICtrlCreateButton($captionOpenServices			, $Col_2, $ROW_8, $BtnWidthL, $BtnHeight)		
+	Local $idBtnSQLMgmt = 				GUICtrlCreateButton($captionSQLMgmt				, $Col_3, $ROW_8, $BtnWidthL, $BtnHeight)
+	Local $idBtnOpenSnoop = 				GUICtrlCreateButton($captionOpenSnoop				, $Col_4, $ROW_8, $BtnWidthL, $BtnHeight)
 	
-	Local $idBtnPOS = 					GUICtrlCreateButton($captionPOS					, $Col_1, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnLogin = 					GUICtrlCreateButton($captionLogin					, $Col_2, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnEmuArrange = 			GUICtrlCreateButton($captionEmuArrange		, $Col_3, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnScanLoyaltyCard = 	GUICtrlCreateButton($captionScanLoyaltyCard	, $Col_4, $ROW_1, $BtnWidthL, $BtnHeight)
-
-	Local $idBtnScenario = 				GUICtrlCreateButton($captionScenario				, $Col_1, $ROW_2, $BtnWidthL, $BtnHeight)
-	Local $idBtnTendering = 			GUICtrlCreateButton($captionTendering			, $Col_2, $ROW_2, $BtnWidthL, $BtnHeight)
-	Local $idBtnUnlock = 					GUICtrlCreateButton($captionUnlock				, $Col_3, $ROW_2, $BtnWidthL, $BtnHeight)
-	Local $idBtnKillPOS =	 				GUICtrlCreateButton($captionKillPOS 	    		, $Col_4, $ROW_2, $BtnWidthL, $BtnHeight)
+	Local $idBtnCopySrvExtToCust =		GUICtrlCreateButton($captionCopySrvExtToCust	, $Col_1, $ROW_9, $BtnWidthL, $BtnHeight)
+	Local $idBtnCopyPOSExtToCust =	GUICtrlCreateButton($captionCopyPOSExtToCust	, $Col_2, $ROW_9, $BtnWidthL, $BtnHeight)
+	Local $idBtnCopyOffExtToCust =		GUICtrlCreateButton($captionCopyOffExtToCust	, $Col_3, $ROW_9, $BtnWidthL, $BtnHeight)
 	
-	Local $idBtnCleanLogs = 			GUICtrlCreateButton($captionCleanLogs			, $Col_1, $ROW_3, $BtnWidthL, $BtnHeight)
-	Local $idBtnBrowseServer =		GUICtrlCreateButton($captionBrowseServer		, $Col_2, $ROW_3, $BtnWidthL, $BtnHeight)
-	Local $idBtnMonitoSrvLog =		GUICtrlCreateButton($captionMonitoSrvLog		, $Col_3, $ROW_3, $BtnWidthL, $BtnHeight)
-	Local $idBtnEditIni = 					GUICtrlCreateButton($captionEditIni				, $Col_4, $ROW_3, $BtnWidthL, $BtnHeight)
+	Local $idBtnToEnglish = 					GUICtrlCreateButton($captionToEnglish				, $Col_1, $ROW_10, $BtnWidthL, $BtnHeight)
+	Local $idBtnToDutch = 					GUICtrlCreateButton($captionToDutch					, $Col_2, $ROW_10, $BtnWidthL, $BtnHeight)
 
+	;~	Local $idBtnResetLoy =	 		GUICtrlCreateButton($captionResetLoy				, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
+	;~ 	Local $idBtnMsg3On =   		    GUICtrlCreateButton($captionMsg3On					, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
+	;~ 	Local $idBtnMsg3Off = 		    GUICtrlCreateButton($captionMsg3Off					, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
+	;~	Local $idBtnFLDiag = 		   		GUICtrlCreateButton($captionFLDiag					, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
 
-	Local $idBtnDebugOn =   			GUICtrlCreateButton($captionDebugOn			, $Col_1, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnDebugOff = 		    	GUICtrlCreateButton($captionDebugOff			, $Col_2, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnExposeLogs = 			GUICtrlCreateButton($captionExposeLogs		, $Col_3, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnCollectLogs = 			GUICtrlCreateButton($captionCollectLogs			, $Col_4, $ROW_4, $BtnWidthL, $BtnHeight)
-
-	Local $idBtnReceiptDebug = 		GUICtrlCreateButton($captionReceiptDebug		, $Col_1, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnReceiptDebugOff = 	GUICtrlCreateButton($captionReceiptDebugOff	, $Col_2, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnViewSlip = 				GUICtrlCreateButton($captionViewSlip				, $Col_3, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnExposeTLog = 			GUICtrlCreateButton($captionExposeTLog		, $Col_4, $ROW_5, $BtnWidthL, $BtnHeight)
-
-
-	Local $idBtnPOSSnip =	 			GUICtrlCreateButton($captionPOSSnip   			, $Col_1, $ROW_6, $BtnWidthL, $BtnHeight)	
-	Local $idBtnScreenshot = 			GUICtrlCreateButton($captionScreenshot			, $Col_2, $ROW_6, $BtnWidthL, $BtnHeight)		
-	Local $idBtnCleanScanner = 		GUICtrlCreateButton($captionCleanScanner		, $Col_3, $ROW_6, $BtnWidthL, $BtnHeight)
-	Local $idBtnBrowseRabbit =		GUICtrlCreateButton($captionBrowseRabbit		, $Col_4, $ROW_6, $BtnWidthL, $BtnHeight)
-	
-	Local $idBtnIISReset = 				GUICtrlCreateButton($captionIISReset				, $Col_1, $ROW_7, $BtnWidthL, $BtnHeight)
-	Local $idBtnIISStop = 				GUICtrlCreateButton($captionIISStop				, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
-	Local $idBtnIISStart = 				GUICtrlCreateButton($captionIISStart				, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
-	Local $idBtnCMD = 					GUICtrlCreateButton($captionCMD					, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
-
-
-	Local $idBtnWebClient = 			GUICtrlCreateButton($captionWebClient			, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
-	Local $idBtnServices = 				GUICtrlCreateButton($captionServices				, $Col_2, $ROW_8, $BtnWidthL, $BtnHeight)		
-	Local $idBtnSQLMgmt = 			GUICtrlCreateButton($captionSQLMgmt			, $Col_3, $ROW_8, $BtnWidthL, $BtnHeight)
-	Local $idBtnSnoop = 					GUICtrlCreateButton($captionSnoop				, $Col_4, $ROW_8, $BtnWidthL, $BtnHeight)
-
-	Local $idBtnCopySrvExt =			GUICtrlCreateButton($captionCopySrvExt		, $Col_1, $ROW_9, $BtnWidthL, $BtnHeight)
-	Local $idBtnCopyPOSExt =			GUICtrlCreateButton($captionCopyPOSExt		, $Col_2, $ROW_9, $BtnWidthL, $BtnHeight)
-	Local $idBtnCopyOffExt =			GUICtrlCreateButton($captionCopyOffExt			, $Col_3, $ROW_9, $BtnWidthL, $BtnHeight)
-
-	Local $idBtnToEnglish = 				GUICtrlCreateButton($captionToEnglish			, $Col_1, $ROW_10, $BtnWidthL, $BtnHeight)
-	Local $idBtnToDutch = 				GUICtrlCreateButton($captionToDutch				, $Col_2, $ROW_10, $BtnWidthL, $BtnHeight)
-
-	;~	Local $idBtnResetLoy =	 		GUICtrlCreateButton($captionResetLoy		, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
-	;~ 	Local $idBtnMsg3On =   		    GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
-	;~ 	Local $idBtnMsg3Off = 		    GUICtrlCreateButton($captionMsg3Off			, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
-	;~	Local $idBtnFLDiag = 		   		GUICtrlCreateButton($captionFLDiag			, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
-
-	GUICtrlSetColor($idBtnPOS , 0x000088)
+	GUICtrlSetColor($idBtnStartPOS , 0x000088)
 	GUICtrlSetColor($idBtnKillPOS, 0xFF0000)
 	;~	GUICtrlSetColor($idBtnResetLoy, 0x008000)
 
@@ -301,101 +298,140 @@ Func Main()
     While $do
 		$Btn = GUIGetMsg()
         Switch $Btn
-            Case $GUI_EVENT_CLOSE
-                ExitLoop
-            Case $idBtnOK
-				FuncWrapper($Btn, $captionOK, Type)
-            ;Case $idBtnCD
-			;	FuncWrapper($Btn, $caption, Checkdigit)
+			Case $GUI_EVENT_CLOSE
+                ExitLoop			
+			Case $idBtnType
+				FuncWrapper($Btn, $captionType, Type)
+            Case $idBtnScan
+				FuncWrapper($Btn, $captionScan, Scan)
+			Case $idBtnStartPOS
+				FuncWrapper($Btn, $captionStartPOS, StartPOS)
 			Case $idBtnLogin
 				FuncWrapper($Btn, $captionLogin, Login, True)
-			Case $idBtnUnlock
-				FuncWrapper($Btn, $captionUnlock, Unlock, True)
-			Case $idBtnTendering
-				FuncWrapper($Btn, $captionTendering, Tendering, True)
-			Case $idBtnEditIni
-				FuncWrapper($Btn, $captionEditIni, EditIni)
-			Case $idBtnSnoop
-				FuncWrapper($Btn, $captionSnoop, Snoop)
-			Case $idBtnWebClient
-				FuncWrapper($Btn, $captionWebClient, WebClient)
-			Case $idBtnIISReset
-				FuncWrapper($Btn, $captionIISReset, IISReset, True)
-			Case $idBtnIISStart
-				FuncWrapper($Btn, $captionIISStart, IISStart, True)
-			Case $idBtnIISStop
-				FuncWrapper($Btn, $captionIISStop, IISStop, True)
-			Case $idBtnPOS
-				FuncWrapper($Btn, $captionPOS, POSStart)
-			Case $idBtnCMD
-				FuncWrapper($Btn, $captionCMD, CMDOpen)
             Case $idBtnEmuArrange
-				FuncWrapper($Btn, $captionEmuArrange, Arrange, True)
+				FuncWrapper($Btn, $captionEmuArrange, ArrangeEmulators, True)
+            Case $idBtnScanLoyaltyCard
+				FuncWrapper($Btn, $captionScanLoyaltyCard, ScanLoyaltyCard)
 			Case $idBtnScenario
 				FuncWrapper($Btn, $captionScenario, Scenario, True)
-			Case $idBtnExposeLogs
-				FuncWrapper($Btn, $captionExposeLogs, ExposeLogs)
-			Case $idBtnExposeTLog
-				FuncWrapper($Btn, $captionExposeTLog, ExposeTLog)
+			Case $idBtnTendering
+				FuncWrapper($Btn, $captionTendering, Tendering, True)
+			Case $idBtnUnlock
+				FuncWrapper($Btn, $captionUnlock, Unlock, True)
+            Case $idBtnKillPOS
+				FuncWrapper($Btn, $captionKillPOS, KillPOS)
 			Case $idBtnCleanLogs
 				FuncWrapper($Btn, $captionCleanLogs, CleanLogs, True)
-			Case $idBtnCollectLogs
-				FuncWrapper($Btn, $captionCollectLogs, CollectLogs, True)
-			Case $idBtnServices
-				FuncWrapper($Btn, $captionServices, Services)
-			Case $idBtnReceiptDebug
-				FuncWrapper($Btn, $captionReceiptDebug, ReceiptDebug, True)
-			Case $idBtnReceiptDebugOff
-				FuncWrapper($Btn, $captionReceiptDebugOff, ReceiptDebugOff, True)
-			Case $idBtnViewSlip
-				FuncWrapper($Btn, $captionViewSlip, ViewSlip)
-			Case $idBtnScreenshot
-				FuncWrapper($Btn, $captionScreenshot, Screenshot)
-			Case $idBtnPOSSnip
-				FuncWrapper($Btn, $captionPOSSnip, POSSnip)
+			Case $idBtnBrowseServer
+				FuncWrapper($Btn, $captionBrowseServer, BrowseServer)
+			Case $idBtnMonitoSrvLog
+				FuncWrapper($Btn, $captionMonitoSrvLog, MonitorSrvLog)
+			Case $idBtnEditIni
+				FuncWrapper($Btn, $captionEditIni, EditIni)
 			Case $idBtnDebugOn
 				FuncWrapper($Btn, $captionDebugOn, DebugOn)
 			Case $idBtnDebugOff
 				FuncWrapper($Btn, $captionDebugOff, DebugOff)
-            Case $idBtnKillPOS
-				FuncWrapper($Btn, $captionKillPOS, KillPOS)
-            Case $idBtnScanLoyaltyCard
-				FuncWrapper($Btn, $captionScanLoyaltyCard, ScanLoyaltyCard)
-	;~		Case $idBtnResetLoy
-	;~			FuncWrapper($Btn, $captionResetLoy, ResetLoy)
-	;~		Case $idBtnFLDiag
-	;~			FuncWrapper($Btn, $captionFLDiag, FLDiag)
-            Case $idBtnScan
-				FuncWrapper($Btn, $captionScan, Scan)
+			Case $idBtnExposeLogs
+				FuncWrapper($Btn, $captionExposeLogs, ExposeLogs)
+			Case $idBtnCollectLogs
+				FuncWrapper($Btn, $captionCollectLogs, CollectLogs, True)
+			Case $idBtnReceiptDebugOn
+				FuncWrapper($Btn, $captionReceiptDebugOn, ReceiptDebugOn, True)
+			Case $idBtnReceiptDebugOff
+				FuncWrapper($Btn, $captionReceiptDebugOff, ReceiptDebugOff, True)
+			Case $idBtnViewSlip
+				FuncWrapper($Btn, $captionViewSlip, ViewSlip)
+			Case $idBtnExposeTLog
+				FuncWrapper($Btn, $captionExposeTLog, ExposeTLog)
+			Case $idBtnSnipPos
+				FuncWrapper($Btn, $captionSnipPos, SnipPOS)
+			Case $idBtnScreenshot
+				FuncWrapper($Btn, $captionScreenshot, Screenshot)
             Case $idBtnCleanScanner
 				FuncWrapper($Btn, $captionCleanScanner, CleanScanner)
-;~ 	Case $idBtnAuto
-				;~ FuncWrapper($Btn, $captionAuto, Autmation)
-;~ 			Case $idBtnMsg3On
-;~				FuncWrapper($Btn, $captionMsg3On, Msg3On)
-;~ 			Case $idBtnMsg3Off
-;~				FuncWrapper($Btn, $captionMsg3Off, Msg3off)
-			Case $idBtnCopySrvExt
-					FuncWrapper($Btn, $captionCopySrvExt, CopyServerExtToCust, True)
-		Case $idBtnCopyPOSExt
-				FuncWrapper($Btn, $captionCopyPOSExt, CopyPosExtToCust, True)
-            Case $idBtnCopyOffExt
-				FuncWrapper($Btn, $captionCopyOffExt, CopyOfficeExtToCust, True)
-			Case $idBtnMonitoSrvLog
-				FuncWrapper($Btn, $captionMonitoSrvLog, MonitorSrvLog)
-			Case $idBtnSQLMgmt
-				FuncWrapper($Btn, $captionSQLMgmt, OpenSSMS)
-			Case $idBtnBrowseServer
-				FuncWrapper($Btn, $captionBrowseServer, BrowseServer)
 			Case $idBtnBrowseRabbit
 				FuncWrapper($Btn, $captionBrowseRabbit, BrowseRabbit)
+			Case $idBtnIISReset
+				FuncWrapper($Btn, $captionIISReset, IISReset, True)
+			Case $idBtnIISStop
+				FuncWrapper($Btn, $captionIISStop, IISStop, True)
+			Case $idBtnIISStart
+				FuncWrapper($Btn, $captionIISStart, IISStart, True)
+			Case $idBtnOpenCMD
+				FuncWrapper($Btn, $captionOpenCMD, OpenCMD)
+			Case $idBtnOpenSpooky
+				FuncWrapper($Btn, $captionOpenSpooky, OpenSpooky)
+			Case $idBtnOpenServices
+				FuncWrapper($Btn, $captionOpenServices, OpenServices)
+			Case $idBtnSQLMgmt
+				FuncWrapper($Btn, $captionSQLMgmt, OpenSSMS)
+			Case $idBtnOpenSnoop
+				FuncWrapper($Btn, $captionOpenSnoop, OpenSnoop)
+			Case $idBtnCopySrvExtToCust
+				FuncWrapper($Btn, $captionCopySrvExtToCust, CopyServerExtToCust, True)
+			Case $idBtnCopyPOSExtToCust
+				FuncWrapper($Btn, $captionCopyPOSExtToCust, CopyPosExtToCust, True)
+            Case $idBtnCopyOffExtToCust
+				FuncWrapper($Btn, $captionCopyOffExtToCust, CopyOfficeExtToCust, True)
 			Case $idBtnToEnglish
 				FuncWrapper($Btn, $captionToEnglish, ToEnglish, True)
 			Case $idBtnToDutch
 				FuncWrapper($Btn, $captionToDutch,ToDutch, True)				
-        EndSwitch
+;			Case $idBtnCD
+;				FuncWrapper($Btn, $caption, Checkdigit)
+;			Case $idBtnResetLoy
+;				FuncWrapper($Btn, $captionResetLoy, ResetLoy)
+;			Case $idBtnFLDiag
+;				FuncWrapper($Btn, $captionFLDiag, FLDiag)
+; 			Case $idBtnAuto
+; 				FuncWrapper($Btn, $captionAuto, Autmation)
+; 			Case $idBtnMsg3On
+;				FuncWrapper($Btn, $captionMsg3On, Msg3On)
+; 			Case $idBtnMsg3Off
+;				FuncWrapper($Btn, $captionMsg3Off, Msg3off)
+		EndSwitch
     WEnd
+EndFunc
 
+
+; === Main Functions =============================================================================================
+
+
+Func Type()
+	Local $pos = MouseGetPos()
+	WinActivate("R10PosClient")
+	sleep(200)
+
+	$Item = GetItemNumberFromCombo()
+ 	$keys = StringSplit($Item,"")
+    MouseClick("left",560,350,2,1)
+	sleep(200)
+	For $i = 1 To $keys[0]
+	  Send($keys[$i])
+	Next
+    MouseClick("left",800,630,1,1)
+	sleep(200)
+	MouseMove($pos[0],$pos[1],1)
+EndFunc
+
+Func Scan()
+	;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
+	$Scanme = GetItemNumberFromCombo()
+	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$Scanme)
+	ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
+	WinActivate("R10PosClient")
+EndFunc
+
+Func StartPOS()
+    If WinExists("R10PosClient") == 0 Then
+		Run($arrCONFIG[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe",$arrCONFIG[$CFG_POS_PATH][1])
+    EndIf
+	Sleep(500)
+	WinActivate("R10PosClient")
 EndFunc
 
 Func Login()
@@ -426,6 +462,64 @@ Func Login()
 	MouseMove($pos[0],$pos[1],1)
 EndFunc
 
+Func ArrangeEmulators()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
+	WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	WinMove($arrCONFIG[$CFG_SCANNER_EMU][1],"",$arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
+	
+	WinActivate($arrCONFIG[$CFG_PRINTER_EMU][1])
+	WinMove($arrCONFIG[$CFG_PRINTER_EMU][1],"",$arrCONFIG[$CFG_PRINTER_EMU_X][1], $arrCONFIG[$CFG_PRINTER_EMU_Y][1])
+	
+	WinActivate($arrCONFIG[$CFG_SCALE_EMU][1])
+	WinMove($arrCONFIG[$CFG_SCALE_EMU][1],"",$arrCONFIG[$CFG_SCALE_EMU_X][1], $arrCONFIG[$CFG_SCALE_EMU_Y][1])
+	
+	WinActivate($arrCONFIG[$CFG_DRAWER_EMU][1])
+	WinMove($arrCONFIG[$CFG_DRAWER_EMU][1],"",$arrCONFIG[$CFG_DRAWER_EMU_X][1], $arrCONFIG[$CFG_DRAWER_EMU_Y][1])
+	
+	WinActivate($arrCONFIG[$CFG_WINEPTS_EMU][1])
+	WinMove($arrCONFIG[$CFG_WINEPTS_EMU][1],"",$arrCONFIG[$CFG_WINEPTS_EMU_X][1], $arrCONFIG[$CFG_WINEPTS_EMU_Y][1])
+	
+	WinActivate($arrCONFIG[$CFG_UPB_EMU][1])
+	WinMove($arrCONFIG[$CFG_UPB_EMU][1],"",$arrCONFIG[$CFG_UPB_EMU_X][1], $arrCONFIG[$CFG_UPB_EMU_Y][1])
+EndFunc
+
+Func ScanLoyaltyCard()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
+	$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
+	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrCONFIG[$CFG_LOYCARD][1])
+	ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
+	WinActivate("R10PosClient")
+EndFunc
+
+Func Scenario()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
+	FileChangeDir($PostyperDir)
+    Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosDir & "\", "All (*.ini)",1)
+    
+	If @error Then
+        MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
+        FileChangeDir($PostyperDir)
+    Else
+		ScenarioAutomation($sScenarioFileName)
+	EndIf			
+EndFunc
+
+Func Tendering()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
+	ScenarioAutomation($TenderngIniFile)
+EndFunc
+
 Func Unlock()
 	If Not IsPosClientRunning() Then
 		return;
@@ -446,16 +540,149 @@ Func Unlock()
 	MouseMove($pos[0],$pos[1],1)
 EndFunc
 
-Func Autmation()
-	$keys = StringSplit(StringStripWS(GUICtrlRead($idComboBox),8),"=")
-	;~ MsgBox($MB_SYSTEMMODAL, "",  $keys[2])
-	If WinExists("R10PosClient") == 1 Then
-		WinActivate("R10PosClient")
+Func KillPOS()
+	ShellExecute($HelpersDir & "\killPOS.cmd","","","",@SW_MINIMIZE)
+EndFunc
+
+Func CleanLogs()
+	$cmd = $HelpersDir & "\CleanLogs.cmd"
+	$arg1 = $arrCONFIG[$CFG_SERVER_PATH][1] & " "
+	$arg2 = $arrCONFIG[$CFG_POS_PATH][1] & " "
+	$arg3 = $arrCONFIG[$CFG_OFFICE_PATH][1] & " "
+	$arg4 = $arrCONFIG[$CFG_DMS_PATH][1] & " "
+	$arg5 = $arrCONFIG[$CFG_ARSGATEWAY_PATH][1] & " "
+	$arg6 = $arrCONFIG[$CFG_RETAILGATEWAY_PATH][1] & " "
+	$arg7 = $arrCONFIG[$CFG_STOREGATEWAY_PATH][1] & " "
+	$arg8 = $arrCONFIG[$CFG_WINEPTS_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8
+	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
+EndFunc
+
+Func BrowseServer()
+	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_SERVER_WEBSITE][1])
+EndFunc
+
+Func MonitorSrvLog()
+	$ServerLogsDir = $arrCONFIG[$CFG_SERVER_PATH][1] & "\Logs\"
+	$hSearch = FileFindFirstFile($ServerLogsDir & "GPOSWebService_*.log")
+	If $hSearch > 0 Then
+		$LastGpos = FileFindNextFile($hSearch)	
+		ShellExecute($arrCONFIG[$CFG_EDITOR][1],  " -monitor " & $ServerLogsDir & $LastGpos)
     EndIf
-	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
-	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-    ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$keys[2])
-    ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:4]")
+EndFunc
+
+Func EditIni()
+	ShellExecute($arrCONFIG[$CFG_EDITOR][1], $cfgFile)
+	Sleep(5000)
+ 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
+	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
+EndFunc
+
+Func DebugOn()
+    FileChangeDir($HelpersDir)
+	$WebLoggerConfig = $arrCONFIG[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
+	ShellExecute($HelpersDir & "\SetLogger.exe",$WebLoggerConfig & " DEBUG","","",@SW_MAXIMIZE)
+    FileChangeDir(@Scriptdir)
+EndFunc
+
+Func DebugOff()
+	$WebLoggerConfig = $arrCONFIG[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
+	ShellExecute($HelpersDir & "\SetLogger.exe",$WebLoggerConfig & " ERROR","","",@SW_MAXIMIZE)
+EndFunc
+
+Func ExposeLogs()
+	$PosLogs = $arrCONFIG[$CFG_POS_PATH][1] & "\Logs"
+  	if FileExists($PosLogs) Then
+	     ShellExecute("C:\Windows\explorer.exe",$PosLogs)
+	EndIf
+	$ServerLogs = $arrCONFIG[$CFG_SERVER_PATH][1] & "\Logs"
+	if FileExists($ServerLogs) Then
+	      ShellExecute("C:\Windows\explorer.exe",$ServerLogs)
+	  EndIf
+EndFunc
+
+
+Func CollectLogs()
+	If Not FileExists($CollectedDir) Then
+		DirCreate($CollectedDir)
+	EndIf	
+	$cmd = $HelpersDir & "\CollectLogs.cmd"
+	$arg1 = $CollectedDir & " "
+	$arg2 = $arrCONFIG[$CFG_SERVER_PATH][1] & " "
+	$arg3 = $arrCONFIG[$CFG_POS_PATH][1] & " "
+	$arg4 = $arrCONFIG[$CFG_OFFICE_PATH][1] & " "
+	$arg5 = $arrCONFIG[$CFG_DMS_PATH][1] & " "
+	$arg6 = $arrCONFIG[$CFG_ARSGATEWAY_PATH][1] & " "
+	$arg7 = $arrCONFIG[$CFG_RETAILGATEWAY_PATH][1] & " "
+	$arg8 = $arrCONFIG[$CFG_STOREGATEWAY_PATH][1] & " "
+	$arg9 = $arrCONFIG[$CFG_WINEPTS_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8 & $arg9
+	ShellExecute($cmd, $arguments,"","",@SW_MAXIMIZE)
+EndFunc
+
+
+Func ReceiptDebugOn()
+	FileChangeDir($HelpersDir)
+	ShellExecute($HelpersDir & "\receiptdebug.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
+	FileChangeDir(@Scriptdir)
+EndFunc
+
+Func ReceiptDebugOff()
+	FileChangeDir($HelpersDir)
+	ShellExecute($HelpersDir & "\receiptdebugoff.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
+	FileChangeDir(@Scriptdir)
+EndFunc
+
+Func ViewSlip()
+    Local $sFileOpenDialog = FileOpenDialog("Select input file", $arrCONFIG[$CFG_TLOG_PATH][1], "TLOG (RetailTransactionLog*.xml)",1)
+    If @error Then
+        MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
+        FileChangeDir(@Scriptdir)
+    Else
+        FileChangeDir($HelpersDir)
+		ShellExecute($HelpersDir & "\ReceiptView.exe",$sFileOpenDialog & " " & $HelpersDir,"","",@SW_MAXIMIZE)
+		Sleep(1500)
+		ShellExecute("c:\temp\Receipt.html","","","",@SW_MAXIMIZE)
+        FileChangeDir(@Scriptdir)
+    EndIf
+EndFunc
+
+Func ExposeTLog()
+	$TLogs = $arrCONFIG[$CFG_TLOG_PATH][1]
+  	if FileExists($TLogs) Then
+	     ShellExecute("C:\Windows\explorer.exe",$TLogs)
+	EndIf
+EndFunc
+  
+Func SnipPOS()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif	
+    If Not FileExists($CaptureDir) Then
+		DirCreate($CaptureDir)
+	EndIf	
+	Local $hBmp
+	WinActivate($g_hPosTyper)
+	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
+	Sleep (250)
+	$hBmp = _ScreenCapture_Capture("",0,0,1024,768)
+	$ImageName = $CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
+    _ScreenCapture_SaveImage($CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg", $hBmp)
+	ShellExecute($ImageName)
+EndFunc
+
+Func Screenshot()
+    If Not FileExists($CaptureDir) Then
+		DirCreate($CaptureDir)
+	EndIf	
+	Local $hBmp
+	WinActivate($g_hPosTyper)
+	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
+	Sleep (250)
+	$hBmp = _ScreenCapture_Capture("")
+	$ImageName = $CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
+    _ScreenCapture_SaveImage($ImageName, $hBmp)
+	ShellExecute($ImageName)
 EndFunc
 
 Func CleanScanner()
@@ -464,24 +691,134 @@ Func CleanScanner()
 	Endif
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+EndFunc  
+
+Func BrowseRabbit()
+	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_RABBITMQ_WEBSITE][1])
 EndFunc
 
-Func Type()
-	Local $pos = MouseGetPos()
-	WinActivate("R10PosClient")
-	sleep(200)
-
-	$Item = GetItemNumberFromCombo()
- 	$keys = StringSplit($Item,"")
-    MouseClick("left",560,350,2,1)
-	sleep(200)
-	For $i = 1 To $keys[0]
-	  Send($keys[$i])
-	Next
-    MouseClick("left",800,630,1,1)
-	sleep(200)
-	MouseMove($pos[0],$pos[1],1)
+Func IISReset()
+	ShellExecute($HelpersDir & "\iisreset.cmd","","","",@SW_MAXIMIZE)
 EndFunc
+
+Func IISStop()
+	ShellExecute($HelpersDir & "\iisreset_stop.cmd","","","",@SW_MAXIMIZE)
+EndFunc
+
+Func IISStart()
+	ShellExecute($HelpersDir & "\iisreset_start.cmd","","","",@SW_MAXIMIZE)
+EndFunc
+
+Func OpenCMD()
+   Run($arrCONFIG[$CFG_CMD][1])
+EndFunc
+
+Func OpenSpooky()
+	$SpookyExe = $arrCONFIG[$CFG_SPOOKY_PATH][1] & "\" & "R10WebClient.exe"
+	if FileExists($SpookyExe) Then
+	  Run($SpookyExe,$arrCONFIG[$CFG_SPOOKY_PATH][1] & "\")
+	EndIf
+EndFunc
+
+Func OpenServices()
+	ShellExecute("C:\Windows\System32\services.msc")
+EndFunc
+
+Func OpenSSMS()
+	ShellExecute($arrCONFIG[$CFG_SQLMGR][1],"-E")	
+EndFunc
+
+Func OpenSnoop()
+	ShellExecute($arrCONFIG[$CFG_SNOOP][1],"")
+EndFunc
+
+Func CopyServerExtToCust()
+	$cmd = $HelpersDir & "\CopyServerExtToCust.cmd"
+	$arg1 = $arrCONFIG[$CFG_SERVER_DBG_CUST_PATH][1] & " "
+	$arg2 = $arrCONFIG[$CFG_SERVER_DBG_EXT_PATH][1] & " "
+	$arguments = $arg1 & $arg2
+	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
+EndFunc
+
+Func CopyPosExtToCust()
+	$cmd = $HelpersDir & "\CopyPosExtToCust.cmd"
+	$arg1 = $arrCONFIG[$CFG_POS_DBG_CUST_PATH][1] & " "
+	$arg2 = $arrCONFIG[$CFG_POS_DBG_EXT_PATH][1] & " "
+	$arguments = $arg1 & $arg2
+	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
+EndFunc
+
+Func CopyOfficeExtToCust()
+	$cmd = $HelpersDir & "\CopyOfficeExtToCust.cmd"
+	$arg1 = $arrCONFIG[$CFG_OFFICE_DBG_CUST_PATH][1] & " "
+	$arg2 = $arrCONFIG[$CFG_OFFICE_DBG_EXT_PATH][1] & " "
+	$arguments = $arg1 & $arg2
+	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
+EndFunc
+
+Func ToEnglish()
+	FileChangeDir($HelpersDir)
+	ShellExecute($HelpersDir & "\jumbo_update_to_english.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
+	FileChangeDir(@Scriptdir)
+EndFunc
+
+Func ToDutch()
+	FileChangeDir($HelpersDir)
+	ShellExecute($HelpersDir & "\jumbo_update_to_dutch.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
+	FileChangeDir(@Scriptdir)
+EndFunc
+
+
+; === Currently Unused Functions ================================================================================
+
+
+;~ Func Autmation()
+;~ 	$keys = StringSplit(StringStripWS(GUICtrlRead($idComboBox),8),"=")
+;~ 	;~ MsgBox($MB_SYSTEMMODAL, "",  $keys[2])
+;~ 	If WinExists("R10PosClient") == 1 Then
+;~ 		WinActivate("R10PosClient")
+;~     EndIf
+;~ 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+;~ 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+;~     ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$keys[2])
+;~     ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:4]")
+;~ EndFunc
+
+;~ Func Checkdigit()
+;~ 	$Number = GUICtrlRead($idComboBox)
+;~ 	$SUMME=0
+;~ 	For $i = 1 To 12
+;~ 	$tempstr = StringLeft($Number,$i)
+;~ 	$NUM = StringRight($tempstr,1)
+;~ 	Mod($i,2)
+;~ 	$SUMME+= Mod($i,2) == 0 ? $NUM * 3 : $NUM
+;~ 	Next
+;~ 	$CHECKDIGIT = MOD($SUMME,10) == 0 ? 0 : 10 - MOD($summe,10)
+;~ 	 _GUICtrlComboBox_SetEditText($idComboBox,StringLeft($Number,12) & $CHECKDIGIT)
+;~ EndFunc
+
+;~ Func ResetLoy()
+;~ 	ShellExecute($HelpersDir & "\resetloy.cmd","","","",@SW_MINIMIZE)
+;~ EndFunc
+
+
+;~ Func FLDiag()
+;~ 	ShellExecute($HelpersDir & "\FLDiag.cmd","","","",@SW_MAXIMIZE)
+;~ EndFunc
+
+;~ Func Msg3On()
+;~ 	ShellExecute($HelpersDir & "\msg3.bat","","","",@SW_MAXIMIZE)
+;~ EndFunc
+
+;~ Func Msg3Off()
+;~ 	ShellExecute($HelpersDir & "\nomsg3.bat","","","",@SW_MAXIMIZE)
+;~ EndFunc
+
+
+
+
+; === Helper Functions ==============================================================================================
+
 
 Func GetItemNumberFromCombo()
 	$SelectedItem = StringStripWS(GUICtrlRead($idComboBox), $STR_STRIPALL)
@@ -489,30 +826,6 @@ Func GetItemNumberFromCombo()
 	$Item = StringStripWS($Tokens[1], $STR_STRIPALL)
 	$Desc = StringStripWS($Tokens[2], $STR_STRIPALL)	
 	return $Item
-EndFunc
-
-Func Scan()
-	;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
-	$Scanme = GetItemNumberFromCombo()
-	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
-	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
-	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$Scanme)
-	ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
-	WinActivate("R10PosClient")
-EndFunc
-
-Func Checkdigit()
-	$Number = GUICtrlRead($idComboBox)
-	$SUMME=0
-	For $i = 1 To 12
-	$tempstr = StringLeft($Number,$i)
-	$NUM = StringRight($tempstr,1)
-	Mod($i,2)
-	$SUMME+= Mod($i,2) == 0 ? $NUM * 3 : $NUM
-	Next
-	$CHECKDIGIT = MOD($SUMME,10) == 0 ? 0 : 10 - MOD($summe,10)
-	 _GUICtrlComboBox_SetEditText($idComboBox,StringLeft($Number,12) & $CHECKDIGIT)
 EndFunc
 
 Func Press0 ()
@@ -560,181 +873,10 @@ Func PressX ()
 EndFunc
 
 Func PressEnter()
-WinActivate("R10PosClient")
-Sleep(500)
-MouseClick("left",800,630,1,1)
-;~ MsgBox($MB_SYSTEMMODAL, "", "enter:")
-EndFunc
-
-Func Arrange()
-	If Not IsPosClientRunning() Then
-		return;
-	Endif
-	WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
-	WinMove($arrCONFIG[$CFG_SCANNER_EMU][1],"",$arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_PRINTER_EMU][1])
-	WinMove($arrCONFIG[$CFG_PRINTER_EMU][1],"",$arrCONFIG[$CFG_PRINTER_EMU_X][1], $arrCONFIG[$CFG_PRINTER_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_SCALE_EMU][1])
-	WinMove($arrCONFIG[$CFG_SCALE_EMU][1],"",$arrCONFIG[$CFG_SCALE_EMU_X][1], $arrCONFIG[$CFG_SCALE_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_DRAWER_EMU][1])
-	WinMove($arrCONFIG[$CFG_DRAWER_EMU][1],"",$arrCONFIG[$CFG_DRAWER_EMU_X][1], $arrCONFIG[$CFG_DRAWER_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_WINEPTS_EMU][1])
-	WinMove($arrCONFIG[$CFG_WINEPTS_EMU][1],"",$arrCONFIG[$CFG_WINEPTS_EMU_X][1], $arrCONFIG[$CFG_WINEPTS_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_UPB_EMU][1])
-	WinMove($arrCONFIG[$CFG_UPB_EMU][1],"",$arrCONFIG[$CFG_UPB_EMU_X][1], $arrCONFIG[$CFG_UPB_EMU_Y][1])
-EndFunc
-
-Func SQLMgmt()
-	Run($arrCONFIG[$CFG_SQLMGR][1])
-EndFunc
-
-Func WebClient()
-	$SpookyExe = $arrCONFIG[$CFG_SPOOKY_PATH][1] & "\" & "R10WebClient.exe"
-	if FileExists($SpookyExe) Then
-	  Run($SpookyExe,$arrCONFIG[$CFG_SPOOKY_PATH][1] & "\")
-	EndIf
-EndFunc
-
-Func Tendering()
-	If Not IsPosClientRunning() Then
-		return;
-	Endif
-	ScenarioAutomation($TenderngIniFile)
-EndFunc
-
-Func IISReset()
-	ShellExecute($HelpersDir & "\iisreset.cmd","","","",@SW_MAXIMIZE)
-EndFunc
-
-Func IISStop()
-	ShellExecute($HelpersDir & "\iisreset_stop.cmd","","","",@SW_MAXIMIZE)
-EndFunc
-
-Func IISStart()
-	ShellExecute($HelpersDir & "\iisreset_start.cmd","","","",@SW_MAXIMIZE)
-EndFunc
-
-Func CMDOpen()
-   Run($arrCONFIG[$CFG_CMD][1])
-EndFunc
-
-Func POSStart()
-    If WinExists("R10PosClient") == 0 Then
-		Run($arrCONFIG[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe",$arrCONFIG[$CFG_POS_PATH][1])
-    EndIf
+	WinActivate("R10PosClient")
 	Sleep(500)
-	WinActivate("R10PosClient")
-EndFunc
-
-Func ExposeLogs()
-	$PosLogs = $arrCONFIG[$CFG_POS_PATH][1] & "\Logs"
-  	if FileExists($PosLogs) Then
-	     ShellExecute("C:\Windows\explorer.exe",$PosLogs)
-	EndIf
-	$ServerLogs = $arrCONFIG[$CFG_SERVER_PATH][1] & "\Logs"
-	if FileExists($ServerLogs) Then
-	      ShellExecute("C:\Windows\explorer.exe",$ServerLogs)
-	  EndIf
-EndFunc
-
-Func ExposeTLog()
-	$TLogs = $arrCONFIG[$CFG_TLOG_PATH][1]
-  	if FileExists($TLogs) Then
-	     ShellExecute("C:\Windows\explorer.exe",$TLogs)
-	EndIf
-  EndFunc
-  
-Func CleanLogs()
-	$cmd = $HelpersDir & "\CleanLogs.cmd"
-	$arg1 = $arrCONFIG[$CFG_SERVER_PATH][1] & " "
-	$arg2 = $arrCONFIG[$CFG_POS_PATH][1] & " "
-	$arg3 = $arrCONFIG[$CFG_OFFICE_PATH][1] & " "
-	$arg4 = $arrCONFIG[$CFG_DMS_PATH][1] & " "
-	$arg5 = $arrCONFIG[$CFG_ARSGATEWAY_PATH][1] & " "
-	$arg6 = $arrCONFIG[$CFG_RETAILGATEWAY_PATH][1] & " "
-	$arg7 = $arrCONFIG[$CFG_STOREGATEWAY_PATH][1] & " "
-	$arg8 = $arrCONFIG[$CFG_WINEPTS_PATH][1] & " "
-	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8
-	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
-EndFunc
-
-Func CollectLogs()
-	If Not FileExists($CollectedDir) Then
-		DirCreate($CollectedDir)
-	EndIf	
-	$cmd = $HelpersDir & "\CollectLogs.cmd"
-	$arg1 = $CollectedDir & " "
-	$arg2 = $arrCONFIG[$CFG_SERVER_PATH][1] & " "
-	$arg3 = $arrCONFIG[$CFG_POS_PATH][1] & " "
-	$arg4 = $arrCONFIG[$CFG_OFFICE_PATH][1] & " "
-	$arg5 = $arrCONFIG[$CFG_DMS_PATH][1] & " "
-	$arg6 = $arrCONFIG[$CFG_ARSGATEWAY_PATH][1] & " "
-	$arg7 = $arrCONFIG[$CFG_RETAILGATEWAY_PATH][1] & " "
-	$arg8 = $arrCONFIG[$CFG_STOREGATEWAY_PATH][1] & " "
-	$arg9 = $arrCONFIG[$CFG_WINEPTS_PATH][1] & " "
-	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8 & $arg9
-	ShellExecute($cmd, $arguments,"","",@SW_MAXIMIZE)
-EndFunc
-
-Func Services()
-	ShellExecute("C:\Windows\System32\services.msc")
-EndFunc
-
-Func ReceiptDebug()
-	FileChangeDir($HelpersDir)
-	ShellExecute($HelpersDir & "\receiptdebug.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
-	FileChangeDir(@Scriptdir)
-EndFunc
-
-Func ReceiptDebugOff()
-	FileChangeDir($HelpersDir)
-	ShellExecute($HelpersDir & "\receiptdebugoff.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
-	FileChangeDir(@Scriptdir)
-EndFunc
-
-Func KillPOS()
-	ShellExecute($HelpersDir & "\killPOS.cmd","","","",@SW_MINIMIZE)
-EndFunc
-
-Func ResetLoy()
-	ShellExecute($HelpersDir & "\resetloy.cmd","","","",@SW_MINIMIZE)
-EndFunc
-
-Func ScanLoyaltyCard()
-	If Not IsPosClientRunning() Then
-		return;
-	Endif
-	$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
-	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
-	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
-	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrCONFIG[$CFG_LOYCARD][1])
-	ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
-	WinActivate("R10PosClient")
-EndFunc
-
-Func FLDiag()
-	ShellExecute($HelpersDir & "\FLDiag.cmd","","","",@SW_MAXIMIZE)
-EndFunc
-
-Func Scenario()
-	If Not IsPosClientRunning() Then
-		return;
-	Endif
-	FileChangeDir($PostyperDir)
-    Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosDir & "\", "All (*.ini)",1)
-    
-	If @error Then
-        MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
-        FileChangeDir($PostyperDir)
-    Else
-		ScenarioAutomation($sScenarioFileName)
-	EndIf			
+	MouseClick("left",800,630,1,1)
+	;~ MsgBox($MB_SYSTEMMODAL, "", "enter:")
 EndFunc
 
 Func ScenarioAutomation($sFileName)
@@ -854,110 +996,9 @@ Func ScenarioAutomation($sFileName)
 	Next
 EndFunc
 
-Func ViewSlip()
-    Local $sFileOpenDialog = FileOpenDialog("Select input file", $arrCONFIG[$CFG_TLOG_PATH][1], "TLOG (RetailTransactionLog*.xml)",1)
-    If @error Then
-        MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
-        FileChangeDir(@Scriptdir)
-    Else
-        FileChangeDir($HelpersDir)
-		ShellExecute($HelpersDir & "\ReceiptView.exe",$sFileOpenDialog & " " & $HelpersDir,"","",@SW_MAXIMIZE)
-		Sleep(1500)
-		ShellExecute("c:\temp\Receipt.html","","","",@SW_MAXIMIZE)
-        FileChangeDir(@Scriptdir)
-    EndIf
-
-EndFunc
-
-Func Screenshot()
-    If Not FileExists($CaptureDir) Then
-		DirCreate($CaptureDir)
-	EndIf	
-	Local $hBmp
-	WinActivate($g_hPosTyper)
-	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
-	Sleep (250)
-	$hBmp = _ScreenCapture_Capture("")
-	$ImageName = $CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
-    _ScreenCapture_SaveImage($ImageName, $hBmp)
-	ShellExecute($ImageName)
-EndFunc
-
-Func POSSnip()
-	If Not IsPosClientRunning() Then
-		return;
-	Endif	
-    If Not FileExists($CaptureDir) Then
-		DirCreate($CaptureDir)
-	EndIf	
-	Local $hBmp
-	WinActivate($g_hPosTyper)
-	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
-	Sleep (250)
-	$hBmp = _ScreenCapture_Capture("",0,0,1024,768)
-	$ImageName = $CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
-    _ScreenCapture_SaveImage($CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg", $hBmp)
-	ShellExecute($ImageName)
-EndFunc
-
-Func DebugOn()
-    FileChangeDir($HelpersDir)
-	$WebLoggerConfig = $arrCONFIG[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
-	ShellExecute($HelpersDir & "\SetLogger.exe",$WebLoggerConfig & " DEBUG","","",@SW_MAXIMIZE)
-    FileChangeDir(@Scriptdir)
-EndFunc
-
-Func DebugOff()
-	$WebLoggerConfig = $arrCONFIG[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
-	ShellExecute($HelpersDir & "\SetLogger.exe",$WebLoggerConfig & " ERROR","","",@SW_MAXIMIZE)
-EndFunc
-
-Func Msg3On()
-	ShellExecute($HelpersDir & "\msg3.bat","","","",@SW_MAXIMIZE)
-EndFunc
-
-Func Msg3Off()
-	ShellExecute($HelpersDir & "\nomsg3.bat","","","",@SW_MAXIMIZE)
-EndFunc
-
-Func EditIni()
-	ShellExecute($arrCONFIG[$CFG_EDITOR][1], $cfgFile)
-	Sleep(5000)
- 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
-	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
-EndFunc
-
-Func Snoop()
-	ShellExecute($arrCONFIG[$CFG_SNOOP][1],"")
-EndFunc
-
 Func _readItemFile()
  	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
 	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
-EndFunc
-
-Func CopyServerExtToCust()
-	$cmd = $HelpersDir & "\CopyServerExtToCust.cmd"
-	$arg1 = $arrCONFIG[$CFG_SERVER_DBG_CUST_PATH][1] & " "
-	$arg2 = $arrCONFIG[$CFG_SERVER_DBG_EXT_PATH][1] & " "
-	$arguments = $arg1 & $arg2
-	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
-EndFunc
-
-Func CopyPosExtToCust()
-	$cmd = $HelpersDir & "\CopyPosExtToCust.cmd"
-	$arg1 = $arrCONFIG[$CFG_POS_DBG_CUST_PATH][1] & " "
-	$arg2 = $arrCONFIG[$CFG_POS_DBG_EXT_PATH][1] & " "
-	$arguments = $arg1 & $arg2
-	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
-EndFunc
-
-Func CopyOfficeExtToCust()
-	$cmd = $HelpersDir & "\CopyOfficeExtToCust.cmd"
-	$arg1 = $arrCONFIG[$CFG_OFFICE_DBG_CUST_PATH][1] & " "
-	$arg2 = $arrCONFIG[$CFG_OFFICE_DBG_EXT_PATH][1] & " "
-	$arguments = $arg1 & $arg2
-	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
 EndFunc
 
 Func SkipAddCustomer()
@@ -993,34 +1034,12 @@ Func SkipZipCodeDialog()
 	return False
 EndFunc
 
-
 ;Func SelectCash()
 ;	WinActivate("R10PosClient")	
 ;	$oP1=_UIA_getObjectByFindAll($UIA_oDesktop, "Title:=R10PosClient;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
 ;	$oUIElement=_UIA_getObjectByFindAll($oP1, "title:=Contant;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
 ;	_UIA_action($oUIElement,"click")
 ;EndFunc
-
-Func MonitorSrvLog()
-	$ServerLogsDir = $arrCONFIG[$CFG_SERVER_PATH][1] & "\Logs\"
-	$hSearch = FileFindFirstFile($ServerLogsDir & "GPOSWebService_*.log")
-	If $hSearch > 0 Then
-		$LastGpos = FileFindNextFile($hSearch)	
-		ShellExecute($arrCONFIG[$CFG_EDITOR][1],  " -monitor " & $ServerLogsDir & $LastGpos)
-    EndIf
-EndFunc
-
-Func OpenSSMS()
-	ShellExecute($arrCONFIG[$CFG_SQLMGR][1],"-E")	
-EndFunc
-
-Func BrowseServer()
-	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_SERVER_WEBSITE][1])
-EndFunc
-
-Func BrowseRabbit()
-	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_RABBITMQ_WEBSITE][1])
-EndFunc
 	
 Func WriteToStatusBar($MethodName, $Txt = "")
 	If ($StatusBarOn) Then		
@@ -1039,18 +1058,6 @@ Func FuncWrapper($Button, $BtnCaption, $FuncName, $Disable = False)
 		GUICtrlSetState ($Button,$GUI_ENABLE)
 	EndIf
 	WinActivate($g_hPosTyper)	
-EndFunc
-
-Func ToEnglish()
-	FileChangeDir($HelpersDir)
-	ShellExecute($HelpersDir & "\jumbo_update_to_english.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
-	FileChangeDir(@Scriptdir)
-EndFunc
-
-Func ToDutch()
-	FileChangeDir($HelpersDir)
-	ShellExecute($HelpersDir & "\jumbo_update_to_dutch.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
-	FileChangeDir(@Scriptdir)
 EndFunc
 
 Func IsPosClientRunning()
