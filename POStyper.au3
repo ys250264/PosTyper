@@ -415,6 +415,7 @@ Func Type()
 	MouseMove($pos[0],$pos[1],1)
 EndFunc
 
+
 Func Scan()
 	;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
 	$Scanme = GetItemNumberFromCombo()
@@ -426,6 +427,7 @@ Func Scan()
 	WinActivate("R10PosClient")
 EndFunc
 
+
 Func StartPOS()
     If WinExists("R10PosClient") == 0 Then
 		Run($arrCONFIG[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe",$arrCONFIG[$CFG_POS_PATH][1])
@@ -433,6 +435,7 @@ Func StartPOS()
 	Sleep(500)
 	WinActivate("R10PosClient")
 EndFunc
+
 
 Func Login()
 	If Not IsPosClientRunning() Then
@@ -462,6 +465,7 @@ Func Login()
 	MouseMove($pos[0],$pos[1],1)
 EndFunc
 
+
 Func ArrangeEmulators()
 	If Not IsPosClientRunning() Then
 		return;
@@ -485,6 +489,7 @@ Func ArrangeEmulators()
 	WinMove($arrCONFIG[$CFG_UPB_EMU][1],"",$arrCONFIG[$CFG_UPB_EMU_X][1], $arrCONFIG[$CFG_UPB_EMU_Y][1])
 EndFunc
 
+
 Func ScanLoyaltyCard()
 	If Not IsPosClientRunning() Then
 		return;
@@ -497,6 +502,7 @@ Func ScanLoyaltyCard()
 	ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
 	WinActivate("R10PosClient")
 EndFunc
+
 
 Func Scenario()
 	If Not IsPosClientRunning() Then
@@ -513,12 +519,14 @@ Func Scenario()
 	EndIf			
 EndFunc
 
+
 Func Tendering()
 	If Not IsPosClientRunning() Then
 		return;
 	Endif
 	ScenarioAutomation($TenderngIniFile)
 EndFunc
+
 
 Func Unlock()
 	If Not IsPosClientRunning() Then
@@ -540,9 +548,11 @@ Func Unlock()
 	MouseMove($pos[0],$pos[1],1)
 EndFunc
 
+
 Func KillPOS()
 	ShellExecute($HelpersDir & "\killPOS.cmd","","","",@SW_MINIMIZE)
 EndFunc
+
 
 Func CleanLogs()
 	$cmd = $HelpersDir & "\CleanLogs.cmd"
@@ -558,9 +568,11 @@ Func CleanLogs()
 	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
 EndFunc
 
+
 Func BrowseServer()
 	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_SERVER_WEBSITE][1])
 EndFunc
+
 
 Func MonitorSrvLog()
 	$ServerLogsDir = $arrCONFIG[$CFG_SERVER_PATH][1] & "\Logs\"
@@ -571,12 +583,14 @@ Func MonitorSrvLog()
     EndIf
 EndFunc
 
+
 Func EditIni()
 	ShellExecute($arrCONFIG[$CFG_EDITOR][1], $cfgFile)
 	Sleep(5000)
  	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
 	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
 EndFunc
+
 
 Func DebugOn()
     FileChangeDir($HelpersDir)
@@ -585,10 +599,12 @@ Func DebugOn()
     FileChangeDir(@Scriptdir)
 EndFunc
 
+
 Func DebugOff()
 	$WebLoggerConfig = $arrCONFIG[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
 	ShellExecute($HelpersDir & "\SetLogger.exe",$WebLoggerConfig & " ERROR","","",@SW_MAXIMIZE)
 EndFunc
+
 
 Func ExposeLogs()
 	$PosLogs = $arrCONFIG[$CFG_POS_PATH][1] & "\Logs"
@@ -627,11 +643,13 @@ Func ReceiptDebugOn()
 	FileChangeDir(@Scriptdir)
 EndFunc
 
+
 Func ReceiptDebugOff()
 	FileChangeDir($HelpersDir)
 	ShellExecute($HelpersDir & "\receiptdebugoff.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
 	FileChangeDir(@Scriptdir)
 EndFunc
+
 
 Func ViewSlip()
     Local $sFileOpenDialog = FileOpenDialog("Select input file", $arrCONFIG[$CFG_TLOG_PATH][1], "TLOG (RetailTransactionLog*.xml)",1)
@@ -647,12 +665,14 @@ Func ViewSlip()
     EndIf
 EndFunc
 
+
 Func ExposeTLog()
 	$TLogs = $arrCONFIG[$CFG_TLOG_PATH][1]
   	if FileExists($TLogs) Then
 	     ShellExecute("C:\Windows\explorer.exe",$TLogs)
 	EndIf
 EndFunc
+  
   
 Func SnipPOS()
 	If Not IsPosClientRunning() Then
@@ -671,6 +691,7 @@ Func SnipPOS()
 	ShellExecute($ImageName)
 EndFunc
 
+
 Func Screenshot()
     If Not FileExists($CaptureDir) Then
 		DirCreate($CaptureDir)
@@ -685,6 +706,7 @@ Func Screenshot()
 	ShellExecute($ImageName)
 EndFunc
 
+
 Func CleanScanner()
 	If Not IsPosClientRunning() Then
 		return;
@@ -693,25 +715,31 @@ Func CleanScanner()
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 EndFunc  
 
+
 Func BrowseRabbit()
 	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_RABBITMQ_WEBSITE][1])
 EndFunc
+
 
 Func IISReset()
 	ShellExecute($HelpersDir & "\iisreset.cmd","","","",@SW_MAXIMIZE)
 EndFunc
 
+
 Func IISStop()
 	ShellExecute($HelpersDir & "\iisreset_stop.cmd","","","",@SW_MAXIMIZE)
 EndFunc
+
 
 Func IISStart()
 	ShellExecute($HelpersDir & "\iisreset_start.cmd","","","",@SW_MAXIMIZE)
 EndFunc
 
+
 Func OpenCMD()
    Run($arrCONFIG[$CFG_CMD][1])
 EndFunc
+
 
 Func OpenSpooky()
 	$SpookyExe = $arrCONFIG[$CFG_SPOOKY_PATH][1] & "\" & "R10WebClient.exe"
@@ -720,17 +748,21 @@ Func OpenSpooky()
 	EndIf
 EndFunc
 
+
 Func OpenServices()
 	ShellExecute("C:\Windows\System32\services.msc")
 EndFunc
+
 
 Func OpenSSMS()
 	ShellExecute($arrCONFIG[$CFG_SQLMGR][1],"-E")	
 EndFunc
 
+
 Func OpenSnoop()
 	ShellExecute($arrCONFIG[$CFG_SNOOP][1],"")
 EndFunc
+
 
 Func CopyServerExtToCust()
 	$cmd = $HelpersDir & "\CopyServerExtToCust.cmd"
@@ -740,6 +772,7 @@ Func CopyServerExtToCust()
 	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
 EndFunc
 
+
 Func CopyPosExtToCust()
 	$cmd = $HelpersDir & "\CopyPosExtToCust.cmd"
 	$arg1 = $arrCONFIG[$CFG_POS_DBG_CUST_PATH][1] & " "
@@ -747,6 +780,7 @@ Func CopyPosExtToCust()
 	$arguments = $arg1 & $arg2
 	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
 EndFunc
+
 
 Func CopyOfficeExtToCust()
 	$cmd = $HelpersDir & "\CopyOfficeExtToCust.cmd"
@@ -756,11 +790,13 @@ Func CopyOfficeExtToCust()
 	ShellExecute($cmd,$arguments,"","",@SW_MAXIMIZE)
 EndFunc
 
+
 Func ToEnglish()
 	FileChangeDir($HelpersDir)
 	ShellExecute($HelpersDir & "\jumbo_update_to_english.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
 	FileChangeDir(@Scriptdir)
 EndFunc
+
 
 Func ToDutch()
 	FileChangeDir($HelpersDir)
@@ -820,6 +856,12 @@ EndFunc
 ; === Helper Functions ==============================================================================================
 
 
+Func _readItemFile()
+ 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
+	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
+EndFunc
+
+
 Func GetItemNumberFromCombo()
 	$SelectedItem = StringStripWS(GUICtrlRead($idComboBox), $STR_STRIPALL)
 	$Tokens = StringSplit($SelectedItem, "-")
@@ -827,6 +869,7 @@ Func GetItemNumberFromCombo()
 	$Desc = StringStripWS($Tokens[2], $STR_STRIPALL)	
 	return $Item
 EndFunc
+
 
 Func Press0 ()
 	MouseClick("left",580,625,1,1)
@@ -878,6 +921,7 @@ Func PressEnter()
 	MouseClick("left",800,630,1,1)
 	;~ MsgBox($MB_SYSTEMMODAL, "", "enter:")
 EndFunc
+
 
 Func ScenarioAutomation($sFileName)
 	$LastBtnClickedOK = True
@@ -996,10 +1040,6 @@ Func ScenarioAutomation($sFileName)
 	Next
 EndFunc
 
-Func _readItemFile()
- 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
-	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
-EndFunc
 
 Func SkipAddCustomer()
 	WinActivate("R10PosClient")	
@@ -1016,6 +1056,7 @@ Func SkipAddCustomer()
 	EndIf
 	return False
 EndFunc
+
 
 Func SkipZipCodeDialog()
 	WinActivate("R10PosClient")	
@@ -1034,6 +1075,7 @@ Func SkipZipCodeDialog()
 	return False
 EndFunc
 
+
 ;Func SelectCash()
 ;	WinActivate("R10PosClient")	
 ;	$oP1=_UIA_getObjectByFindAll($UIA_oDesktop, "Title:=R10PosClient;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
@@ -1041,11 +1083,13 @@ EndFunc
 ;	_UIA_action($oUIElement,"click")
 ;EndFunc
 	
+	
 Func WriteToStatusBar($MethodName, $Txt = "")
 	If ($StatusBarOn) Then		
 		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "  " & $MethodName & ": " & $Txt)
 	EndIf
 EndFunc
+
 
 Func FuncWrapper($Button, $BtnCaption, $FuncName, $Disable = False)
 	WriteToStatusBar($BtnCaption)
@@ -1059,6 +1103,7 @@ Func FuncWrapper($Button, $BtnCaption, $FuncName, $Disable = False)
 	EndIf
 	WinActivate($g_hPosTyper)	
 EndFunc
+
 
 Func IsPosClientRunning()
 	If (Not WinExists("R10PosClient")) Then
