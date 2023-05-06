@@ -111,12 +111,14 @@ Func Main()
 		$ExtDeveloper = True
 	EndIf
 	
+	$HeightOfOneButtonsLine = 30
 	if ( Not $ExtDeveloper ) Then
-		$PosTyperDialogHeight -= 60
+		$PosTyperDialogHeight -= (2*$HeightOfOneButtonsLine)
 	EndIf
 	
+	$HeightOfStatusBar = 20
 	If ($StatusBarOn) Then		
-		$PosTyperDialogHeight += 20
+		$PosTyperDialogHeight += $HeightOfStatusBar
 	EndIf
 	
 	If ($arrCONFIG[$CFG_DIALOG_X][1] >= 0 And $arrCONFIG[$CFG_DIALOG_Y][1] >= 0) Then
@@ -126,7 +128,11 @@ Func Main()
 	
     Global $g_hPosTyper = GUICreate($arrCONFIG[$CFG_DIALOG_CAPTION][1], $PosTyperDialogWidth, $PosTyperDialogHeight, $PosTyperDialogX, $PosTyperDialogY, -1, $WS_EX_ACCEPTFILES)
 	GUISetIcon($icoFile)
-	AddStatusBar()
+	
+	Global $g_hPosTyperStatusBar
+	If ($StatusBarOn) Then		
+		$g_hPosTyperStatusBar = _GUICtrlStatusBar_Create($g_hPosTyper)
+	EndIf	
 	
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
 	Global $idComboBox = GUICtrlCreateCombo("", 10, 10, 235, 20)
@@ -729,7 +735,6 @@ Func Scenario()
     Else
 		ScenarioAutomation($sScenarioFileName)
 	EndIf			
-	;EmptyStatusBar(2000)
 EndFunc
 
 Func ScenarioAutomation($sFileName)
@@ -1017,24 +1022,9 @@ Func BrowseRabbit()
 	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_RABBITMQ_WEBSITE][1])
 EndFunc
 	
-	
-Func AddStatusBar()
-	Global $g_hPosTyperStatusBar
-	If ($StatusBarOn) Then		
-		$g_hPosTyperStatusBar = _GUICtrlStatusBar_Create($g_hPosTyper)
-	EndIf
-EndFunc
-
 Func WriteToStatusBar($MethodName, $Txt = "")
 	If ($StatusBarOn) Then		
 		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "  " & $MethodName & ": " & $Txt)
-	EndIf
-EndFunc
-
-Func EmptyStatusBar($Sleep)
-	If ($StatusBarOn) Then		
-		Sleep($Sleep)
-		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "")
 	EndIf
 EndFunc
 
