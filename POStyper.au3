@@ -35,26 +35,26 @@ global $CFG_DIALOG_X								= 2
 global $CFG_DIALOG_Y								= 3
 global $CFG_DIALOG_STATUS_BAR				= 4
 global $CFG_DIALOG_EXT_DEVELOPER		= 5
-global $CFG_CMD_PATH								= 6
-global $CFG_RETAIL_DB_NAME					= 7
-global $CFG_SERVER_WEBSITE					= 8
-global $CFG_RABBITMQ_WEBSITE				= 9
-global $CFG_SERVER_PATH						= 10
-global $CFG_POS_PATH								= 11
-global $CFG_OFFICE_PATH							= 12
-global $CFG_TLOG_PATH							= 13
-global $CFG_DMS_PATH								= 14
-global $CFG_SPOOKY_PATH						= 15
-global $CFG_ARSGATEWAY_PATH				= 16
-global $CFG_RETAILGATEWAY_PATH			= 17
-global $CFG_STOREGATEWAY_PATH			= 18
-global $CFG_WINEPTS_PATH						= 19
-global $CFG_SERVER_DBG_CUST_PATH		= 20
-global $CFG_SERVER_DBG_EXT_PATH			= 21
-global $CFG_POS_DBG_CUST_PATH			= 22
-global $CFG_POS_DBG_EXT_PATH				= 23
-global $CFG_OFFICE_DBG_CUST_PATH		= 24
-global $CFG_OFFICE_DBG_EXT_PATH			= 25
+global $CFG_RETAIL_DB_NAME					= 6
+global $CFG_SERVER_WEBSITE					= 7
+global $CFG_RABBITMQ_WEBSITE				= 8
+global $CFG_SERVER_PATH						= 9
+global $CFG_POS_PATH								= 10
+global $CFG_OFFICE_PATH							= 11
+global $CFG_TLOG_PATH							= 12
+global $CFG_DMS_PATH								= 13
+global $CFG_SPOOKY_PATH						= 14
+global $CFG_ARSGATEWAY_PATH				= 15
+global $CFG_RETAILGATEWAY_PATH			= 16
+global $CFG_STOREGATEWAY_PATH			= 17
+global $CFG_WINEPTS_PATH						= 18
+global $CFG_SERVER_DBG_CUST_PATH		= 19
+global $CFG_SERVER_DBG_EXT_PATH			= 20
+global $CFG_POS_DBG_CUST_PATH			= 21
+global $CFG_POS_DBG_EXT_PATH				= 22
+global $CFG_OFFICE_DBG_CUST_PATH		= 23
+global $CFG_OFFICE_DBG_EXT_PATH			= 24
+global $CFG_CMD										= 25
 global $CFG_SQLMGR									= 26
 global $CFG_EDITOR									= 27
 global $CFG_BROWSER								= 28
@@ -314,8 +314,8 @@ Func Main()
 				FuncWrapper($Btn, $captionIISStop, IISStop, True)
 			Case $idBtnPOS
 				FuncWrapper($Btn, $captionPOS, POSStart)
-			;~Case $idBtnCMD
-			;~	FuncWrapper($Btn, $captionCMD, CMDOpen)
+			Case $idBtnCMD
+				FuncWrapper($Btn, $captionCMD, CMDOpen)
             Case $idBtnEmuarrange
 				FuncWrapper($Btn, $captionEmuarrange, Arrange, True)
 			Case $idBtnScenario
@@ -606,7 +606,7 @@ Func IISStart()
 EndFunc
 
 Func CMDOpen()
-   Run("C:\Windows\System32\cmd.exe",$arrCONFIG[$CFG_CMD_PATH][1])
+   Run("C:\Windows\System32\cmd.exe",$arrCONFIG[$CFG_CMD][1])
 EndFunc
 
 Func POSStart()
