@@ -23,8 +23,10 @@ global $HelpersDir = @Scriptdir &"\helpers"
 global $CollectedDir = @Scriptdir &"\collected_logs"
 global $CaptureDir = @Scriptdir &"\captured_images"
 global $ItemsdDir = @Scriptdir &"\items"
+global $TenderingDir = @Scriptdir &"\tendering"
 
-global $iniFile = $ItemsdDir & "\Items.ini"
+global $ItemsIniFile = $ItemsdDir & "\Items.ini"
+global $TenderngIniFile = $TenderingDir & "\tendering.ini"
 global $cfgFile = @Scriptdir & "\POStyper.ini"
 global $icoFile = @Scriptdir & "\POStyper.ico"
 
@@ -132,7 +134,6 @@ Func Main()
 		GUICtrlSetData($idComboBox, $arrItems[$i][1], $arrItems[1][1])
 	Next
 
-
 	Local $captionScan = 					"Scan"
 	;Local $captionCD = 						"CD"
 	Local $captionOK = 						"Type"
@@ -140,7 +141,7 @@ Func Main()
 	
 	Local $captionPOS = 						"Start POS"
 	Local $captionLogin = 					"Login"
-	Local $captionEmuarrange = 			"Move Emu"
+	Local $captionEmuArrange = 			"Move Emu"
 	Local $captionScanLoyaltyCard = 	"Scan Loyalty"
 	
 	Local $captionScenario = 				"Scenario"
@@ -190,7 +191,6 @@ Func Main()
 	;Local $captionMsg3Off = 		    	"NO MSG3"
 	;Local $captionFLDiag = 		   		"FLDiag"
 
-
 	Local $ROW_0		=	10
 	Local $ROW_1		=	45
 	Local $ROW_2		=	75
@@ -202,7 +202,6 @@ Func Main()
 	Local $ROW_8		=	255
 	Local $ROW_9		=	285
 	Local $ROW_10		=	315
-	
 	
 	Local $INVALID_HEIGHT	=	-1
 	
@@ -221,8 +220,6 @@ Func Main()
 	Local $BtnWidthL	=	70
 	Local $BtnHeight	=	20
 
-
-
 	Local $idBtnScan = 					GUICtrlCreateButton($captionScan					, 250, $ROW_0 - 1,  $BtnWidthS, $BtnHeightS)
 	;Local $idBtnCD = 						GUICtrlCreateButton($captionCD						, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 	Local $idBtnOK = 						GUICtrlCreateButton($captionOK						, 285, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
@@ -230,7 +227,7 @@ Func Main()
 	
 	Local $idBtnPOS = 					GUICtrlCreateButton($captionPOS					, $Col_1, $ROW_1, $BtnWidthL, $BtnHeight)
 	Local $idBtnLogin = 					GUICtrlCreateButton($captionLogin					, $Col_2, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnEmuarrange = 			GUICtrlCreateButton($captionEmuarrange		, $Col_3, $ROW_1, $BtnWidthL, $BtnHeight)
+	Local $idBtnEmuArrange = 			GUICtrlCreateButton($captionEmuArrange		, $Col_3, $ROW_1, $BtnWidthL, $BtnHeight)
 	Local $idBtnScanLoyaltyCard = 	GUICtrlCreateButton($captionScanLoyaltyCard	, $Col_4, $ROW_1, $BtnWidthL, $BtnHeight)
 
 	Local $idBtnScenario = 				GUICtrlCreateButton($captionScenario				, $Col_1, $ROW_2, $BtnWidthL, $BtnHeight)
@@ -326,8 +323,8 @@ Func Main()
 				FuncWrapper($Btn, $captionPOS, POSStart)
 			Case $idBtnCMD
 				FuncWrapper($Btn, $captionCMD, CMDOpen)
-            Case $idBtnEmuarrange
-				FuncWrapper($Btn, $captionEmuarrange, Arrange, True)
+            Case $idBtnEmuArrange
+				FuncWrapper($Btn, $captionEmuArrange, Arrange, True)
 			Case $idBtnScenario
 				FuncWrapper($Btn, $captionScenario, Scenario, True)
 			Case $idBtnExposeLogs
@@ -365,7 +362,7 @@ Func Main()
             Case $idBtnScan
 				FuncWrapper($Btn, $captionScan, Scan)
             Case $idBtnCleanScanner
-				FuncWrapper($Btn, $captionCleanScanner, CleanScanner,)
+				FuncWrapper($Btn, $captionCleanScanner, CleanScanner)
 ;~ 	Case $idBtnAuto
 				;~ FuncWrapper($Btn, $captionAuto, Autmation)
 ;~ 			Case $idBtnMsg3On
@@ -395,7 +392,10 @@ Func Main()
 
 EndFunc
 
-func Login()
+Func Login()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
 	WinActivate("R10PosClient")
 	Local $pos = MouseGetPos()
 	Sleep(300)
@@ -420,7 +420,10 @@ func Login()
 	MouseMove($pos[0],$pos[1],1)
 EndFunc
 
-func Unlock()
+Func Unlock()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif	
 	WinActivate("R10PosClient")
 	Local $pos = MouseGetPos()
 	Sleep(300)
@@ -437,31 +440,27 @@ func Unlock()
 	MouseMove($pos[0],$pos[1],1)
 EndFunc
 
-func Autmation()
-$keys = StringSplit(StringStripWS(GUICtrlRead($idComboBox),8),"=")
-;~ MsgBox($MB_SYSTEMMODAL, "",  $keys[2])
-
+Func Autmation()
+	$keys = StringSplit(StringStripWS(GUICtrlRead($idComboBox),8),"=")
+	;~ MsgBox($MB_SYSTEMMODAL, "",  $keys[2])
 	If WinExists("R10PosClient") == 1 Then
 		WinActivate("R10PosClient")
     EndIf
-		$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
-
-		ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-	    ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$keys[2])
-	    ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:4]")
-
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+    ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$keys[2])
+    ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:4]")
 EndFunc
 
-func CleanScanner()
-	If WinExists("R10PosClient") == 1 Then
-		WinActivate("R10PosClient")
-    EndIf
-		$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
-		ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+Func CleanScanner()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 EndFunc
 
-
-func Type()
+Func Type()
 	Local $pos = MouseGetPos()
 	WinActivate("R10PosClient")
 	sleep(200)
@@ -486,10 +485,10 @@ Func GetItemNumberFromCombo()
 	return $Item
 EndFunc
 
-func Scan()
-;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
-$Scanme = GetItemNumberFromCombo()
-;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
+Func Scan()
+	;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
+	$Scanme = GetItemNumberFromCombo()
+	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$Scanme)
@@ -497,57 +496,64 @@ $Scanme = GetItemNumberFromCombo()
 	WinActivate("R10PosClient")
 EndFunc
 
-
-
-func Checkdigit()
-$Number = GUICtrlRead($idComboBox)
-$SUMME=0
-For $i = 1 To 12
-
-$tempstr = StringLeft($Number,$i)
-$NUM = StringRight($tempstr,1)
-Mod($i,2)
-$SUMME+= Mod($i,2) == 0 ? $NUM * 3 : $NUM
-Next
-$CHECKDIGIT = MOD($SUMME,10) == 0 ? 0 : 10 - MOD($summe,10)
- _GUICtrlComboBox_SetEditText($idComboBox,StringLeft($Number,12) & $CHECKDIGIT)
+Func Checkdigit()
+	$Number = GUICtrlRead($idComboBox)
+	$SUMME=0
+	For $i = 1 To 12
+	$tempstr = StringLeft($Number,$i)
+	$NUM = StringRight($tempstr,1)
+	Mod($i,2)
+	$SUMME+= Mod($i,2) == 0 ? $NUM * 3 : $NUM
+	Next
+	$CHECKDIGIT = MOD($SUMME,10) == 0 ? 0 : 10 - MOD($summe,10)
+	 _GUICtrlComboBox_SetEditText($idComboBox,StringLeft($Number,12) & $CHECKDIGIT)
 EndFunc
 
-func Press0 ()
-MouseClick("left",580,625,1,1)
-EndFunc
-func Press1()
-MouseClick("left",580,555,1,1)
-EndFunc
-func Press2 ()
-MouseClick("left",650,555,1,1)
-EndFunc
-func Press3 ()
-MouseClick("left",730,555,1,1)
-EndFunc
-func Press4 ()
-MouseClick("left",580,480,1,1)
-EndFunc
-func Press5 ()
-MouseClick("left",650,480,1,1)
-EndFunc
-func Press6 ()
-MouseClick("left",730,480,1,1)
-EndFunc
-func Press7 ()
-MouseClick("left",580,405,1,1)
-EndFunc
-func Press8 ()
-MouseClick("left",650,405,1,1)
-EndFunc
-func Press9 ()
-MouseClick("left",730,405,1,1)
-EndFunc
-func PressX ()
-MouseClick("left",800,480,1,1)
+Func Press0 ()
+	MouseClick("left",580,625,1,1)
 EndFunc
 
-func PressEnter()
+Func Press1()
+	MouseClick("left",580,555,1,1)
+EndFunc
+
+Func Press2 ()
+	MouseClick("left",650,555,1,1)
+EndFunc
+
+Func Press3 ()
+	MouseClick("left",730,555,1,1)
+EndFunc
+
+Func Press4 ()
+	MouseClick("left",580,480,1,1)
+EndFunc
+
+Func Press5 ()
+	MouseClick("left",650,480,1,1)
+EndFunc
+
+Func Press6 ()
+	MouseClick("left",730,480,1,1)
+EndFunc
+
+Func Press7 ()
+	MouseClick("left",580,405,1,1)
+EndFunc
+
+Func Press8 ()
+	MouseClick("left",650,405,1,1)
+EndFunc
+
+Func Press9 ()
+	MouseClick("left",730,405,1,1)
+EndFunc
+
+Func PressX ()
+	MouseClick("left",800,480,1,1)
+EndFunc
+
+Func PressEnter()
 WinActivate("R10PosClient")
 Sleep(500)
 MouseClick("left",800,630,1,1)
@@ -555,9 +561,9 @@ MouseClick("left",800,630,1,1)
 EndFunc
 
 Func Arrange()
-	If WinExists("R10PosClient") == 1 Then
-		WinActivate("R10PosClient")
-    EndIf
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
 	WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	WinMove($arrCONFIG[$CFG_SCANNER_EMU][1],"",$arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
 	
@@ -588,23 +594,11 @@ Func WebClient()
 	EndIf
 EndFunc
 
-
 Func Tendering()
-
-	PressEnter()
-
-	Sleep(1000)
-
-	SkipAddCustomer()
-	
-	Sleep(500)
-
-	SkipZipCodeDialog()
-
-	Sleep(500)
-
-	SelectCash()	
-
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
+	ScenarioAutomation($TenderngIniFile)
 EndFunc
 
 Func IISReset()
@@ -706,6 +700,9 @@ Func ResetLoy()
 EndFunc
 
 Func ScanLoyaltyCard()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
 	$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
 	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
@@ -720,126 +717,136 @@ Func FLDiag()
 EndFunc
 
 Func Scenario()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif
 	FileChangeDir($PostyperDir)
-    Local $sFileOpenDialog = FileOpenDialog("Select input file", $ScenariosDir & "\", "All (*.ini)",1)
+    Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosDir & "\", "All (*.ini)",1)
     
 	If @error Then
         MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
         FileChangeDir($PostyperDir)
     Else
-        FileChangeDir($PostyperDir)
-		$arrItems=IniReadSection($sFileOpenDialog,"ITEMS")
-	
-		If WinExists("R10PosClient") == 1 Then
-			WinActivate("R10PosClient")
-		EndIf
+		ScenarioAutomation($sScenarioFileName)
+	EndIf			
+	;EmptyStatusBar(2000)
+EndFunc
 
-		For $i = 1 To $arrItems[0][0]
-			
+Func ScenarioAutomation($sFileName)
+	$LastBtnClickedOK = True
+	FileChangeDir($PostyperDir)
+	$arrItems=IniReadSection($sFileName,"ITEMS")
+
+	If WinExists("R10PosClient") == 1 Then
+		WinActivate("R10PosClient")
+	EndIf
+
+	For $i = 1 To $arrItems[0][0]
+		
+		WinActivate("R10PosClient")		
+		;MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
+
+		WriteToStatusBar("Scenario", $arrItems[$i][0] & " = " & $arrItems[$i][1])
+		
+		If $arrItems[$i][0] = "item" Then
+			;MsgBox($MB_SYSTEMMODAL, "", "Item")
+			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
+			ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
+
+			For $j = 1 To 10
+				Sleep (50)
+				$sText = ControlGetText($hWndSCR,"","[CLASS:Edit; INSTANCE:3]")
+				If $sText = "Claimed,Enabled" Then	ExitLoop
+			Next
 			WinActivate("R10PosClient")		
-			;MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
-
-			WriteToStatusBar("Scenario", $arrItems[$i][0] & " = " & $arrItems[$i][1])
-			
-			If $arrItems[$i][0] = "item" Then
-				;MsgBox($MB_SYSTEMMODAL, "", "Item")
-				$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
-				ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-				ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
-				ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
-
-				For $j = 1 To 10
-					Sleep (50)
-					$sText = ControlGetText($hWndSCR,"","[CLASS:Edit; INSTANCE:3]")
-					If $sText = "Claimed,Enabled" Then	ExitLoop
-				Next
-				WinActivate("R10PosClient")		
-			ElseIf $arrItems[$i][0] = "button" Then
-				if $arrItems[$i][1] = "QTY" Then
-				   PressX()
-				EndIf
-				if $arrItems[$i][1] = "ENTER" Then
-				   PressEnter()
-				EndIf
-				if $arrItems[$i][1] = "DIALOGMIDOK" Then
-				   MouseClick("left",520,520,1,1)
-			   EndIf
-				if $arrItems[$i][1] = "ADDCUSTOMERTOSKIP" Then
-					SkipAddCustomer()					
-				EndIf			   			   
-				if $arrItems[$i][1] = "DIALOGZIPTOSKIP" Then
-					SkipZipCodeDialog()					
-				EndIf			   
-				if $arrItems[$i][1] = "DYNA1" Then
-				   MouseClick("left",930,110,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA2" Then
-				   MouseClick("left",930,170,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA3" Then
-				   MouseClick("left",930,240,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA4" Then
-				   MouseClick("left",930,310,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA5" Then
-				   MouseClick("left",930,370,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA6" Then
-				   MouseClick("left",930,440,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNA7" Then
-				   MouseClick("left",930,510,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNAUP" Then
-				   MouseClick("left",910,580,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNADOWN" Then
-				   MouseClick("left",960,580,1,1)
-				EndIf
-				if $arrItems[$i][1] = "DYNABACK" Then
-				   MouseClick("left",930,630,1,1)
-				EndIf
-				if $arrItems[$i][1] = "CLOSECHANGE" Then
-				   MouseClick("left",730,535,1,1)
-				EndIf
-				if $arrItems[$i][1] = '0' Then
-				  Press0()
-				EndIf
-				if $arrItems[$i][1] = '1' Then
-				  Press1()
-				EndIf
-				if $arrItems[$i][1] = '2' Then
-				  Press2()
-				EndIf
-				if $arrItems[$i][1] = '3' Then
-				  Press3()
-				EndIf
-				if $arrItems[$i][1] = '4' Then
-				  Press4()
-				EndIf
-				if $arrItems[$i][1] = '5' Then
-				  Press5()
-				EndIf
-				if $arrItems[$i][1] = '6' Then
-				  Press6()
-				EndIf
-				if $arrItems[$i][1] = '7' Then
-				  Press7()
-				EndIf
-				if $arrItems[$i][1] = '8' Then
-				  Press8()
-				EndIf
-				if $arrItems[$i][1] = '9' Then
-				  Press9()
-				EndIf
-			ElseIf $arrItems[$i][0] = "wait" Then
+		ElseIf $arrItems[$i][0] = "button" Then
+			if $arrItems[$i][1] = "QTY" Then
+			   PressX()
+			EndIf
+			if $arrItems[$i][1] = "ENTER" Then
+			   PressEnter()
+			EndIf
+			if $arrItems[$i][1] = "DIALOGMIDOK" Then
+			   MouseClick("left",520,520,1,1)
+		   EndIf
+			if $arrItems[$i][1] = "ADDCUSTOMERTOSKIP" Then
+				$LastBtnClickedOK = SkipAddCustomer()			
+			EndIf			   			   
+			if $arrItems[$i][1] = "DIALOGZIPTOSKIP" Then
+				$LastBtnClickedOK = SkipZipCodeDialog()					
+			EndIf			   
+			if $arrItems[$i][1] = "DYNA1" Then
+			   MouseClick("left",930,110,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA2" Then
+			   MouseClick("left",930,170,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA3" Then
+			   MouseClick("left",930,240,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA4" Then
+			   MouseClick("left",930,310,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA5" Then
+			   MouseClick("left",930,370,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA6" Then
+			   MouseClick("left",930,440,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNA7" Then
+			   MouseClick("left",930,510,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNAUP" Then
+			   MouseClick("left",910,580,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNADOWN" Then
+			   MouseClick("left",960,580,1,1)
+			EndIf
+			if $arrItems[$i][1] = "DYNABACK" Then
+			   MouseClick("left",930,630,1,1)
+			EndIf
+			if $arrItems[$i][1] = "CLOSECHANGE" Then
+			   MouseClick("left",730,535,1,1)
+			EndIf
+			if $arrItems[$i][1] = '0' Then
+			  Press0()
+			EndIf
+			if $arrItems[$i][1] = '1' Then
+			  Press1()
+			EndIf
+			if $arrItems[$i][1] = '2' Then
+			  Press2()
+			EndIf
+			if $arrItems[$i][1] = '3' Then
+			  Press3()
+			EndIf
+			if $arrItems[$i][1] = '4' Then
+			  Press4()
+			EndIf
+			if $arrItems[$i][1] = '5' Then
+			  Press5()
+			EndIf
+			if $arrItems[$i][1] = '6' Then
+			  Press6()
+			EndIf
+			if $arrItems[$i][1] = '7' Then
+			  Press7()
+			EndIf
+			if $arrItems[$i][1] = '8' Then
+			  Press8()
+			EndIf
+			if $arrItems[$i][1] = '9' Then
+			  Press9()
+			EndIf
+		ElseIf $arrItems[$i][0] = "wait" Then
+			If ($LastBtnClickedOK) Then
 				Sleep($arrItems[$i][1])
 			EndIf
-			
-		Next
-    EndIf
-	EmptyStatusBar(2000)
+			$LastBtnClickedOK = True
+		EndIf		
+	Next
 EndFunc
 
 Func ViewSlip()
@@ -872,6 +879,9 @@ Func Screenshot()
 EndFunc
 
 Func POSSnip()
+	If Not IsPosClientRunning() Then
+		return;
+	Endif	
     If Not FileExists($CaptureDir) Then
 		DirCreate($CaptureDir)
 	EndIf	
@@ -906,9 +916,9 @@ Func Msg3Off()
 EndFunc
 
 Func EditIni()
-	ShellExecute($arrCONFIG[$CFG_EDITOR][1],$PostyperDir &"\POStyper.ini")
+	ShellExecute($arrCONFIG[$CFG_EDITOR][1], $cfgFile)
 	Sleep(5000)
- 	$arrItems=IniReadSection($iniFile,"ITEMS")
+ 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
 	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
 EndFunc
 
@@ -917,7 +927,7 @@ Func Snoop()
 EndFunc
 
 Func _readItemFile()
- 	$arrItems=IniReadSection($iniFile,"ITEMS")
+ 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
 	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
 EndFunc
 
@@ -951,13 +961,15 @@ Func SkipAddCustomer()
 	$oBtnAnnuleren=_UIA_getObjectByFindAll($oP1, "title:=Annuleren;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
 	If isobj($oBtnAnnuleren) Then
 		_UIA_action($oBtnAnnuleren,"click")
+		return True,
 	EndIf
 	$oBtnBack=_UIA_getObjectByFindAll($oP1, "title:=Back;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree) 
-	If isobj($oBtnBack) Then
+	If (isobj($oBtnBack)) Then
 		_UIA_action($oBtnBack,"click")
+		return True
 	EndIf
+	return False
 EndFunc
-
 
 Func SkipZipCodeDialog()
 	WinActivate("R10PosClient")	
@@ -966,19 +978,23 @@ Func SkipZipCodeDialog()
 	$oBtnOverslaan=_UIA_getObjectByFindAll($oP0, "title:=Overslaan;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
 	If isobj($oBtnOverslaan) Then
 		_UIA_action($oBtnOverslaan,"click")
+		return True
 	EndIf
 	$oBtnToSkip=_UIA_getObjectByFindAll($oP0, "title:=To skip;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If isobj($oBtnToSkip) Then
+	If (isobj($oBtnToSkip)) Then
 		_UIA_action($oBtnToSkip,"click")
+		return True
 	EndIf
+	return False
 EndFunc
 
-Func SelectCash()
-	WinActivate("R10PosClient")	
-	$oP1=_UIA_getObjectByFindAll($UIA_oDesktop, "Title:=R10PosClient;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
-	$oUIElement=_UIA_getObjectByFindAll($oP1, "title:=Contant;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	_UIA_action($oUIElement,"click")
-EndFunc
+
+;Func SelectCash()
+;	WinActivate("R10PosClient")	
+;	$oP1=_UIA_getObjectByFindAll($UIA_oDesktop, "Title:=R10PosClient;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
+;	$oUIElement=_UIA_getObjectByFindAll($oP1, "title:=Contant;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
+;	_UIA_action($oUIElement,"click")
+;EndFunc
 
 Func MonitorSrvLog()
 	$ServerLogsDir = $arrCONFIG[$CFG_SERVER_PATH][1] & "\Logs\"
@@ -1026,6 +1042,7 @@ Func FuncWrapper($Button, $BtnCaption, $FuncName, $Disable = False)
 	WriteToStatusBar($BtnCaption)
 	If ($Disable) Then
 		GUICtrlSetState ($Button,$GUI_DISABLE)
+		Sleep(200)
 	EndIf
 	$FuncName()
 	If ($Disable) Then
@@ -1044,4 +1061,12 @@ Func ToDutch()
 	FileChangeDir($HelpersDir)
 	ShellExecute($HelpersDir & "\jumbo_update_to_dutch.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
 	FileChangeDir(@Scriptdir)
+EndFunc
+
+Func IsPosClientRunning()
+	If (Not WinExists("R10PosClient")) Then
+        MsgBox($MB_SYSTEMMODAL, "", "R10PosClient not running")		
+		return False
+    EndIf
+	return True
 EndFunc
