@@ -97,7 +97,7 @@ Func Main()
 	$PosTyperDialogX = @DesktopWidth - 333
 	$PosTyperDialogY = 0
 	$PosTyperDialogWidth = 333
-	$PosTyperDialogHeight = 315
+	$PosTyperDialogHeight = 345
 	
 	Global $StatusBarOn = False
 	If (StringLower(StringStripWS($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1], $STR_STRIPALL)) == "true") Then
@@ -110,7 +110,7 @@ Func Main()
 	EndIf
 	
 	if ( Not $ExtDeveloper ) Then
-		$PosTyperDialogHeight -= 30
+		$PosTyperDialogHeight -= 60
 	EndIf
 	
 	If ($StatusBarOn) Then		
@@ -182,6 +182,9 @@ Func Main()
 	Local $captionCopyPOSExt =			"Copy PosExt"
 	Local $captionCopyOffExt =			"Copy OfcExt"
 	
+	Local $captionToEnglish =				"To English"
+	Local $captionToDutch =					"To Dutch"
+	
 	;Local $captionResetLoy =	 			"Reset Loy"
 	;Local $captionMsg3On =   		    "MSG3"
 	;Local $captionMsg3Off = 		    	"NO MSG3"
@@ -198,9 +201,14 @@ Func Main()
 	Local $ROW_7		=	225
 	Local $ROW_8		=	255
 	Local $ROW_9		=	285
+	Local $ROW_10		=	315
+	
+	
+	Local $INVALID_HEIGHT	=	-1
 	
 	if (Not $ExtDeveloper) Then
-		$ROW_9 = -100
+		$ROW_9 = $INVALID_HEIGHT
+		$ROW_10 = $INVALID_HEIGHT
 	EndIf
 	
 	Local $Col_1			=	10
@@ -267,6 +275,8 @@ Func Main()
 	Local $idBtnCopyPOSExt =			GUICtrlCreateButton($captionCopyPOSExt		, $Col_2, $ROW_9, $BtnWidthL, $BtnHeight)
 	Local $idBtnCopyOffExt =			GUICtrlCreateButton($captionCopyOffExt			, $Col_3, $ROW_9, $BtnWidthL, $BtnHeight)
 
+	Local $idBtnToEnglish = 				GUICtrlCreateButton($captionToEnglish			, $Col_1, $ROW_10, $BtnWidthL, $BtnHeight)
+	Local $idBtnToDutch = 				GUICtrlCreateButton($captionToDutch				, $Col_2, $ROW_10, $BtnWidthL, $BtnHeight)
 
 	;~	Local $idBtnResetLoy =	 		GUICtrlCreateButton($captionResetLoy		, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
 	;~ 	Local $idBtnMsg3On =   		    GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
@@ -376,6 +386,10 @@ Func Main()
 				FuncWrapper($Btn, $captionBrowseServer, BrowseServer)
 			Case $idBtnBrowseRabbit
 				FuncWrapper($Btn, $captionBrowseRabbit, BrowseRabbit)
+			Case $idBtnToEnglish
+				FuncWrapper($Btn, $captionToEnglish, ToEnglish, True)
+			Case $idBtnToDutch
+				FuncWrapper($Btn, $captionToDutch,ToDutch, True)				
         EndSwitch
     WEnd
 
@@ -1018,4 +1032,16 @@ Func FuncWrapper($Button, $BtnCaption, $FuncName, $Disable = False)
 		GUICtrlSetState ($Button,$GUI_ENABLE)
 	EndIf
 	WinActivate($g_hPosTyper)	
+EndFunc
+
+Func ToEnglish()
+	FileChangeDir($HelpersDir)
+	ShellExecute($HelpersDir & "\jumbo_update_to_english.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
+	FileChangeDir(@Scriptdir)
+EndFunc
+
+Func ToDutch()
+	FileChangeDir($HelpersDir)
+	ShellExecute($HelpersDir & "\jumbo_update_to_dutch.cmd",$arrCONFIG[$CFG_RETAIL_DB_NAME][1],"","",@SW_MAXIMIZE)
+	FileChangeDir(@Scriptdir)
 EndFunc
