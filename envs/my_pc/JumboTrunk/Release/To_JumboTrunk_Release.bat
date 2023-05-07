@@ -1,2 +1,2 @@
-copy ".\POStyper_Release.ini" "..\..\..\..\POStyper.ini"
+copy .\POStyper_Release.ini ..\..\..\..\POStyper.ini
 rem pause

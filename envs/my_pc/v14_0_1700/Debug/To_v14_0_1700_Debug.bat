@@ -1,2 +1,2 @@
-copy ".\POStyper_Debug.ini" "..\..\..\..\POStyper.ini"
+copy .\POStyper_Debug.ini ..\..\..\..\POStyper.ini
 rem pause
