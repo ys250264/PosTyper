@@ -288,6 +288,8 @@ Func Main()
 	GUICtrlSetColor($idBtnStartPOS , 0x000088)
 	GUICtrlSetColor($idBtnKillPOS, 0xFF0000)
 
+	Copyrights()
+	
     GUISetState(@SW_SHOW)
     If (WinExists("R10PosClient")) Then
 		WinActivate("R10PosClient")
@@ -1087,8 +1089,12 @@ EndFunc
 	
 	
 Func WriteToStatusBar($MethodName, $Txt = "")
-	If ($ShowStatusBar) Then		
-		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "  " & $MethodName & ": " & $Txt)
+	$Seperator = ": "
+	If ($Txt == "") Then
+		$Seperator = ""
+	EndIf
+	If ($ShowStatusBar) Then
+		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "  " & $MethodName & $Seperator & $Txt)
 	EndIf
 EndFunc
 
@@ -1164,4 +1170,8 @@ Func DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
 	If (Not IsDutchBackupDbTablesExist()) Then
 		GUICtrlSetState ($idBtnToDutch, $GUI_DISABLE)
 	EndIf
+EndFunc
+
+Func Copyrights()
+	WriteToStatusBar("© Created by Christian H, enhanced by Yossi S", "")
 EndFunc
