@@ -472,23 +472,30 @@ Func ArrangeEmulators()
 	If Not IsPosClientRunning() Then
 		return
 	Endif
-	WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
-	WinMove($arrCONFIG[$CFG_SCANNER_EMU][1],"",$arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_PRINTER_EMU][1])
-	WinMove($arrCONFIG[$CFG_PRINTER_EMU][1],"",$arrCONFIG[$CFG_PRINTER_EMU_X][1], $arrCONFIG[$CFG_PRINTER_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_SCALE_EMU][1])
-	WinMove($arrCONFIG[$CFG_SCALE_EMU][1],"",$arrCONFIG[$CFG_SCALE_EMU_X][1], $arrCONFIG[$CFG_SCALE_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_DRAWER_EMU][1])
-	WinMove($arrCONFIG[$CFG_DRAWER_EMU][1],"",$arrCONFIG[$CFG_DRAWER_EMU_X][1], $arrCONFIG[$CFG_DRAWER_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_WINEPTS_EMU][1])
-	WinMove($arrCONFIG[$CFG_WINEPTS_EMU][1],"",$arrCONFIG[$CFG_WINEPTS_EMU_X][1], $arrCONFIG[$CFG_WINEPTS_EMU_Y][1])
-	
-	WinActivate($arrCONFIG[$CFG_UPB_EMU][1])
-	WinMove($arrCONFIG[$CFG_UPB_EMU][1],"",$arrCONFIG[$CFG_UPB_EMU_X][1], $arrCONFIG[$CFG_UPB_EMU_Y][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	If ($WndHnd > 0) Then
+		WinMove($arrCONFIG[$CFG_SCANNER_EMU][1],"",$arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
+	EndIf
+	$WndHnd = WinActivate($arrCONFIG[$CFG_PRINTER_EMU][1])
+	If ($WndHnd > 0) Then
+		WinMove($arrCONFIG[$CFG_PRINTER_EMU][1],"",$arrCONFIG[$CFG_PRINTER_EMU_X][1], $arrCONFIG[$CFG_PRINTER_EMU_Y][1])
+	EndIf
+	$WndHnd = WinActivate($arrCONFIG[$CFG_SCALE_EMU][1])
+	If ($WndHnd > 0) Then
+		WinMove($arrCONFIG[$CFG_SCALE_EMU][1],"",$arrCONFIG[$CFG_SCALE_EMU_X][1], $arrCONFIG[$CFG_SCALE_EMU_Y][1])
+	EndIf
+	$WndHnd = WinActivate($arrCONFIG[$CFG_DRAWER_EMU][1])
+	If ($WndHnd > 0) Then
+		WinMove($arrCONFIG[$CFG_DRAWER_EMU][1],"",$arrCONFIG[$CFG_DRAWER_EMU_X][1], $arrCONFIG[$CFG_DRAWER_EMU_Y][1])
+	EndIf
+	$WndHnd = WinActivate($arrCONFIG[$CFG_WINEPTS_EMU][1])
+	If ($WndHnd > 0) Then
+		WinMove($arrCONFIG[$CFG_WINEPTS_EMU][1],"",$arrCONFIG[$CFG_WINEPTS_EMU_X][1], $arrCONFIG[$CFG_WINEPTS_EMU_Y][1])
+	EndIf
+	$WndHnd = WinActivate($arrCONFIG[$CFG_UPB_EMU][1])
+	If ($WndHnd > 0) Then
+		WinMove($arrCONFIG[$CFG_UPB_EMU][1],"",$arrCONFIG[$CFG_UPB_EMU_X][1], $arrCONFIG[$CFG_UPB_EMU_Y][1])
+	EndIf
 EndFunc
 
 
