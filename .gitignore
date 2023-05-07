@@ -445,6 +445,7 @@ Servers/RetailGateway/Src/**/*.[Xx][Mm][Ll]
 
 # PosTyper output files
 /POStyper.exe
+/POStyper.ini
 /POStyper.lnk
 collected_logs/
 captured_images/
