@@ -12,6 +12,7 @@
 #include <GuiComboBox.au3>
 #include <GuiStatusBar.au3>
 #include ".\lib\UIAWrappers.au3"
+#include ".\lib\ExtMsgBox.au3"
 
 #RequireAdmin
 
@@ -86,7 +87,7 @@ global $CFG_UPB_EMU_X							= 50
 global $CFG_UPB_EMU_Y							= 51
 
 If _Singleton("POStyper", 1) = 0 Then
-    MsgBox(4096, "Warning", "PosTyper is already running")
+	ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper", "PosTyper is already running", 3, False)	
     Exit
 EndIf
 
@@ -406,6 +407,9 @@ Func Type()
 	WinActivate("R10PosClient")
 	sleep(200)
 	$Item = GetItemNumberFromCombo()
+	If ($Item  == "") Then
+		Return
+	EndIf
  	$keys = StringSplit($Item,"")
     MouseClick("left",560,350,2,1)
 	sleep(200)
@@ -421,7 +425,9 @@ EndFunc
 Func Scan()
 	;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
 	$Scanme = GetItemNumberFromCombo()
-	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
+	If ($Scanme  == "") Then
+		Return
+	EndIf	
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$Scanme)
@@ -504,7 +510,6 @@ Func ScanLoyaltyCard()
 		return
 	Endif
 	$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
-	;~ 	MsgBox($MB_SYSTEMMODAL, "", "String:" & $Scanme)
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrCONFIG[$CFG_LOYCARD][1])
@@ -520,7 +525,7 @@ Func Scenario()
 	FileChangeDir($PostyperDir)
     Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosDir & "\", "All (*.ini)",1)
 	If @error Then
-        MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
+		NoFilesSelectedMsgBox()		
         FileChangeDir($PostyperDir)
     Else
 		ScenarioAutomation($sScenarioFileName)
@@ -662,7 +667,7 @@ EndFunc
 Func ViewSlip()
     Local $sFileOpenDialog = FileOpenDialog("Select input file", $arrCONFIG[$CFG_TLOG_PATH][1], "TLOG (RetailTransactionLog*.xml)",1)
     If @error Then
-        MsgBox($MB_SYSTEMMODAL, "", "No file(s) were selected.")
+		NoFilesSelectedMsgBox()
         FileChangeDir(@Scriptdir)
     Else
         FileChangeDir($HelpersDir)
@@ -869,12 +874,13 @@ Func GetItemNumberFromCombo()
 	$Tokens = StringSplit($SelectedItem, "-")
 	$numberOfTokens = $Tokens[0]
 	if ($numberOfTokens < 1) Then
-		return
+		return ""
 	EndIf
 	$Item = StringStripWS($Tokens[1], $STR_STRIPALL)
 	$ItemIsNumber = StringRegExp($Item,"^\d+$")
 	If (Not $ItemIsNumber) Then
-        MsgBox($MB_SYSTEMMODAL, "", $Item & " is not a number")				
+		ExtMsgBox($EMB_ICONEXCLAM, $MB_OK, "PosTyper",  $Item & " is not a number", 3, $g_hPosTyper)
+		Return ""
 	EndIf
 	if ($numberOfTokens > 1) Then
 		$Desc = StringStripWS($Tokens[2], $STR_STRIPALL)	
@@ -930,7 +936,6 @@ EndFunc
 Func PressEnter()
 	Sleep(500)
 	MouseClick("left",800,630,1,1)
-	;~ MsgBox($MB_SYSTEMMODAL, "", "enter:")
 EndFunc
 
 
@@ -951,7 +956,6 @@ Func ScenarioAutomation($sFileName)
 		WriteToStatusBar("Scenario", $arrItems[$i][0] & " = " & $arrItems[$i][1])
 		
 		If $arrItems[$i][0] = "item" Then
-			;MsgBox($MB_SYSTEMMODAL, "", "Item")
 			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
@@ -1122,12 +1126,15 @@ EndFunc
 
 Func IsPosClientRunning()
 	If (Not WinExists("R10PosClient")) Then
-        MsgBox($MB_SYSTEMMODAL, "", "R10PosClient not running")		
+		ExtMsgBox($EMB_ICONEXCLAM, $MB_OK, "PosTyper", "PosClient not running", 7, $g_hPosTyper)
 		return False
     EndIf
 	return True
 EndFunc
 
+Func NoFilesSelectedMsgBox()
+	ExtMsgBox($EMB_ICONINFO, " ", "PosTyper",  "No file(s) were selected", 3, $g_hPosTyper)
+EndFunc
 
 Func GetDialogHeight($Height, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
 	$RowHeight = 30
@@ -1181,4 +1188,9 @@ EndFunc
 
 Func Copyrights()
 	WriteToStatusBar("© Created by Christian H, enhanced by Yossi S", "")
+EndFunc
+
+Func ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin)
+	;_ExtMsgBoxSet(2, $SS_CENTER, -1, -1, -1, -1, Default, Default, "#")
+	$iRetValue = _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin) 
 EndFunc
