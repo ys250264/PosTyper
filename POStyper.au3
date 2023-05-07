@@ -38,51 +38,52 @@ global $CFG_DIALOG_X								= 2
 global $CFG_DIALOG_Y								= 3
 global $CFG_DIALOG_STATUS_BAR				= 4
 global $CFG_DIALOG_EXT_DEVELOPER		= 5
-global $CFG_RETAIL_DB_NAME					= 6
-global $CFG_SERVER_WEBSITE					= 7
-global $CFG_RABBITMQ_WEBSITE				= 8
-global $CFG_SERVER_PATH						= 9
-global $CFG_POS_PATH								= 10
-global $CFG_OFFICE_PATH							= 11
-global $CFG_TLOG_PATH							= 12
-global $CFG_DMS_PATH								= 13
-global $CFG_SPOOKY_PATH						= 14
-global $CFG_ARSGATEWAY_PATH				= 15
-global $CFG_RETAILGATEWAY_PATH			= 16
-global $CFG_STOREGATEWAY_PATH			= 17
-global $CFG_WINEPTS_PATH						= 18
-global $CFG_SERVER_DBG_CUST_PATH		= 19
-global $CFG_SERVER_DBG_EXT_PATH			= 20
-global $CFG_POS_DBG_CUST_PATH			= 21
-global $CFG_POS_DBG_EXT_PATH				= 22
-global $CFG_OFFICE_DBG_CUST_PATH		= 23
-global $CFG_OFFICE_DBG_EXT_PATH			= 24
-global $CFG_CMD										= 25
-global $CFG_SQLMGR									= 26
-global $CFG_EDITOR									= 27
-global $CFG_BROWSER								= 28
-global $CFG_SNOOP									= 29
-global $CFG_USER										= 30
-global $CFG_PASSWORD							= 31
-global $CFG_LOYCARD								= 32
-global $CFG_SCANNER_EMU						= 33
-global $CFG_SCANNER_EMU_X					= 34
-global $CFG_SCANNER_EMU_Y					= 35
-global $CFG_PRINTER_EMU						= 36
-global $CFG_PRINTER_EMU_X						= 37
-global $CFG_PRINTER_EMU_Y						= 38
-global $CFG_SCALE_EMU							= 39
-global $CFG_SCALE_EMU_X						= 40
-global $CFG_SCALE_EMU_Y						= 41
-global $CFG_DRAWER_EMU						= 42
-global $CFG_DRAWER_EMU_X						= 43
-global $CFG_DRAWER_EMU_Y						= 44
-global $CFG_WINEPTS_EMU						= 45
-global $CFG_WINEPTS_EMU_X					= 46
-global $CFG_WINEPTS_EMU_Y					= 47
-global $CFG_UPB_EMU								= 48
-global $CFG_UPB_EMU_X							= 49
-global $CFG_UPB_EMU_Y							= 50
+global $CFG_DIALOG_LANG_SWITCHER		= 6
+global $CFG_RETAIL_DB_NAME					= 7
+global $CFG_SERVER_WEBSITE					= 8
+global $CFG_RABBITMQ_WEBSITE				= 9
+global $CFG_SERVER_PATH						= 10
+global $CFG_POS_PATH								= 11
+global $CFG_OFFICE_PATH							= 12
+global $CFG_TLOG_PATH							= 13
+global $CFG_DMS_PATH								= 14
+global $CFG_SPOOKY_PATH						= 15
+global $CFG_ARSGATEWAY_PATH				= 16
+global $CFG_RETAILGATEWAY_PATH			= 17
+global $CFG_STOREGATEWAY_PATH			= 18
+global $CFG_WINEPTS_PATH						= 19
+global $CFG_SERVER_DBG_CUST_PATH		= 20
+global $CFG_SERVER_DBG_EXT_PATH			= 21
+global $CFG_POS_DBG_CUST_PATH			= 22
+global $CFG_POS_DBG_EXT_PATH				= 23
+global $CFG_OFFICE_DBG_CUST_PATH		= 24
+global $CFG_OFFICE_DBG_EXT_PATH			= 25
+global $CFG_CMD										= 26
+global $CFG_SQLMGR									= 27
+global $CFG_EDITOR									= 28
+global $CFG_BROWSER								= 29
+global $CFG_SNOOP									= 30
+global $CFG_USER										= 31
+global $CFG_PASSWORD							= 32
+global $CFG_LOYCARD								= 33
+global $CFG_SCANNER_EMU						= 34
+global $CFG_SCANNER_EMU_X					= 35
+global $CFG_SCANNER_EMU_Y					= 36
+global $CFG_PRINTER_EMU						= 37
+global $CFG_PRINTER_EMU_X						= 38
+global $CFG_PRINTER_EMU_Y						= 39
+global $CFG_SCALE_EMU							= 40
+global $CFG_SCALE_EMU_X						= 41
+global $CFG_SCALE_EMU_Y						= 42
+global $CFG_DRAWER_EMU						= 43
+global $CFG_DRAWER_EMU_X						= 44
+global $CFG_DRAWER_EMU_Y						= 45
+global $CFG_WINEPTS_EMU						= 46
+global $CFG_WINEPTS_EMU_X					= 47
+global $CFG_WINEPTS_EMU_Y					= 48
+global $CFG_UPB_EMU								= 49
+global $CFG_UPB_EMU_X							= 50
+global $CFG_UPB_EMU_Y							= 51
 
 If _Singleton("POStyper", 1) = 0 Then
     MsgBox(4096, "Warning", "PosTyper is already running")
@@ -103,20 +104,13 @@ Func Main()
 	$PosTyperDialogX = @DesktopWidth - 333
 	$PosTyperDialogY = 0
 	$PosTyperDialogWidth = 333
-	$PosTyperDialogHeight = 345
+	$PosTyperDialogHeight = 285
 	
-	Global $StatusBarOn	= StringIsTrue($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1])
-	Global $ExtDeveloper	= StringIsTrue($arrCONFIG[$CFG_DIALOG_EXT_DEVELOPER][1])
+	Global $ShowStatusBar = StringIsTrue($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1])
+	Global $ShowExtDeveloperLine = StringIsTrue($arrCONFIG[$CFG_DIALOG_EXT_DEVELOPER][1])
+	Global $ShowLanguageSwitcherLine = StringIsTrue($arrCONFIG[$CFG_DIALOG_LANG_SWITCHER][1])
 	
-	$RowHeight = 30
-	if (Not $ExtDeveloper) Then
-		$PosTyperDialogHeight -= (2*$RowHeight)
-	EndIf
-	
-	$HeightOfStatusBar = 20
-	If ($StatusBarOn) Then		
-		$PosTyperDialogHeight += $HeightOfStatusBar
-	EndIf
+	$PosTyperDialogHeight = GetDialogHeight($PosTyperDialogHeight, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
 	
 	If ($arrCONFIG[$CFG_DIALOG_X][1] >= 0 And $arrCONFIG[$CFG_DIALOG_Y][1] >= 0) Then
 		$PosTyperDialogX = $arrCONFIG[$CFG_DIALOG_X][1]
@@ -128,7 +122,7 @@ Func Main()
 	GUISetIcon($icoFile)
 	
 	Global $g_hPosTyperStatusBar
-	If ($StatusBarOn) Then		
+	If ($ShowStatusBar) Then		
 		$g_hPosTyperStatusBar = _GUICtrlStatusBar_Create($g_hPosTyper)
 	EndIf	
 	
@@ -195,6 +189,7 @@ Func Main()
 	;Local $captionMsg3Off = 		    	"NO MSG3"
 	;Local $captionFLDiag = 		   		"FLDiag"
 
+	$RowHeight = 30
 	Local $ROW_0	=	10
 	Local $ROW_1	=	$ROW_0 + $RowHeight
 	Local $ROW_2	=	$ROW_1 + $RowHeight
@@ -207,12 +202,17 @@ Func Main()
 	Local $ROW_9	=	$ROW_8 + $RowHeight
 	Local $ROW_10	=	$ROW_9 + $RowHeight
 	
-	Local $INVALID_HEIGHT	=	-1
-	if (Not $ExtDeveloper) Then
-		$ROW_9 = $INVALID_HEIGHT
+	$INVALID_HEIGHT	=	-100
+	if (Not $ShowLanguageSwitcherLine) Then
 		$ROW_10 = $INVALID_HEIGHT
 	EndIf
-	
+	If ($ShowLanguageSwitcherLine And Not $ShowExtDeveloperLine) Then
+		$ROW_10 = $ROW_9 
+	EndIf
+	if (Not $ShowExtDeveloperLine) Then
+		$ROW_9 = $INVALID_HEIGHT
+	EndIf
+
 	$ColWidth = 80
 	Local $Col_1	=	10
 	Local $Col_2	=	$Col_1 + $ColWidth
@@ -281,7 +281,9 @@ Func Main()
 	;~ 	Local $idBtnMsg3Off = 		    GUICtrlCreateButton($captionMsg3Off					, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
 	;~	Local $idBtnFLDiag = 		   		GUICtrlCreateButton($captionFLDiag					, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
 
-	DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
+	If ($ShowLanguageSwitcherLine) Then
+		DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
+	EndIf
 	
 	GUICtrlSetColor($idBtnStartPOS , 0x000088)
 	GUICtrlSetColor($idBtnKillPOS, 0xFF0000)
@@ -1085,7 +1087,7 @@ EndFunc
 	
 	
 Func WriteToStatusBar($MethodName, $Txt = "")
-	If ($StatusBarOn) Then		
+	If ($ShowStatusBar) Then		
 		_GUICtrlStatusBar_SetText($g_hPosTyperStatusBar, "  " & $MethodName & ": " & $Txt)
 	EndIf
 EndFunc
@@ -1111,6 +1113,22 @@ Func IsPosClientRunning()
 		return False
     EndIf
 	return True
+EndFunc
+
+
+Func GetDialogHeight($Height, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
+	$RowHeight = 30
+	$StatusBarHeight = 20
+	if ($ShowExtDeveloperLine) Then
+		$Height += $RowHeight
+	EndIf
+	if ($ShowLanguageSwitcherLine) Then
+		$Height += $RowHeight
+	EndIf
+	If ($ShowStatusBar) Then		
+		$Height += $StatusBarHeight
+	EndIf
+	return $Height
 EndFunc
 
 
