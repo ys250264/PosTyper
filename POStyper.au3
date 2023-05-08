@@ -979,46 +979,46 @@ Func ScenarioAutomation($sFileName)
 			if $arrItems[$i][1] = "ENTER" Then
 			   PressEnter()
 			EndIf
-			if $arrItems[$i][1] = "DIALOGMIDOK" Then
+			if $arrItems[$i][1] = "DIALOG_MID_OK" Then
 			   MouseClick("left",520,520,1,1)
 		   EndIf
-			if $arrItems[$i][1] = "ADDCUSTOMERTOSKIP" Then
+			if $arrItems[$i][1] = "ADD_CUSTOMER_BACK_BTN" Then
 				$LastBtnClickedOK = SkipAddCustomer()			
 			EndIf			   			   
-			if $arrItems[$i][1] = "DIALOGZIPTOSKIP" Then
+			if $arrItems[$i][1] = "DIALOG_ZIP_TO_SKIP_BTN" Then
 				$LastBtnClickedOK = SkipZipCodeDialog()					
 			EndIf			   
-			if $arrItems[$i][1] = "DYNA1" Then
+			if $arrItems[$i][1] = "TENDER_1" Then
 			   MouseClick("left",930,110,1,1)
 			EndIf
-			if $arrItems[$i][1] = "DYNA2" Then
+			if $arrItems[$i][1] = "TENDER_2" Then
 			   MouseClick("left",930,170,1,1)
 			EndIf
-			if $arrItems[$i][1] = "DYNA3" Then
+			if $arrItems[$i][1] = "TENDER_3" Then
 			   MouseClick("left",930,240,1,1)
 			EndIf
-			if $arrItems[$i][1] = "DYNA4" Then
+			if $arrItems[$i][1] = "TENDER_4" Then
 			   MouseClick("left",930,310,1,1)
 			EndIf
-			if $arrItems[$i][1] = "DYNA5" Then
+			if $arrItems[$i][1] = "TENDER_5" Then
 			   MouseClick("left",930,370,1,1)
 			EndIf
-			if $arrItems[$i][1] = "DYNA6" Then
+			if $arrItems[$i][1] = "TENDER_6" Then
 			   MouseClick("left",930,440,1,1)
 			EndIf
-			if $arrItems[$i][1] = "DYNA7" Then
+			if $arrItems[$i][1] = "TENDER_7" Then
 			   MouseClick("left",930,510,1,1)
 			EndIf
-			if $arrItems[$i][1] = "DYNAUP" Then
+			if $arrItems[$i][1] = "TENDER_UP" Then
 			   MouseClick("left",910,580,1,1)
 			EndIf
-			if $arrItems[$i][1] = "DYNADOWN" Then
+			if $arrItems[$i][1] = "TENDER_DOWN" Then
 			   MouseClick("left",960,580,1,1)
 			EndIf
-			if $arrItems[$i][1] = "DYNABACK" Then
+			if $arrItems[$i][1] = "TENDER_BACK" Then
 			   MouseClick("left",930,630,1,1)
 			EndIf
-			if $arrItems[$i][1] = "CLOSECHANGE" Then
+			if $arrItems[$i][1] = "CLOSE_CHANGE" Then
 			   MouseClick("left",730,535,1,1)
 			EndIf
 			if $arrItems[$i][1] = '0' Then
