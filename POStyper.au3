@@ -156,12 +156,12 @@ Func Main()
 	Local $captionDebugOn =   			"Gpos DBG"
 	Local $captionDebugOff = 		    	"Gpos ERR"
 	Local $captionExposeLogs = 			"Expose Logs"
-	Local $captionCollectLogs = 			"Collect Logs"
+	Local $captionExposeTLog = 			"Expose Tlog"
 
 	Local $captionReceiptDebugOn = 	"Slip Dbg"
 	Local $captionReceiptDebugOff = 	"No Slip Dbg"
 	Local $captionViewSlip = 				"View Slip"
-	Local $captionExposeTLog = 			"Expose Tlog"
+	Local $captionCollectLogs = 			"Collect Logs"
 	
 	Local $captionSnipPos =	 				"Pos Capture"
 	Local $captionScreenshot = 			"Scrn Capture"
@@ -248,12 +248,12 @@ Func Main()
 	Local $idBtnDebugOn =   				GUICtrlCreateButton($captionDebugOn				, $Col_1, $ROW_4, $BtnWidthL, $BtnHeight)
 	Local $idBtnDebugOff = 		    		GUICtrlCreateButton($captionDebugOff				, $Col_2, $ROW_4, $BtnWidthL, $BtnHeight)
 	Local $idBtnExposeLogs = 				GUICtrlCreateButton($captionExposeLogs			, $Col_3, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnCollectLogs = 				GUICtrlCreateButton($captionCollectLogs				, $Col_4, $ROW_4, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeTLog = 				GUICtrlCreateButton($captionExposeTLog			, $Col_4, $ROW_4, $BtnWidthL, $BtnHeight)
 		
 	Local $idBtnReceiptDebugOn = 		GUICtrlCreateButton($captionReceiptDebugOn		, $Col_1, $ROW_5, $BtnWidthL, $BtnHeight)
 	Local $idBtnReceiptDebugOff = 		GUICtrlCreateButton($captionReceiptDebugOff		, $Col_2, $ROW_5, $BtnWidthL, $BtnHeight)
 	Local $idBtnViewSlip = 					GUICtrlCreateButton($captionViewSlip					, $Col_3, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnExposeTLog = 				GUICtrlCreateButton($captionExposeTLog			, $Col_4, $ROW_5, $BtnWidthL, $BtnHeight)
+	Local $idBtnCollectLogs = 				GUICtrlCreateButton($captionCollectLogs				, $Col_4, $ROW_5, $BtnWidthL, $BtnHeight)
 		
 	Local $idBtnSnipPos =	 				GUICtrlCreateButton($captionSnipPos   				, $Col_1, $ROW_6, $BtnWidthL, $BtnHeight)	
 	Local $idBtnScreenshot = 				GUICtrlCreateButton($captionScreenshot				, $Col_2, $ROW_6, $BtnWidthL, $BtnHeight)		
