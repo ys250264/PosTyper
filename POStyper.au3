@@ -163,8 +163,8 @@ Func Main()
 	Local $captionViewSlip = 				"View Slip"
 	Local $captionCollectLogs = 			"Collect Logs"
 	
-	Local $captionSnipPos =	 				"Pos Capture"
-	Local $captionScreenshot = 			"Scrn Capture"
+	Local $captionSnipPos =	 				"Snip Pos"
+	Local $captionSnipScreen = 			"Snip Screen"
 	Local $captionCleanScanner = 		"Clean Scan"
 	Local $captionBrowseRabbit =			"Rabbit"
 	
@@ -256,7 +256,7 @@ Func Main()
 	Local $idBtnCollectLogs = 				GUICtrlCreateButton($captionCollectLogs				, $Col_4, $ROW_5, $BtnWidthL, $BtnHeight)
 		
 	Local $idBtnSnipPos =	 				GUICtrlCreateButton($captionSnipPos   				, $Col_1, $ROW_6, $BtnWidthL, $BtnHeight)	
-	Local $idBtnScreenshot = 				GUICtrlCreateButton($captionScreenshot				, $Col_2, $ROW_6, $BtnWidthL, $BtnHeight)		
+	Local $idBtnSnipScreen = 				GUICtrlCreateButton($captionSnipScreen				, $Col_2, $ROW_6, $BtnWidthL, $BtnHeight)		
 	Local $idBtnCleanScanner = 			GUICtrlCreateButton($captionCleanScanner			, $Col_3, $ROW_6, $BtnWidthL, $BtnHeight)
 	Local $idBtnBrowseRabbit =			GUICtrlCreateButton($captionBrowseRabbit			, $Col_4, $ROW_6, $BtnWidthL, $BtnHeight)
 			
@@ -350,8 +350,8 @@ Func Main()
 				FuncWrapper($Btn, $captionExposeTLog, ExposeTLog)
 			Case $idBtnSnipPos
 				FuncWrapper($Btn, $captionSnipPos, SnipPOS)
-			Case $idBtnScreenshot
-				FuncWrapper($Btn, $captionScreenshot, Screenshot)
+			Case $idBtnSnipScreen
+				FuncWrapper($Btn, $captionSnipScreen, SnipScreen)
             Case $idBtnCleanScanner
 				FuncWrapper($Btn, $captionCleanScanner, CleanScanner)
 			Case $idBtnBrowseRabbit
@@ -700,13 +700,13 @@ Func SnipPOS()
 	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
 	Sleep (250)
 	$hBmp = _ScreenCapture_Capture("",0,0,1024,768)
-	$ImageName = $CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
-    _ScreenCapture_SaveImage($CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg", $hBmp)
+	$ImageName = $CaptureDir  & "\PosSnip_" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
+    _ScreenCapture_SaveImage($ImageName, $hBmp)
 	ShellExecute($ImageName)
 EndFunc
 
 
-Func Screenshot()
+Func SnipScreen()
     If Not FileExists($CaptureDir) Then
 		DirCreate($CaptureDir)
 	EndIf	
@@ -715,7 +715,7 @@ Func Screenshot()
 	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
 	Sleep (250)
 	$hBmp = _ScreenCapture_Capture("")
-	$ImageName = $CaptureDir  & "\Screenshot" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
+	$ImageName = $CaptureDir  & "\ScreenSnip_" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
     _ScreenCapture_SaveImage($ImageName, $hBmp)
 	ShellExecute($ImageName)
 EndFunc
