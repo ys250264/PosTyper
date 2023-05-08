@@ -413,9 +413,13 @@ Func Type()
  	$keys = StringSplit($Item,"")
     MouseClick("left",560,350,2,1)
 	sleep(200)
+	$SleepMsBetweenTypes = 300
+	If ($keys[0]>4) Then
+		$SleepMsBetweenTypes = 100
+	EndIf
 	For $i = 1 To $keys[0]
 		Send($keys[$i])
-		sleep(300)
+		sleep($SleepMsBetweenTypes)
 	Next
     MouseClick("left",800,630,1,1)
 	sleep(200)
