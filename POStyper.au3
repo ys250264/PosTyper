@@ -1062,7 +1062,7 @@ Func SkipAddCustomer()
 	$oBtnAnnuleren=_UIA_getObjectByFindAll($oP1, "title:=Annuleren;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
 	If isobj($oBtnAnnuleren) Then
 		_UIA_action($oBtnAnnuleren,"click")
-		return True,
+		return True
 	EndIf
 	$oBtnBack=_UIA_getObjectByFindAll($oP1, "title:=Back;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree) 
 	If (isobj($oBtnBack)) Then
