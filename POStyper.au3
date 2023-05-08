@@ -415,6 +415,7 @@ Func Type()
 	sleep(200)
 	For $i = 1 To $keys[0]
 		Send($keys[$i])
+		sleep(300)
 	Next
     MouseClick("left",800,630,1,1)
 	sleep(200)
