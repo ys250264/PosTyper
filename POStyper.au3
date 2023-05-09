@@ -66,23 +66,23 @@ global $CFG_BROWSER								= 29
 global $CFG_SNOOP									= 30
 global $CFG_USER										= 31
 global $CFG_PASSWORD							= 32
-global $CFG_LOYALTY_CARD								= 33
-global $CFG_SCANNER_EMU						= 34
+global $CFG_LOYALTY_CARD						= 33
+global $CFG_SCANNER_EMU_CAPTION		= 34
 global $CFG_SCANNER_EMU_X					= 35
 global $CFG_SCANNER_EMU_Y					= 36
-global $CFG_PRINTER_EMU						= 37
+global $CFG_PRINTER_EMU_CAPTION			= 37
 global $CFG_PRINTER_EMU_X						= 38
 global $CFG_PRINTER_EMU_Y						= 39
-global $CFG_SCALE_EMU							= 40
+global $CFG_SCALE_EMU_CAPTION				= 40
 global $CFG_SCALE_EMU_X						= 41
 global $CFG_SCALE_EMU_Y						= 42
-global $CFG_DRAWER_EMU						= 43
+global $CFG_DRAWER_EMU_CAPTION			= 43
 global $CFG_DRAWER_EMU_X						= 44
 global $CFG_DRAWER_EMU_Y						= 45
-global $CFG_WINEPTS_EMU						= 46
+global $CFG_WINEPTS_EMU_CAPTION			= 46
 global $CFG_WINEPTS_EMU_X					= 47
 global $CFG_WINEPTS_EMU_Y					= 48
-global $CFG_UPB_EMU								= 49
+global $CFG_UPB_EMU_CAPTION				= 49
 global $CFG_UPB_EMU_X							= 50
 global $CFG_UPB_EMU_Y							= 51
 
@@ -433,7 +433,7 @@ Func Scan()
 	If ($Scanme  == "") Then
 		Return
 	EndIf	
-	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$Scanme)
 	ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
@@ -483,29 +483,29 @@ Func ArrangeEmulators()
 	If Not IsPosClientRunning() Then
 		return
 	Endif
-	$WndHnd = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
 	If ($WndHnd > 0) Then
-		WinMove($arrCONFIG[$CFG_SCANNER_EMU][1],"",$arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1],"",$arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_PRINTER_EMU][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_PRINTER_EMU_CAPTION][1])
 	If ($WndHnd > 0) Then
-		WinMove($arrCONFIG[$CFG_PRINTER_EMU][1],"",$arrCONFIG[$CFG_PRINTER_EMU_X][1], $arrCONFIG[$CFG_PRINTER_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_PRINTER_EMU_CAPTION][1],"",$arrCONFIG[$CFG_PRINTER_EMU_X][1], $arrCONFIG[$CFG_PRINTER_EMU_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_SCALE_EMU][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_SCALE_EMU_CAPTION][1])
 	If ($WndHnd > 0) Then
-		WinMove($arrCONFIG[$CFG_SCALE_EMU][1],"",$arrCONFIG[$CFG_SCALE_EMU_X][1], $arrCONFIG[$CFG_SCALE_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_SCALE_EMU_CAPTION][1],"",$arrCONFIG[$CFG_SCALE_EMU_X][1], $arrCONFIG[$CFG_SCALE_EMU_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_DRAWER_EMU][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_DRAWER_EMU_CAPTION][1])
 	If ($WndHnd > 0) Then
-		WinMove($arrCONFIG[$CFG_DRAWER_EMU][1],"",$arrCONFIG[$CFG_DRAWER_EMU_X][1], $arrCONFIG[$CFG_DRAWER_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_DRAWER_EMU_CAPTION][1],"",$arrCONFIG[$CFG_DRAWER_EMU_X][1], $arrCONFIG[$CFG_DRAWER_EMU_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_WINEPTS_EMU][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_WINEPTS_EMU_CAPTION][1])
 	If ($WndHnd > 0) Then
-		WinMove($arrCONFIG[$CFG_WINEPTS_EMU][1],"",$arrCONFIG[$CFG_WINEPTS_EMU_X][1], $arrCONFIG[$CFG_WINEPTS_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_WINEPTS_EMU_CAPTION][1],"",$arrCONFIG[$CFG_WINEPTS_EMU_X][1], $arrCONFIG[$CFG_WINEPTS_EMU_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_UPB_EMU][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_UPB_EMU_CAPTION][1])
 	If ($WndHnd > 0) Then
-		WinMove($arrCONFIG[$CFG_UPB_EMU][1],"",$arrCONFIG[$CFG_UPB_EMU_X][1], $arrCONFIG[$CFG_UPB_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_UPB_EMU_CAPTION][1],"",$arrCONFIG[$CFG_UPB_EMU_X][1], $arrCONFIG[$CFG_UPB_EMU_Y][1])
 	EndIf
 EndFunc
 
@@ -515,7 +515,7 @@ Func ScanLoyaltyCard()
 		return
 	Endif
 	$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
-	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrCONFIG[$CFG_LOYALTY_CARD][1])
 	ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
@@ -729,7 +729,7 @@ Func CleanScanner()
 	If Not IsPosClientRunning() Then
 		return
 	Endif
-	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 EndFunc  
 
@@ -832,7 +832,7 @@ EndFunc
 ;~ 	If WinExists("R10PosClient") == 1 Then
 ;~ 		WinActivate("R10PosClient")
 ;~     EndIf
-;~ 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+;~ 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
 ;~ 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 ;~     ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$keys[2])
 ;~     ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:4]")
@@ -961,7 +961,7 @@ Func ScenarioAutomation($sFileName)
 		WriteToStatusBar("Scenario", $arrItems[$i][0] & " = " & $arrItems[$i][1])
 		
 		If $arrItems[$i][0] = "item" Then
-			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
+			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
 			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
 			ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
