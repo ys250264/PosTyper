@@ -66,7 +66,7 @@ global $CFG_BROWSER								= 29
 global $CFG_SNOOP									= 30
 global $CFG_USER										= 31
 global $CFG_PASSWORD							= 32
-global $CFG_LOYCARD								= 33
+global $CFG_LOYALTY_CARD								= 33
 global $CFG_SCANNER_EMU						= 34
 global $CFG_SCANNER_EMU_X					= 35
 global $CFG_SCANNER_EMU_Y					= 36
@@ -517,7 +517,7 @@ Func ScanLoyaltyCard()
 	$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU][1])
 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrCONFIG[$CFG_LOYCARD][1])
+	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrCONFIG[$CFG_LOYALTY_CARD][1])
 	ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
 	WinActivate("R10PosClient")
 EndFunc
