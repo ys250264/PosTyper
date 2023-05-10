@@ -163,7 +163,7 @@ Func Main()
 	Local $captionViewSlip = 				"View Slip"
 	Local $captionCollectLogs = 			"Collect Logs"
 	
-	Local $captionSnipPos =	 				"Snip Pos"
+	Local $captionSnipPos =	 				"Snip POS"
 	Local $captionSnipScreen = 			"Snip Screen"
 	Local $captionCleanScanner = 		"Clean Scan"
 	Local $captionBrowseRabbit =			"Rabbit"
