@@ -1056,6 +1056,8 @@ Func ScenarioAutomation($sFileName)
 				Sleep($arrItems[$i][1])
 			EndIf
 			$LastBtnClickedOK = True
+		ElseIf $arrItems[$i][0] = "user" Then	
+			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & "Automation will continue when this dialog is dismissed", Null, False)	
 		EndIf		
 	Next
 EndFunc
