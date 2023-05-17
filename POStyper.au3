@@ -530,8 +530,9 @@ Func Scenario()
 	Endif
 	FileChangeDir($PostyperDir)
 	$ScenariosFullDir = $ScenariosDir
-	if (StringLen($arrCONFIG[$CFG_DIALOG_SCENARIO_SUBPATH][1]) > 0) Then
-		$ScenariosFullDir =  $ScenariosDir & "\" & $arrCONFIG[$CFG_DIALOG_SCENARIO_SUBPATH][1]
+	$SubPath = StringReplace($arrCONFIG[$CFG_DIALOG_SCENARIO_SUBPATH][1],'"', '')	
+	if ($SubPath > 0) Then
+		$ScenariosFullDir =  $ScenariosDir & "\" & $SubPath
 	EndIf
     Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosFullDir & "\", "All (*.ini)",1)
 	If @error Then
@@ -1145,7 +1146,7 @@ Func IsPosClientRunning()
 EndFunc
 
 Func NoFilesSelectedMsgBox()
-	ExtMsgBox($EMB_ICONINFO, " ", "PosTyper",  "No file(s) were selected", 3, $g_hPosTyper)
+	ExtMsgBox($EMB_ICONINFO, " ", "PosTyper",  "No file(s) were selected", 1, $g_hPosTyper)
 EndFunc
 
 Func GetDialogHeight($Height, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
