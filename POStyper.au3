@@ -40,51 +40,52 @@ global $CFG_DIALOG_Y								= 3
 global $CFG_DIALOG_STATUS_BAR				= 4
 global $CFG_DIALOG_EXT_DEVELOPER		= 5
 global $CFG_DIALOG_LANG_SWITCHER		= 6
-global $CFG_RETAIL_DB_NAME					= 7
-global $CFG_SERVER_WEBSITE					= 8
-global $CFG_RABBITMQ_WEBSITE				= 9
-global $CFG_SERVER_PATH						= 10
-global $CFG_POS_PATH								= 11
-global $CFG_OFFICE_PATH							= 12
-global $CFG_TLOG_PATH							= 13
-global $CFG_DMS_PATH								= 14
-global $CFG_SPOOKY_PATH						= 15
-global $CFG_ARSGATEWAY_PATH				= 16
-global $CFG_RETAILGATEWAY_PATH			= 17
-global $CFG_STOREGATEWAY_PATH			= 18
-global $CFG_WINEPTS_PATH						= 19
-global $CFG_SERVER_DBG_CUST_PATH		= 20
-global $CFG_SERVER_DBG_EXT_PATH			= 21
-global $CFG_POS_DBG_CUST_PATH			= 22
-global $CFG_POS_DBG_EXT_PATH				= 23
-global $CFG_OFFICE_DBG_CUST_PATH		= 24
-global $CFG_OFFICE_DBG_EXT_PATH			= 25
-global $CFG_CMD										= 26
-global $CFG_SQLMGR									= 27
-global $CFG_EDITOR									= 28
-global $CFG_BROWSER								= 29
-global $CFG_SNOOP									= 30
-global $CFG_USER										= 31
-global $CFG_PASSWORD							= 32
-global $CFG_LOYALTY_CARD						= 33
-global $CFG_SCANNER_EMU_CAPTION		= 34
-global $CFG_SCANNER_EMU_X					= 35
-global $CFG_SCANNER_EMU_Y					= 36
-global $CFG_PRINTER_EMU_CAPTION			= 37
-global $CFG_PRINTER_EMU_X						= 38
-global $CFG_PRINTER_EMU_Y						= 39
-global $CFG_SCALE_EMU_CAPTION				= 40
-global $CFG_SCALE_EMU_X						= 41
-global $CFG_SCALE_EMU_Y						= 42
-global $CFG_DRAWER_EMU_CAPTION			= 43
-global $CFG_DRAWER_EMU_X						= 44
-global $CFG_DRAWER_EMU_Y						= 45
-global $CFG_WINEPTS_EMU_CAPTION			= 46
-global $CFG_WINEPTS_EMU_X					= 47
-global $CFG_WINEPTS_EMU_Y					= 48
-global $CFG_UPB_EMU_CAPTION				= 49
-global $CFG_UPB_EMU_X							= 50
-global $CFG_UPB_EMU_Y							= 51
+global $CFG_DIALOG_SCENARIO_SUBPATH	= 7
+global $CFG_RETAIL_DB_NAME					= 8
+global $CFG_SERVER_WEBSITE					= 9
+global $CFG_RABBITMQ_WEBSITE				= 10
+global $CFG_SERVER_PATH						= 11
+global $CFG_POS_PATH								= 12
+global $CFG_OFFICE_PATH							= 13
+global $CFG_TLOG_PATH							= 14
+global $CFG_DMS_PATH								= 15
+global $CFG_SPOOKY_PATH						= 16
+global $CFG_ARSGATEWAY_PATH				= 17
+global $CFG_RETAILGATEWAY_PATH			= 18
+global $CFG_STOREGATEWAY_PATH			= 19
+global $CFG_WINEPTS_PATH						= 20
+global $CFG_SERVER_DBG_CUST_PATH		= 21
+global $CFG_SERVER_DBG_EXT_PATH			= 22
+global $CFG_POS_DBG_CUST_PATH			= 23
+global $CFG_POS_DBG_EXT_PATH				= 24
+global $CFG_OFFICE_DBG_CUST_PATH		= 25
+global $CFG_OFFICE_DBG_EXT_PATH			= 26
+global $CFG_CMD										= 27
+global $CFG_SQLMGR									= 28
+global $CFG_EDITOR									= 29
+global $CFG_BROWSER								= 30
+global $CFG_SNOOP									= 31
+global $CFG_USER										= 32
+global $CFG_PASSWORD							= 33
+global $CFG_LOYALTY_CARD						= 34
+global $CFG_SCANNER_EMU_CAPTION		= 35
+global $CFG_SCANNER_EMU_X					= 36
+global $CFG_SCANNER_EMU_Y					= 37
+global $CFG_PRINTER_EMU_CAPTION			= 38
+global $CFG_PRINTER_EMU_X						= 39
+global $CFG_PRINTER_EMU_Y						= 40
+global $CFG_SCALE_EMU_CAPTION				= 41
+global $CFG_SCALE_EMU_X						= 42
+global $CFG_SCALE_EMU_Y						= 43
+global $CFG_DRAWER_EMU_CAPTION			= 44
+global $CFG_DRAWER_EMU_X						= 45
+global $CFG_DRAWER_EMU_Y						= 46
+global $CFG_WINEPTS_EMU_CAPTION			= 47
+global $CFG_WINEPTS_EMU_X					= 48
+global $CFG_WINEPTS_EMU_Y					= 49
+global $CFG_UPB_EMU_CAPTION				= 50
+global $CFG_UPB_EMU_X							= 51
+global $CFG_UPB_EMU_Y							= 52
 
 If _Singleton("POStyper", 1) = 0 Then
 	ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper", "PosTyper is already running", 3, False)	
@@ -528,7 +529,11 @@ Func Scenario()
 		return
 	Endif
 	FileChangeDir($PostyperDir)
-    Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosDir & "\", "All (*.ini)",1)
+	$ScenariosFullDir = $ScenariosDir
+	if (StringLen($arrCONFIG[$CFG_DIALOG_SCENARIO_SUBPATH][1]) > 0) Then
+		$ScenariosFullDir =  $ScenariosDir & "\" & $arrCONFIG[$CFG_DIALOG_SCENARIO_SUBPATH][1]
+	EndIf
+    Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosFullDir & "\", "All (*.ini)",1)
 	If @error Then
 		NoFilesSelectedMsgBox()		
         FileChangeDir($PostyperDir)
@@ -1057,7 +1062,7 @@ Func ScenarioAutomation($sFileName)
 			EndIf
 			$LastBtnClickedOK = True
 		ElseIf $arrItems[$i][0] = "user" Then	
-			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & "Automation will continue when this dialog is dismissed", Null, False)	
+			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & @CRLF & "Automation will continue when this dialog is dismissed", Null, False)	
 		EndIf		
 	Next
 EndFunc
