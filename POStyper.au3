@@ -965,7 +965,7 @@ Func ScenarioAutomation($sFileName)
 
 		WriteToStatusBar("Scenario", $arrItems[$i][0] & " = " & $arrItems[$i][1])
 		
-		If $arrItems[$i][0] = "item" Then
+		If $arrItems[$i][0] = "item" Or  $arrItems[$i][0] = "card" Then
 			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
 			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
@@ -981,7 +981,7 @@ Func ScenarioAutomation($sFileName)
 			if $arrItems[$i][1] = "QTY" Then
 			   PressX()
 			EndIf
-			if $arrItems[$i][1] = "ENTER" Then
+			if $arrItems[$i][1] = "ENTER" Or $arrItems[$i][1] = "TO_TENDER" Then
 			   PressEnter()
 			EndIf
 			if $arrItems[$i][1] = "DIALOG_MID_OK" Then
