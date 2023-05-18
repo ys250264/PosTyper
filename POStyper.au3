@@ -980,7 +980,7 @@ EndFunc
 Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 	$LastBtnClickedOK = True
 	FileChangeDir($PostyperDir)
-	$arrItems=IniReadSection($sFileName,"ITEMS")
+	$arrItems=IniReadSection($sFileName,"SCENARIO")
 
 	If (WinExists("R10PosClient")) Then
 		WinActivate("R10PosClient")
