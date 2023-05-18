@@ -1037,7 +1037,10 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			EndIf			   			   
 			if $arrItems[$i][1] = "DIALOG_ZIP_TO_SKIP_BTN" Then
 				$LastBtnClickedOK = SkipZipCodeDialog()					
-			EndIf			   
+			EndIf			
+			if $arrItems[$i][1] = "DIALOG_SPARE_CHANGE_CANCEL_BTN" Then
+				$LastBtnClickedOK = SkipSpareChangeCodeDialog()			
+			EndIf			
 			if $arrItems[$i][1] = "TENDER_1" Then
 			   MouseClick("left",930,110,1,1)
 			EndIf
@@ -1170,6 +1173,23 @@ Func SkipZipCodeDialog()
 	EndIf
 	return False
 EndFunc
+
+Func SkipSpareChangeCodeDialog()
+	WinActivate("R10PosClient")	
+	$oP1=_UIA_getObjectByFindAll($UIA_oDesktop, "Title:=Retalix.Jumbo.Client.POS.Presentation.ViewModels.ViewModels.CashPaymentChangeExtendedViewModel;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
+	$oBtnAnnuleren=_UIA_getObjectByFindAll($oP1, "title:=Annuleren;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
+	If isobj($oBtnAnnuleren) Then
+		_UIA_action($oBtnAnnuleren,"click")
+		return True
+	EndIf
+	$oBtnCancel=_UIA_getObjectByFindAll($oP1, "title:=Cancel;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
+	If (isobj($oBtnCancel)) Then
+		_UIA_action($oBtnCancel,"click")
+		return True
+	EndIf
+	return False
+EndFunc
+
 
 
 ;Func SelectCash()
