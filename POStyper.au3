@@ -1071,6 +1071,21 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			if $arrItems[$i][1] = "CLOSE_CHANGE" Then
 			   MouseClick("left",730,535,1,1)
 			EndIf
+			if $arrItems[$i][1] = "LEFT_TOP" Then
+			   MouseClick("left",585,140,1,1)
+			EndIf
+			if $arrItems[$i][1] = "RIGHT_TOP" Then
+			   MouseClick("left",690,140,1,1)
+			EndIf
+			if $arrItems[$i][1] = "LEFT_BOTTOM" Then
+			   MouseClick("left",589,195,1,1)
+			EndIf
+			if $arrItems[$i][1] = "RIGHT_BOTTOM" Then
+			   MouseClick("left",690,195,1,1)
+			EndIf
+			if $arrItems[$i][1] = "MANUAL_ENTRY" Then
+			   MouseClick("left",795,165,1,1)
+			EndIf
 			if $arrItems[$i][1] = '0' Then
 			  Press0()
 			EndIf
