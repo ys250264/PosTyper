@@ -34,58 +34,59 @@ global $icoFile = @Scriptdir & "\POStyper.ico"
 global $arrItems
 global $arrCONFIG
 
-global $CFG_DIALOG_CAPTION					= 1
-global $CFG_DIALOG_X								= 2
-global $CFG_DIALOG_Y								= 3
-global $CFG_DIALOG_STATUS_BAR				= 4
-global $CFG_DIALOG_EXT_DEVELOPER		= 5
-global $CFG_DIALOG_LANG_SWITCHER		= 6
-global $CFG_DIALOG_SCENARIO_SUBPATH	= 7
-global $CFG_RETAIL_DB_NAME					= 8
-global $CFG_SERVER_WEBSITE					= 9
-global $CFG_RABBITMQ_WEBSITE				= 10
-global $CFG_SERVER_PATH						= 11
-global $CFG_POS_PATH								= 12
-global $CFG_OFFICE_PATH							= 13
-global $CFG_TLOG_PATH							= 14
-global $CFG_DMS_PATH								= 15
-global $CFG_SPOOKY_PATH						= 16
-global $CFG_ARSGATEWAY_PATH				= 17
-global $CFG_RETAILGATEWAY_PATH			= 18
-global $CFG_STOREGATEWAY_PATH			= 19
-global $CFG_WINEPTS_PATH						= 20
-global $CFG_SERVER_DBG_CUST_PATH		= 21
-global $CFG_SERVER_DBG_EXT_PATH			= 22
-global $CFG_POS_DBG_CUST_PATH			= 23
-global $CFG_POS_DBG_EXT_PATH				= 24
-global $CFG_OFFICE_DBG_CUST_PATH		= 25
-global $CFG_OFFICE_DBG_EXT_PATH			= 26
-global $CFG_CMD										= 27
-global $CFG_SQLMGR									= 28
-global $CFG_EDITOR									= 29
-global $CFG_BROWSER								= 30
-global $CFG_SNOOP									= 31
-global $CFG_USER										= 32
-global $CFG_PASSWORD							= 33
-global $CFG_LOYALTY_CARD						= 34
-global $CFG_SCANNER_EMU_CAPTION		= 35
-global $CFG_SCANNER_EMU_X					= 36
-global $CFG_SCANNER_EMU_Y					= 37
-global $CFG_PRINTER_EMU_CAPTION			= 38
-global $CFG_PRINTER_EMU_X						= 39
-global $CFG_PRINTER_EMU_Y						= 40
-global $CFG_SCALE_EMU_CAPTION				= 41
-global $CFG_SCALE_EMU_X						= 42
-global $CFG_SCALE_EMU_Y						= 43
-global $CFG_DRAWER_EMU_CAPTION			= 44
-global $CFG_DRAWER_EMU_X						= 45
-global $CFG_DRAWER_EMU_Y						= 46
-global $CFG_WINEPTS_EMU_CAPTION			= 47
-global $CFG_WINEPTS_EMU_X					= 48
-global $CFG_WINEPTS_EMU_Y					= 49
-global $CFG_UPB_EMU_CAPTION				= 50
-global $CFG_UPB_EMU_X							= 51
-global $CFG_UPB_EMU_Y							= 52
+global $CFG_DIALOG_CAPTION						= 1
+global $CFG_DIALOG_X									= 2
+global $CFG_DIALOG_Y									= 3
+global $CFG_DIALOG_STATUS_BAR					= 4
+global $CFG_DIALOG_EXT_DEVELOPER			= 5
+global $CFG_DIALOG_LANG_SWITCHER			= 6
+global $CFG_DIALOG_SCENARIO_SUBPATH		= 7
+global $CFG_DIALOG_AUTO_SPEED_FACTOR	= 8
+global $CFG_RETAIL_DB_NAME						= 9
+global $CFG_SERVER_WEBSITE						= 10
+global $CFG_RABBITMQ_WEBSITE					= 11
+global $CFG_SERVER_PATH							= 12
+global $CFG_POS_PATH									= 13
+global $CFG_OFFICE_PATH								= 14
+global $CFG_TLOG_PATH								= 15
+global $CFG_DMS_PATH									= 16
+global $CFG_SPOOKY_PATH							= 17
+global $CFG_ARSGATEWAY_PATH					= 18
+global $CFG_RETAILGATEWAY_PATH				= 19
+global $CFG_STOREGATEWAY_PATH				= 20
+global $CFG_WINEPTS_PATH							= 21
+global $CFG_SERVER_DBG_CUST_PATH			= 22
+global $CFG_SERVER_DBG_EXT_PATH				= 23
+global $CFG_POS_DBG_CUST_PATH				= 24
+global $CFG_POS_DBG_EXT_PATH					= 25
+global $CFG_OFFICE_DBG_CUST_PATH			= 26
+global $CFG_OFFICE_DBG_EXT_PATH				= 27
+global $CFG_CMD											= 28
+global $CFG_SQLMGR										= 29
+global $CFG_EDITOR										= 30
+global $CFG_BROWSER									= 31
+global $CFG_SNOOP										= 32
+global $CFG_USER											= 33
+global $CFG_PASSWORD								= 34
+global $CFG_LOYALTY_CARD							= 35
+global $CFG_SCANNER_EMU_CAPTION			= 36
+global $CFG_SCANNER_EMU_X						= 37
+global $CFG_SCANNER_EMU_Y						= 38
+global $CFG_PRINTER_EMU_CAPTION				= 39
+global $CFG_PRINTER_EMU_X							= 40
+global $CFG_PRINTER_EMU_Y							= 41
+global $CFG_SCALE_EMU_CAPTION					= 42
+global $CFG_SCALE_EMU_X							= 43
+global $CFG_SCALE_EMU_Y							= 44
+global $CFG_DRAWER_EMU_CAPTION				= 45
+global $CFG_DRAWER_EMU_X							= 46
+global $CFG_DRAWER_EMU_Y							= 47
+global $CFG_WINEPTS_EMU_CAPTION				= 48
+global $CFG_WINEPTS_EMU_X						= 49
+global $CFG_WINEPTS_EMU_Y						= 50
+global $CFG_UPB_EMU_CAPTION					= 51
+global $CFG_UPB_EMU_X								= 52
+global $CFG_UPB_EMU_Y								= 53
 
 If _Singleton("POStyper", 1) = 0 Then
 	ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper", "PosTyper is already running", 3, False)	
@@ -108,6 +109,8 @@ Func Main()
 	$PosTyperDialogWidth = 333
 	$PosTyperDialogHeight = 285
 	
+	Global $DefaultAutomationSpeedFactor = 1
+	Global $AutomationSpeedFactor = $DefaultAutomationSpeedFactor
 	Global $ShowStatusBar = StringIsTrue($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1])
 	Global $ShowExtDeveloperLine = StringIsTrue($arrCONFIG[$CFG_DIALOG_EXT_DEVELOPER][1])
 	Global $ShowLanguageSwitcherLine = StringIsTrue($arrCONFIG[$CFG_DIALOG_LANG_SWITCHER][1])
@@ -129,7 +132,7 @@ Func Main()
 	EndIf	
 	
     GUICtrlSetState(-1, $GUI_DROPACCEPTED)
-	Global $idComboBox = GUICtrlCreateCombo("", 10, 10, 235, 20)
+	Global $idComboBox = GUICtrlCreateCombo("", 10, 10, 210, 20)
     for $i = 1 to $arrItems[0][0]
 		GUICtrlSetData($idComboBox, $arrItems[$i][1], $arrItems[1][1])
 	Next
@@ -137,6 +140,8 @@ Func Main()
 	Local $captionScan = 					"Scan"
 	;Local $captionCD = 						"CD"
 	Local $captionType = 						"Type"
+	Local $captionAutomationSpeed =	"x" & $DefaultAutomationSpeedFactor
+	
 	;Local $captionAuto = 					"Gal"
 	
 	Local $captionStartPOS = 				"Start POS"
@@ -226,9 +231,10 @@ Func Main()
 	Local $BtnWidthL	=	70
 	Local $BtnHeight	=	20
 
-	Local $idBtnScan = 						GUICtrlCreateButton($captionScan						, 250, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Local $idBtnScan = 						GUICtrlCreateButton($captionScan						, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 	;Local $idBtnCD = 							GUICtrlCreateButton($captionCD							, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	Local $idBtnType = 						GUICtrlCreateButton($captionType						, 285, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Local $idBtnType = 						GUICtrlCreateButton($captionType						, 260, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Global $idBtnAutomationSpeed =	GUICtrlCreateButton($captionAutomationSpeed	, 295, $ROW_0 - 1, $BtnWidthS-10, $BtnHeightS)
 	;Local $idBtnAuto = 						GUICtrlCreateButton($captionAuto						, 170, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 			
 	Local $idBtnStartPOS = 					GUICtrlCreateButton($captionStartPOS				, $Col_1, $ROW_1, $BtnWidthL, $BtnHeight)
@@ -307,6 +313,8 @@ Func Main()
                 ExitLoop			
 			Case $idBtnType
 				FuncWrapper($Btn, $captionType, Type)
+			Case $idBtnAutomationSpeed
+				FuncWrapper($Btn, $captionAutomationSpeed, AutomationSpeed)
             Case $idBtnScan
 				FuncWrapper($Btn, $captionScan, Scan)
 			Case $idBtnStartPOS
@@ -425,6 +433,20 @@ Func Type()
     MouseClick("left",800,630,1,1)
 	sleep(200)
 	MouseMove($pos[0],$pos[1],1)
+EndFunc
+
+
+Func AutomationSpeed()
+	$UserAutomationSpeedFactor = $arrCONFIG[$CFG_DIALOG_AUTO_SPEED_FACTOR][1]
+	$DefaultSpeedFactorText = "x" & $DefaultAutomationSpeedFactor
+	$UserSpeedFactorText = "x" & $UserAutomationSpeedFactor
+	If GUICtrlRead($idBtnAutomationSpeed) = $DefaultSpeedFactorText Then
+		GUICtrlSetData($idBtnAutomationSpeed, $UserSpeedFactorText)
+		$AutomationSpeedFactor = $UserAutomationSpeedFactor
+	Else
+		GUICtrlSetData($idBtnAutomationSpeed, $DefaultSpeedFactorText)
+		$AutomationSpeedFactor = $DefaultAutomationSpeedFactor
+	EndIf
 EndFunc
 
 
@@ -964,7 +986,14 @@ Func ScenarioAutomation($sFileName)
 		WinActivate("R10PosClient")		
 		;MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
 
-		WriteToStatusBar("Scenario", $arrItems[$i][0] & " = " & $arrItems[$i][1])
+		$KeyToStatusBar = $arrItems[$i][0]
+		$ValToStatusBar = $arrItems[$i][1]
+		
+		if $KeyToStatusBar =  "wait" Then
+			$ValToStatusBar *= $AutomationSpeedFactor
+		EndIf
+
+		WriteToStatusBar("Scenario", $KeyToStatusBar & " = " & $ValToStatusBar)
 		
 		If $arrItems[$i][0] = "item" Or  $arrItems[$i][0] = "card" Then
 			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
@@ -1059,7 +1088,7 @@ Func ScenarioAutomation($sFileName)
 			EndIf
 		ElseIf $arrItems[$i][0] = "wait" Then
 			If ($LastBtnClickedOK) Then
-				Sleep($arrItems[$i][1])
+				Sleep($ValToStatusBar)
 			EndIf
 			$LastBtnClickedOK = True
 		ElseIf $arrItems[$i][0] = "user" Then	
