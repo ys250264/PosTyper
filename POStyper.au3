@@ -273,9 +273,9 @@ Func Main()
 	Local $idBtnOpenCMD = 				GUICtrlCreateButton($captionOpenCMD				, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
 		
 	Local $idBtnOpenSpooky = 			GUICtrlCreateButton($captionOpenSpooky			, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
-	Local $idBtnOpenServices = 			GUICtrlCreateButton($captionOpenServices			, $Col_2, $ROW_8, $BtnWidthL, $BtnHeight)		
-	Local $idBtnSQLMgmt = 				GUICtrlCreateButton($captionSQLMgmt				, $Col_3, $ROW_8, $BtnWidthL, $BtnHeight)
-	Local $idBtnOpenSnoop = 				GUICtrlCreateButton($captionOpenSnoop				, $Col_4, $ROW_8, $BtnWidthL, $BtnHeight)
+	Local $idBtnSQLMgmt = 				GUICtrlCreateButton($captionSQLMgmt				, $Col_2, $ROW_8, $BtnWidthL, $BtnHeight)
+	Local $idBtnOpenSnoop = 				GUICtrlCreateButton($captionOpenSnoop				, $Col_3, $ROW_8, $BtnWidthL, $BtnHeight)
+	Local $idBtnOpenServices = 			GUICtrlCreateButton($captionOpenServices			, $Col_4, $ROW_8, $BtnWidthL, $BtnHeight)		
 	
 	Local $idBtnCopySrvExtToCust =		GUICtrlCreateButton($captionCopySrvExtToCust	, $Col_1, $ROW_9, $BtnWidthL, $BtnHeight)
 	Local $idBtnCopyPOSExtToCust =	GUICtrlCreateButton($captionCopyPOSExtToCust	, $Col_2, $ROW_9, $BtnWidthL, $BtnHeight)
@@ -442,9 +442,11 @@ Func AutomationSpeed()
 	$UserSpeedFactorText = "x" & $UserAutomationSpeedFactor
 	If GUICtrlRead($idBtnAutomationSpeed) = $DefaultSpeedFactorText Then
 		GUICtrlSetData($idBtnAutomationSpeed, $UserSpeedFactorText)
+		GUICtrlSetColor($idBtnAutomationSpeed, 0xFF0000)
 		$AutomationSpeedFactor = $UserAutomationSpeedFactor
 	Else
 		GUICtrlSetData($idBtnAutomationSpeed, $DefaultSpeedFactorText)
+		GUICtrlSetColor($idBtnAutomationSpeed, 0x000000)
 		$AutomationSpeedFactor = $DefaultAutomationSpeedFactor
 	EndIf
 EndFunc
