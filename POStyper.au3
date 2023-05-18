@@ -38,55 +38,56 @@ global $CFG_DIALOG_CAPTION						= 1
 global $CFG_DIALOG_X									= 2
 global $CFG_DIALOG_Y									= 3
 global $CFG_DIALOG_STATUS_BAR					= 4
-global $CFG_DIALOG_EXT_DEVELOPER			= 5
-global $CFG_DIALOG_LANG_SWITCHER			= 6
-global $CFG_DIALOG_SCENARIO_SUBPATH		= 7
-global $CFG_DIALOG_AUTO_SPEED_FACTOR	= 8
-global $CFG_RETAIL_DB_NAME						= 9
-global $CFG_SERVER_WEBSITE						= 10
-global $CFG_RABBITMQ_WEBSITE					= 11
-global $CFG_SERVER_PATH							= 12
-global $CFG_POS_PATH									= 13
-global $CFG_OFFICE_PATH								= 14
-global $CFG_TLOG_PATH								= 15
-global $CFG_DMS_PATH									= 16
-global $CFG_SPOOKY_PATH							= 17
-global $CFG_ARSGATEWAY_PATH					= 18
-global $CFG_RETAILGATEWAY_PATH				= 19
-global $CFG_STOREGATEWAY_PATH				= 20
-global $CFG_WINEPTS_PATH							= 21
-global $CFG_SERVER_DBG_CUST_PATH			= 22
-global $CFG_SERVER_DBG_EXT_PATH				= 23
-global $CFG_POS_DBG_CUST_PATH				= 24
-global $CFG_POS_DBG_EXT_PATH					= 25
-global $CFG_OFFICE_DBG_CUST_PATH			= 26
-global $CFG_OFFICE_DBG_EXT_PATH				= 27
-global $CFG_CMD											= 28
-global $CFG_SQLMGR										= 29
-global $CFG_EDITOR										= 30
-global $CFG_BROWSER									= 31
-global $CFG_SNOOP										= 32
-global $CFG_USER											= 33
-global $CFG_PASSWORD								= 34
-global $CFG_LOYALTY_CARD							= 35
-global $CFG_SCANNER_EMU_CAPTION			= 36
-global $CFG_SCANNER_EMU_X						= 37
-global $CFG_SCANNER_EMU_Y						= 38
-global $CFG_PRINTER_EMU_CAPTION				= 39
-global $CFG_PRINTER_EMU_X							= 40
-global $CFG_PRINTER_EMU_Y							= 41
-global $CFG_SCALE_EMU_CAPTION					= 42
-global $CFG_SCALE_EMU_X							= 43
-global $CFG_SCALE_EMU_Y							= 44
-global $CFG_DRAWER_EMU_CAPTION				= 45
-global $CFG_DRAWER_EMU_X							= 46
-global $CFG_DRAWER_EMU_Y							= 47
-global $CFG_WINEPTS_EMU_CAPTION				= 48
-global $CFG_WINEPTS_EMU_X						= 49
-global $CFG_WINEPTS_EMU_Y						= 50
-global $CFG_UPB_EMU_CAPTION					= 51
-global $CFG_UPB_EMU_X								= 52
-global $CFG_UPB_EMU_Y								= 53
+global $CFG_DIALOG_PROGRESS_BAR			= 5
+global $CFG_DIALOG_EXT_DEVELOPER			= 6
+global $CFG_DIALOG_LANG_SWITCHER			= 7
+global $CFG_DIALOG_SCENARIO_SUBPATH		= 8
+global $CFG_DIALOG_AUTO_SPEED_FACTOR	= 9
+global $CFG_RETAIL_DB_NAME						= 10
+global $CFG_SERVER_WEBSITE						= 11
+global $CFG_RABBITMQ_WEBSITE					= 12
+global $CFG_SERVER_PATH							= 13
+global $CFG_POS_PATH									= 14
+global $CFG_OFFICE_PATH								= 15
+global $CFG_TLOG_PATH								= 16
+global $CFG_DMS_PATH									= 17
+global $CFG_SPOOKY_PATH							= 18
+global $CFG_ARSGATEWAY_PATH					= 19
+global $CFG_RETAILGATEWAY_PATH				= 20
+global $CFG_STOREGATEWAY_PATH				= 21
+global $CFG_WINEPTS_PATH							= 22
+global $CFG_SERVER_DBG_CUST_PATH			= 23
+global $CFG_SERVER_DBG_EXT_PATH				= 24
+global $CFG_POS_DBG_CUST_PATH				= 25
+global $CFG_POS_DBG_EXT_PATH					= 26
+global $CFG_OFFICE_DBG_CUST_PATH			= 27
+global $CFG_OFFICE_DBG_EXT_PATH				= 28
+global $CFG_CMD											= 29
+global $CFG_SQLMGR										= 30
+global $CFG_EDITOR										= 31
+global $CFG_BROWSER									= 32
+global $CFG_SNOOP										= 33
+global $CFG_USER											= 34
+global $CFG_PASSWORD								= 35
+global $CFG_LOYALTY_CARD							= 36
+global $CFG_SCANNER_EMU_CAPTION			= 37
+global $CFG_SCANNER_EMU_X						= 38
+global $CFG_SCANNER_EMU_Y						= 39
+global $CFG_PRINTER_EMU_CAPTION				= 40
+global $CFG_PRINTER_EMU_X							= 41
+global $CFG_PRINTER_EMU_Y							= 42
+global $CFG_SCALE_EMU_CAPTION					= 43
+global $CFG_SCALE_EMU_X							= 44
+global $CFG_SCALE_EMU_Y							= 45
+global $CFG_DRAWER_EMU_CAPTION				= 46
+global $CFG_DRAWER_EMU_X							= 47
+global $CFG_DRAWER_EMU_Y							= 48
+global $CFG_WINEPTS_EMU_CAPTION				= 49
+global $CFG_WINEPTS_EMU_X						= 50
+global $CFG_WINEPTS_EMU_Y						= 51
+global $CFG_UPB_EMU_CAPTION					= 52
+global $CFG_UPB_EMU_X								= 53
+global $CFG_UPB_EMU_Y								= 54
 
 If _Singleton("POStyper", 1) = 0 Then
 	ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper", "PosTyper is already running", 3, False)	
@@ -114,6 +115,7 @@ Func Main()
 	Global $ShowStatusBar = StringIsTrue($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1])
 	Global $ShowExtDeveloperLine = StringIsTrue($arrCONFIG[$CFG_DIALOG_EXT_DEVELOPER][1])
 	Global $ShowLanguageSwitcherLine = StringIsTrue($arrCONFIG[$CFG_DIALOG_LANG_SWITCHER][1])
+	Global $ShowProgressBar = StringIsTrue($arrCONFIG[$CFG_DIALOG_PROGRESS_BAR][1])
 	
 	$PosTyperDialogHeight = GetDialogHeight($PosTyperDialogHeight, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
 	
@@ -984,10 +986,12 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 		WinActivate("R10PosClient")
 	EndIf
 
-	$aPos = WinGetPos($g_hPosTyper)
-	$xPOS = $aPos[0] + 15
-	$yPOS = $aPos[1] + $aPos[3] / 4 + 30
-	ProgressOn($ProgressBarCaption, "", "0%", $xPOS, $yPOS, $DLG_MOVEABLE)
+	If $ShowProgressBar Then
+		$aPos = WinGetPos($g_hPosTyper)
+		$xPOS = $aPos[0] + 15
+		$yPOS = $aPos[1] + $aPos[3] / 4 + 30
+		ProgressOn($ProgressBarCaption, "", "0%", $xPOS, $yPOS, $DLG_MOVEABLE)
+	EndIf
 	
 	$NumOfItems = $arrItems[0][0]
 	
@@ -1106,11 +1110,15 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & @CRLF & "Automation will continue when this dialog is dismissed", Null, False)	
 		EndIf		
 		
-		$Percents = Int($i / $NumOfItems * 100)
-		ProgressSet($Percents, $StatusBarText, $Percents & "%")
+		If $ShowProgressBar Then		
+			$Percents = Int($i / $NumOfItems * 100)
+			ProgressSet($Percents, $StatusBarText, $Percents & "%")
+		EndIf
 
 	Next
-	ProgressOff()
+	If $ShowProgressBar Then			
+		ProgressOff()
+	EndIf
 EndFunc
 
 
