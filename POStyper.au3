@@ -561,7 +561,8 @@ Func Scenario()
 		NoFilesSelectedMsgBox()		
         FileChangeDir($PostyperDir)
     Else
-		ScenarioAutomation($sScenarioFileName)
+		$sFileName = GetFileNameFromFullPath($sScenarioFileName)
+		ScenarioAutomation("Scenario: " & $sFileName, $sScenarioFileName)
 	EndIf			
 EndFunc
 
@@ -570,7 +571,7 @@ Func Tendering()
 	If Not IsPosClientRunning() Then
 		return
 	Endif
-	ScenarioAutomation($TenderngIniFile)
+	ScenarioAutomation("Tendering...", $TenderngIniFile)
 EndFunc
 
 
@@ -972,7 +973,7 @@ Func PressEnter()
 EndFunc
 
 
-Func ScenarioAutomation($sFileName)
+Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 	$LastBtnClickedOK = True
 	FileChangeDir($PostyperDir)
 	$arrItems=IniReadSection($sFileName,"ITEMS")
@@ -981,7 +982,14 @@ Func ScenarioAutomation($sFileName)
 		WinActivate("R10PosClient")
 	EndIf
 
-	For $i = 1 To $arrItems[0][0]
+	$aPos = WinGetPos($g_hPosTyper)
+	$xPOS = $aPos[0] + 15
+	$yPOS = $aPos[1] + $aPos[3] / 4 + 30
+	ProgressOn($ProgressBarCaption, "", "0%", $xPOS, $yPOS, $DLG_MOVEABLE)
+	
+	$NumOfItems = $arrItems[0][0]
+	
+	For $i = 1 To $NumOfItems
 		
 		WinActivate("R10PosClient")		
 		;MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
@@ -992,8 +1000,9 @@ Func ScenarioAutomation($sFileName)
 		if $KeyToStatusBar =  "wait" Then
 			$ValToStatusBar *= $AutomationSpeedFactor
 		EndIf
-
-		WriteToStatusBar("Scenario", $KeyToStatusBar & " = " & $ValToStatusBar)
+		
+		$StatusBarText = $KeyToStatusBar & " = " & $ValToStatusBar
+		WriteToStatusBar("Scenario", $StatusBarText)
 		
 		If $arrItems[$i][0] = "item" Or  $arrItems[$i][0] = "card" Then
 			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
@@ -1094,7 +1103,12 @@ Func ScenarioAutomation($sFileName)
 		ElseIf $arrItems[$i][0] = "user" Then	
 			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & @CRLF & "Automation will continue when this dialog is dismissed", Null, False)	
 		EndIf		
+		
+		$Percents = Int($i / $NumOfItems * 100)
+		ProgressSet($Percents, $StatusBarText, $Percents & "%")
+
 	Next
+	ProgressOff()
 EndFunc
 
 
@@ -1235,4 +1249,23 @@ EndFunc
 Func ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin)
 	;_ExtMsgBoxSet(2, $SS_CENTER, -1, -1, -1, -1, Default, Default, "#")
 	$iRetValue = _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin) 
+EndFunc
+
+Func GetFileNameFromFullPath($TEST)
+	$FILENAME=""
+	$PATH=""
+	$TITLE=""
+	$EXT_START=0
+	$FILE_START=0
+	For $X = StringLen($TEST) To 2 Step -1
+	   If StringMid($TEST,$X,1) = "." And $EXT_START = 0 Then $EXT_START = $X
+	   If StringMid($TEST,$X,1) = "\" And $FILE_START = 0 Then $FILE_START = $X
+	   If $FILE_START > 0 Then
+		  $FILENAME = StringTrimLeft($TEST,$FILE_START)
+		  $TITLE = StringLeft($FILENAME, $EXT_START - $FILE_START -1)
+		  $PATH = StringLeft($TEST,$FILE_START)
+		  ExitLoop
+	   EndIf
+   Next	
+   return $FILENAME
 EndFunc
