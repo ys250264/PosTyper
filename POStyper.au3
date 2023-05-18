@@ -99,8 +99,8 @@ _readItemFile()
 Main()
 
 Func _readItemFile()
- 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
-	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
+	ReloadItemsFile()
+	ReloadConfigFile()
 EndFunc
 
 Func Main()
@@ -638,8 +638,8 @@ EndFunc
 Func EditIni()
 	ShellExecute($arrCONFIG[$CFG_EDITOR][1], $cfgFile)
 	Sleep(5000)
- 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
-	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
+	ReloadItemsFile()
+	ReloadConfigFile()
 EndFunc
 
 
@@ -1278,4 +1278,12 @@ Func GetFileNameFromFullPath($TEST)
 	   EndIf
    Next	
    return $FILENAME
+EndFunc
+
+Func ReloadConfigFile()
+	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
+EndFunc
+
+Func ReloadItemsFile()
+ 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
 EndFunc
