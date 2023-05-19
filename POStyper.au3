@@ -21,21 +21,21 @@
 
 ;AutoItSetOption("MustDeclareVars", 1)
 
-global $PostyperDir		= @Scriptdir
-global $ScenariosDir	= @Scriptdir &"\scenarios"
-global $HelpersDir		= @Scriptdir &"\helpers"
-global $CollectedDir	= @Scriptdir &"\collected_logs"
-global $CaptureDir		= @Scriptdir &"\captured_images"
-global $ItemsdDir		= @Scriptdir &"\items"
-global $TenderingDir	= @Scriptdir &"\tendering"
+Global $PostyperDir		= @ScriptDir
+Global $ScenariosDir	= @ScriptDir &"\scenarios"
+Global $HelpersDir		= @ScriptDir &"\helpers"
+Global $CollectedDir	= @ScriptDir &"\collected_logs"
+Global $CaptureDir		= @ScriptDir &"\captured_images"
+Global $ItemsdDir		= @ScriptDir &"\items"
+Global $TenderingDir	= @ScriptDir &"\tendering"
 
-global $ItemsIniFile	= $ItemsdDir & "\Items.ini"
-global $TenderngIniFile	= $TenderingDir & "\tendering.ini"
-global $cfgFile			= @Scriptdir & "\POStyper.ini"
-global $icoFile			= @Scriptdir & "\POStyper.ico"
+Global $ItemsIniFile	= $ItemsdDir & "\Items.ini"
+Global $TenderngIniFile	= $TenderingDir & "\tendering.ini"
+Global $cfgFile			= @ScriptDir & "\POStyper.ini"
+Global $icoFile			= @ScriptDir & "\POStyper.ico"
 
-global $arrItems
-global $arrCONFIG
+Global $arrItems
+Global $arrCONFIG
 
 Global $CFG_DIALOG_CAPTION				= 1
 Global $CFG_DIALOG_X					= 2
