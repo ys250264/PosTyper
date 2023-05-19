@@ -1324,21 +1324,21 @@ EndFunc   ;==>GetFileNameFromFullPath
 
 
 Func ReloadConfigFile()
-	$arrUI			= IniReadSection($cfgFile, "UI")
+	$arrPosTyper	= IniReadSection($cfgFile, "PosTyper")
 	$arrEnv			= IniReadSection($cfgFile, "Env")
 	$arrR10			= IniReadSection($cfgFile, "R10")
 	$arrDev			= IniReadSection($cfgFile, "Dev")
 	$arrHelpers		= IniReadSection($cfgFile, "Helpers")
 	$arrPOS			= IniReadSection($cfgFile, "POS")
 	$arrEmulators	= IniReadSection($cfgFile, "Emulators")
-	$arrCONFIG = $arrUI
+	$arrCONFIG = $arrPosTyper
 	_ArrayConcatenate($arrCONFIG, $arrEnv, 1)
 	_ArrayConcatenate($arrCONFIG, $arrR10, 1)
 	_ArrayConcatenate($arrCONFIG, $arrDev, 1)
 	_ArrayConcatenate($arrCONFIG, $arrHelpers, 1)
 	_ArrayConcatenate($arrCONFIG, $arrPOS, 1)
 	_ArrayConcatenate($arrCONFIG, $arrEmulators, 1)
-	$arrCONFIG[0][0] = $arrUI[0][0] + $arrEnv[0][0] + $arrR10[0][0] + $arrDev[0][0] + $arrHelpers[0][0] + $arrPOS[0][0] + $arrEmulators[0][0]
+	$arrCONFIG[0][0] = $arrPosTyper[0][0] + $arrEnv[0][0] + $arrR10[0][0] + $arrDev[0][0] + $arrHelpers[0][0] + $arrPOS[0][0] + $arrEmulators[0][0]
 EndFunc   ;==>ReloadConfigFile
 
 
