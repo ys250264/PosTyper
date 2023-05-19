@@ -34,60 +34,60 @@ Global $icoFile			= @ScriptDir & "\POStyper.ico"
 Global $arrItems
 Global $arrCONFIG
 
-Global $CFG_DIALOG_CAPTION				= 1
-Global $CFG_DIALOG_X					= 2
-Global $CFG_DIALOG_Y					= 3
-Global $CFG_DIALOG_STATUS_BAR			= 4
-Global $CFG_DIALOG_PROGRESS_BAR			= 5
-Global $CFG_DIALOG_EXT_DEVELOPER		= 6
-Global $CFG_DIALOG_LANG_SWITCHER		= 7
-Global $CFG_DIALOG_SCENARIO_SUBPATH		= 8
-Global $CFG_DIALOG_AUTO_SPEED_FACTOR	= 9
-Global $CFG_RETAIL_DB_NAME				= 10
-Global $CFG_SERVER_WEBSITE				= 11
-Global $CFG_RABBITMQ_WEBSITE			= 12
-Global $CFG_SERVER_PATH					= 13
-Global $CFG_POS_PATH					= 14
-Global $CFG_OFFICE_PATH					= 15
-Global $CFG_TLOG_PATH					= 16
-Global $CFG_DMS_PATH					= 17
-Global $CFG_SPOOKY_PATH					= 18
-Global $CFG_ARSGATEWAY_PATH				= 19
-Global $CFG_RETAILGATEWAY_PATH			= 20
-Global $CFG_STOREGATEWAY_PATH			= 21
-Global $CFG_WINEPTS_PATH				= 22
-Global $CFG_SERVER_DBG_CUST_PATH		= 23
-Global $CFG_SERVER_DBG_EXT_PATH			= 24
-Global $CFG_POS_DBG_CUST_PATH			= 25
-Global $CFG_POS_DBG_EXT_PATH			= 26
-Global $CFG_OFFICE_DBG_CUST_PATH		= 27
-Global $CFG_OFFICE_DBG_EXT_PATH			= 28
-Global $CFG_CMD							= 29
-Global $CFG_SQLMGR						= 30
-Global $CFG_EDITOR						= 31
-Global $CFG_BROWSER						= 32
-Global $CFG_SNOOP						= 33
-Global $CFG_USER						= 34
-Global $CFG_PASSWORD					= 35
-Global $CFG_LOYALTY_CARD				= 36
-Global $CFG_SCANNER_EMU_CAPTION			= 37
-Global $CFG_SCANNER_EMU_X				= 38
-Global $CFG_SCANNER_EMU_Y				= 39
-Global $CFG_PRINTER_EMU_CAPTION			= 40
-Global $CFG_PRINTER_EMU_X				= 41
-Global $CFG_PRINTER_EMU_Y				= 42
-Global $CFG_SCALE_EMU_CAPTION			= 43
-Global $CFG_SCALE_EMU_X					= 44
-Global $CFG_SCALE_EMU_Y					= 45
-Global $CFG_DRAWER_EMU_CAPTION			= 46
-Global $CFG_DRAWER_EMU_X				= 47
-Global $CFG_DRAWER_EMU_Y				= 48
-Global $CFG_WINEPTS_EMU_CAPTION			= 49
-Global $CFG_WINEPTS_EMU_X				= 50
-Global $CFG_WINEPTS_EMU_Y				= 51
-Global $CFG_UPB_EMU_CAPTION				= 52
-Global $CFG_UPB_EMU_X					= 53
-Global $CFG_UPB_EMU_Y					= 54
+Global $CFG_CAPTION					= 1
+Global $CFG_X						= 2
+Global $CFG_Y						= 3
+Global $CFG_STATUS_BAR				= 4
+Global $CFG_PROGRESS_BAR			= 5
+Global $CFG_EXT_DEVELOPER			= 6
+Global $CFG_LANG_SWITCHER			= 7
+Global $CFG_SCENARIO_SUBPATH		= 8
+Global $CFG_AUTO_SPEED_FACTOR		= 9
+Global $CFG_RETAIL_DB_NAME			= 10
+Global $CFG_SERVER_WEBSITE			= 11
+Global $CFG_RABBITMQ_WEBSITE		= 12
+Global $CFG_SERVER_PATH				= 13
+Global $CFG_POS_PATH				= 14
+Global $CFG_OFFICE_PATH				= 15
+Global $CFG_TLOG_PATH				= 16
+Global $CFG_DMS_PATH				= 17
+Global $CFG_SPOOKY_PATH				= 18
+Global $CFG_ARSGATEWAY_PATH			= 19
+Global $CFG_RETAILGATEWAY_PATH		= 20
+Global $CFG_STOREGATEWAY_PATH		= 21
+Global $CFG_WINEPTS_PATH			= 22
+Global $CFG_SERVER_DBG_CUST_PATH	= 23
+Global $CFG_SERVER_DBG_EXT_PATH		= 24
+Global $CFG_POS_DBG_CUST_PATH		= 25
+Global $CFG_POS_DBG_EXT_PATH		= 26
+Global $CFG_OFFICE_DBG_CUST_PATH	= 27
+Global $CFG_OFFICE_DBG_EXT_PATH		= 28
+Global $CFG_CMD						= 29
+Global $CFG_SQLMGR					= 30
+Global $CFG_EDITOR					= 31
+Global $CFG_BROWSER					= 32
+Global $CFG_SNOOP					= 33
+Global $CFG_USER					= 34
+Global $CFG_PASSWORD				= 35
+Global $CFG_LOYALTY_CARD			= 36
+Global $CFG_SCANNER_CAPTION			= 37
+Global $CFG_SCANNER_X				= 38
+Global $CFG_SCANNER_Y				= 39
+Global $CFG_PRINTER_CAPTION			= 40
+Global $CFG_PRINTER_X				= 41
+Global $CFG_PRINTER_Y				= 42
+Global $CFG_SCALE_CAPTION			= 43
+Global $CFG_SCALE_X					= 44
+Global $CFG_SCALE_Y					= 45
+Global $CFG_DRAWER_CAPTION			= 46
+Global $CFG_DRAWER_X				= 47
+Global $CFG_DRAWER_Y				= 48
+Global $CFG_WINEPTS_CAPTION			= 49
+Global $CFG_WINEPTS_X				= 50
+Global $CFG_WINEPTS_Y				= 51
+Global $CFG_UPB_CAPTION				= 52
+Global $CFG_UPB_X					= 53
+Global $CFG_UPB_Y					= 54
 
 If _Singleton("POStyper", 1) = 0 Then
 	ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper", "PosTyper is already running", 3, False)
@@ -108,19 +108,19 @@ Func Main()
 	Global $DefaultAutomationSpeedFactor = 1
 	Global $AutomationSpeedFactor = $DefaultAutomationSpeedFactor
 
-	Global $ShowStatusBar				= StringIsTrue($arrCONFIG[$CFG_DIALOG_STATUS_BAR][1])
-	Global $ShowExtDeveloperLine		= StringIsTrue($arrCONFIG[$CFG_DIALOG_EXT_DEVELOPER][1])
-	Global $ShowLanguageSwitcherLine	= StringIsTrue($arrCONFIG[$CFG_DIALOG_LANG_SWITCHER][1])
-	Global $ShowProgressBar				= StringIsTrue($arrCONFIG[$CFG_DIALOG_PROGRESS_BAR][1])
+	Global $ShowStatusBar				= StringIsTrue($arrCONFIG[$CFG_STATUS_BAR][1])
+	Global $ShowExtDeveloperLine		= StringIsTrue($arrCONFIG[$CFG_EXT_DEVELOPER][1])
+	Global $ShowLanguageSwitcherLine	= StringIsTrue($arrCONFIG[$CFG_LANG_SWITCHER][1])
+	Global $ShowProgressBar				= StringIsTrue($arrCONFIG[$CFG_PROGRESS_BAR][1])
 
 	$PosTyperDialogHeight = GetDialogHeight($PosTyperDialogHeight, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
 
-	If ($arrCONFIG[$CFG_DIALOG_X][1] >= 0 And $arrCONFIG[$CFG_DIALOG_Y][1] >= 0) Then
-		$PosTyperDialogX = $arrCONFIG[$CFG_DIALOG_X][1]
-		$PosTyperDialogY = $arrCONFIG[$CFG_DIALOG_Y][1]
+	If ($arrCONFIG[$CFG_X][1] >= 0 And $arrCONFIG[$CFG_Y][1] >= 0) Then
+		$PosTyperDialogX = $arrCONFIG[$CFG_X][1]
+		$PosTyperDialogY = $arrCONFIG[$CFG_Y][1]
 	EndIf
 
-	Global $g_hPosTyper = GUICreate($arrCONFIG[$CFG_DIALOG_CAPTION][1], $PosTyperDialogWidth, $PosTyperDialogHeight, $PosTyperDialogX, $PosTyperDialogY, -1, $WS_EX_ACCEPTFILES)
+	Global $g_hPosTyper = GUICreate($arrCONFIG[$CFG_CAPTION][1], $PosTyperDialogWidth, $PosTyperDialogHeight, $PosTyperDialogX, $PosTyperDialogY, -1, $WS_EX_ACCEPTFILES)
 
 	GUISetIcon($icoFile)
 
@@ -436,7 +436,7 @@ EndFunc   ;==>Type
 
 
 Func AutomationSpeed()
-	$UserAutomationSpeedFactor = $arrCONFIG[$CFG_DIALOG_AUTO_SPEED_FACTOR][1]
+	$UserAutomationSpeedFactor = $arrCONFIG[$CFG_AUTO_SPEED_FACTOR][1]
 	$DefaultSpeedFactorText = "x" & $DefaultAutomationSpeedFactor
 	$UserSpeedFactorText = "x" & $UserAutomationSpeedFactor
 	If GUICtrlRead($idBtnAutomationSpeed) = $DefaultSpeedFactorText Then
@@ -457,7 +457,7 @@ Func Scan()
 	If $Scanme == "" Then
 		Return
 	EndIf
-	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_CAPTION][1])
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $Scanme)
 	ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
@@ -507,29 +507,29 @@ Func ArrangeEmulators()
 	If Not IsPosClientRunning() Then
 		Return
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_SCANNER_CAPTION][1])
 	If $WndHnd > 0 Then
-		WinMove($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1], "", $arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_SCANNER_CAPTION][1], "", $arrCONFIG[$CFG_SCANNER_X][1], $arrCONFIG[$CFG_SCANNER_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_PRINTER_EMU_CAPTION][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_PRINTER_CAPTION][1])
 	If $WndHnd > 0 Then
-		WinMove($arrCONFIG[$CFG_PRINTER_EMU_CAPTION][1], "", $arrCONFIG[$CFG_PRINTER_EMU_X][1], $arrCONFIG[$CFG_PRINTER_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_PRINTER_CAPTION][1], "", $arrCONFIG[$CFG_PRINTER_X][1], $arrCONFIG[$CFG_PRINTER_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_SCALE_EMU_CAPTION][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_SCALE_CAPTION][1])
 	If $WndHnd > 0 Then
-		WinMove($arrCONFIG[$CFG_SCALE_EMU_CAPTION][1], "", $arrCONFIG[$CFG_SCALE_EMU_X][1], $arrCONFIG[$CFG_SCALE_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_SCALE_CAPTION][1], "", $arrCONFIG[$CFG_SCALE_X][1], $arrCONFIG[$CFG_SCALE_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_DRAWER_EMU_CAPTION][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_DRAWER_CAPTION][1])
 	If $WndHnd > 0 Then
-		WinMove($arrCONFIG[$CFG_DRAWER_EMU_CAPTION][1], "", $arrCONFIG[$CFG_DRAWER_EMU_X][1], $arrCONFIG[$CFG_DRAWER_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_DRAWER_CAPTION][1], "", $arrCONFIG[$CFG_DRAWER_X][1], $arrCONFIG[$CFG_DRAWER_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_WINEPTS_EMU_CAPTION][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_WINEPTS_CAPTION][1])
 	If $WndHnd > 0 Then
-		WinMove($arrCONFIG[$CFG_WINEPTS_EMU_CAPTION][1], "", $arrCONFIG[$CFG_WINEPTS_EMU_X][1], $arrCONFIG[$CFG_WINEPTS_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_WINEPTS_CAPTION][1], "", $arrCONFIG[$CFG_WINEPTS_X][1], $arrCONFIG[$CFG_WINEPTS_Y][1])
 	EndIf
-	$WndHnd = WinActivate($arrCONFIG[$CFG_UPB_EMU_CAPTION][1])
+	$WndHnd = WinActivate($arrCONFIG[$CFG_UPB_CAPTION][1])
 	If $WndHnd > 0 Then
-		WinMove($arrCONFIG[$CFG_UPB_EMU_CAPTION][1], "", $arrCONFIG[$CFG_UPB_EMU_X][1], $arrCONFIG[$CFG_UPB_EMU_Y][1])
+		WinMove($arrCONFIG[$CFG_UPB_CAPTION][1], "", $arrCONFIG[$CFG_UPB_X][1], $arrCONFIG[$CFG_UPB_Y][1])
 	EndIf
 EndFunc   ;==>ArrangeEmulators
 
@@ -539,7 +539,7 @@ Func ScanLoyaltyCard()
 		Return
 	EndIf
 	$Scanme = StringStripWS(GUICtrlRead($idComboBox), 8)
-	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_CAPTION][1])
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $arrCONFIG[$CFG_LOYALTY_CARD][1])
 	ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
@@ -553,7 +553,7 @@ Func Scenario()
 	EndIf
 	FileChangeDir($PostyperDir)
 	$ScenariosFullDir = $ScenariosDir
-	$SubPath = StringReplace($arrCONFIG[$CFG_DIALOG_SCENARIO_SUBPATH][1], '"', '')
+	$SubPath = StringReplace($arrCONFIG[$CFG_SCENARIO_SUBPATH][1], '"', '')
 	If $SubPath > 0 Then
 		$ScenariosFullDir = $ScenariosDir & "\" & $SubPath
 	EndIf
@@ -759,7 +759,7 @@ Func CleanScanner()
 	If Not IsPosClientRunning() Then
 		Return
 	EndIf
-	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
+	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_CAPTION][1])
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 EndFunc   ;==>CleanScanner
 
@@ -862,7 +862,7 @@ EndFunc   ;==>ToDutch
 ;~ 	If WinExists("R10PosClient") == 1 Then
 ;~ 		WinActivate("R10PosClient")
 ;~     EndIf
-;~ 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
+;~ 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_CAPTION][1])
 ;~ 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 ;~     ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$keys[2])
 ;~     ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:4]")
@@ -1013,7 +1013,7 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 		WriteToStatusBar("Scenario", $StatusBarText)
 
 		If $arrItems[$i][0] = "item" Or $arrItems[$i][0] = "card" Then
-			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
+			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_CAPTION][1])
 			ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 			ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $arrItems[$i][1])
 			ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
