@@ -163,7 +163,7 @@ Func Main()
 	Local $captionEditIni			= "Edit Ini"
  
 	Local $captionDebugOn			= "Gpos DBG"
-	Local $captionDebugOff			=  "Gpos ERR"
+	Local $captionDebugOff			= "Gpos ERR"
 	Local $captionExposeLogs		= "Expose Logs"
 	Local $captionExposeTLog		= "Expose Tlog"
  
@@ -230,70 +230,71 @@ Func Main()
 	Local $Col_3 = $Col_2 + $ColWidth
 	Local $Col_4 = $Col_3 + $ColWidth
 
+	Local $BtnWidthT	= 25
 	Local $BtnWidthS	= 35
 	Local $BtnHeightS	= 23
 	Local $BtnWidthL	= 70
 	Local $BtnHeight	= 20
 
-	Local $idBtnScan				= GUICtrlCreateButton($captionScan				, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	;Local $idBtnCD					= GUICtrlCreateButton($captionCD				, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	Local $idBtnType				= GUICtrlCreateButton($captionType				, 260, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	Global $idBtnAutomationSpeed	= GUICtrlCreateButton($captionAutomationSpeed	, 295, $ROW_0 - 1, $BtnWidthS-10, $BtnHeightS)
-	;Local $idBtnAuto				= GUICtrlCreateButton($captionAuto				, 170, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Local $idBtnScan				= GUICtrlCreateButton($captionScan				, 225	, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	;Local $idBtnCD					= GUICtrlCreateButton($captionCD				, 225	, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Local $idBtnType				= GUICtrlCreateButton($captionType				, 260	, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	Global $idBtnAutomationSpeed	= GUICtrlCreateButton($captionAutomationSpeed	, 295	, $ROW_0 - 1, $BtnWidthT, $BtnHeightS)
+	;Local $idBtnAuto				= GUICtrlCreateButton($captionAuto				, 170	, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 			 
-	Local $idBtnStartPOS			= GUICtrlCreateButton($captionStartPOS			, $Col_1, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnLogin				= GUICtrlCreateButton($captionLogin				, $Col_2, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnEmuArrange			= GUICtrlCreateButton($captionEmuArrange		, $Col_3, $ROW_1, $BtnWidthL, $BtnHeight)
-	Local $idBtnScanLoyaltyCard		= GUICtrlCreateButton($captionScanLoyaltyCard	, $Col_4, $ROW_1, $BtnWidthL, $BtnHeight)
-		 
-	Local $idBtnScenario			= GUICtrlCreateButton($captionScenario			, $Col_1, $ROW_2, $BtnWidthL, $BtnHeight)
-	Local $idBtnTendering			= GUICtrlCreateButton($captionTendering			, $Col_2, $ROW_2, $BtnWidthL, $BtnHeight)
-	Local $idBtnUnlock				= GUICtrlCreateButton($captionUnlock			, $Col_3, $ROW_2, $BtnWidthL, $BtnHeight)
-	Local $idBtnKillPOS				= GUICtrlCreateButton($captionKillPOS 	    	, $Col_4, $ROW_2, $BtnWidthL, $BtnHeight)
-			 
-	Local $idBtnCleanLogs			= GUICtrlCreateButton($captionCleanLogs			, $Col_1, $ROW_3, $BtnWidthL, $BtnHeight)
-	Local $idBtnBrowseServer		= GUICtrlCreateButton($captionBrowseServer		, $Col_2, $ROW_3, $BtnWidthL, $BtnHeight)
-	Local $idBtnMonitoSrvLog		= GUICtrlCreateButton($captionMonitoSrvLog		, $Col_3, $ROW_3, $BtnWidthL, $BtnHeight)
-	Local $idBtnEditIni				= GUICtrlCreateButton($captionEditIni			, $Col_4, $ROW_3, $BtnWidthL, $BtnHeight)
-		 
-	Local $idBtnDebugOn				= GUICtrlCreateButton($captionDebugOn			, $Col_1, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnDebugOff			= GUICtrlCreateButton($captionDebugOff			, $Col_2, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnExposeLogs			= GUICtrlCreateButton($captionExposeLogs		, $Col_3, $ROW_4, $BtnWidthL, $BtnHeight)
-	Local $idBtnExposeTLog			= GUICtrlCreateButton($captionExposeTLog		, $Col_4, $ROW_4, $BtnWidthL, $BtnHeight)
-		 
-	Local $idBtnReceiptDebugOn		= GUICtrlCreateButton($captionReceiptDebugOn	, $Col_1, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnReceiptDebugOff		= GUICtrlCreateButton($captionReceiptDebugOff	, $Col_2, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnViewSlip			= GUICtrlCreateButton($captionViewSlip			, $Col_3, $ROW_5, $BtnWidthL, $BtnHeight)
-	Local $idBtnCollectLogs			= GUICtrlCreateButton($captionCollectLogs		, $Col_4, $ROW_5, $BtnWidthL, $BtnHeight)
-		 
-	Local $idBtnSnipPos				= GUICtrlCreateButton($captionSnipPos   		, $Col_1, $ROW_6, $BtnWidthL, $BtnHeight)	
-	Local $idBtnSnipScreen			= GUICtrlCreateButton($captionSnipScreen		, $Col_2, $ROW_6, $BtnWidthL, $BtnHeight)		
-	Local $idBtnCleanScanner		= GUICtrlCreateButton($captionCleanScanner		, $Col_3, $ROW_6, $BtnWidthL, $BtnHeight)
-	Local $idBtnBrowseRabbit		= GUICtrlCreateButton($captionBrowseRabbit		, $Col_4, $ROW_6, $BtnWidthL, $BtnHeight)
-			 
-	Local $idBtnIISReset			= GUICtrlCreateButton($captionIISReset			, $Col_1, $ROW_7, $BtnWidthL, $BtnHeight)
-	Local $idBtnIISStop				= GUICtrlCreateButton($captionIISStop			, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
-	Local $idBtnIISStart			= GUICtrlCreateButton($captionIISStart			, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
-	Local $idBtnOpenCMD				= GUICtrlCreateButton($captionOpenCMD			, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
-		 
-	Local $idBtnOpenSpooky			= GUICtrlCreateButton($captionOpenSpooky		, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
-	Local $idBtnSQLMgmt				= GUICtrlCreateButton($captionSQLMgmt			, $Col_2, $ROW_8, $BtnWidthL, $BtnHeight)
-	Local $idBtnOpenSnoop			= GUICtrlCreateButton($captionOpenSnoop			, $Col_3, $ROW_8, $BtnWidthL, $BtnHeight)
-	Local $idBtnOpenServices		= GUICtrlCreateButton($captionOpenServices		, $Col_4, $ROW_8, $BtnWidthL, $BtnHeight)		
+	Local $idBtnStartPOS			= GUICtrlCreateButton($captionStartPOS			, $Col_1, $ROW_1	, $BtnWidthL, $BtnHeight)
+	Local $idBtnLogin				= GUICtrlCreateButton($captionLogin				, $Col_2, $ROW_1	, $BtnWidthL, $BtnHeight)
+	Local $idBtnEmuArrange			= GUICtrlCreateButton($captionEmuArrange		, $Col_3, $ROW_1	, $BtnWidthL, $BtnHeight)
+	Local $idBtnScanLoyaltyCard		= GUICtrlCreateButton($captionScanLoyaltyCard	, $Col_4, $ROW_1	, $BtnWidthL, $BtnHeight)
+			
+	Local $idBtnScenario			= GUICtrlCreateButton($captionScenario			, $Col_1, $ROW_2	, $BtnWidthL, $BtnHeight)
+	Local $idBtnTendering			= GUICtrlCreateButton($captionTendering			, $Col_2, $ROW_2	, $BtnWidthL, $BtnHeight)
+	Local $idBtnUnlock				= GUICtrlCreateButton($captionUnlock			, $Col_3, $ROW_2	, $BtnWidthL, $BtnHeight)
+	Local $idBtnKillPOS				= GUICtrlCreateButton($captionKillPOS 	    	, $Col_4, $ROW_2	, $BtnWidthL, $BtnHeight)
+				
+	Local $idBtnCleanLogs			= GUICtrlCreateButton($captionCleanLogs			, $Col_1, $ROW_3	, $BtnWidthL, $BtnHeight)
+	Local $idBtnBrowseServer		= GUICtrlCreateButton($captionBrowseServer		, $Col_2, $ROW_3	, $BtnWidthL, $BtnHeight)
+	Local $idBtnMonitoSrvLog		= GUICtrlCreateButton($captionMonitoSrvLog		, $Col_3, $ROW_3	, $BtnWidthL, $BtnHeight)
+	Local $idBtnEditIni				= GUICtrlCreateButton($captionEditIni			, $Col_4, $ROW_3	, $BtnWidthL, $BtnHeight)
+			
+	Local $idBtnDebugOn				= GUICtrlCreateButton($captionDebugOn			, $Col_1, $ROW_4	, $BtnWidthL, $BtnHeight)
+	Local $idBtnDebugOff			= GUICtrlCreateButton($captionDebugOff			, $Col_2, $ROW_4	, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeLogs			= GUICtrlCreateButton($captionExposeLogs		, $Col_3, $ROW_4	, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeTLog			= GUICtrlCreateButton($captionExposeTLog		, $Col_4, $ROW_4	, $BtnWidthL, $BtnHeight)
+			
+	Local $idBtnReceiptDebugOn		= GUICtrlCreateButton($captionReceiptDebugOn	, $Col_1, $ROW_5	, $BtnWidthL, $BtnHeight)
+	Local $idBtnReceiptDebugOff		= GUICtrlCreateButton($captionReceiptDebugOff	, $Col_2, $ROW_5	, $BtnWidthL, $BtnHeight)
+	Local $idBtnViewSlip			= GUICtrlCreateButton($captionViewSlip			, $Col_3, $ROW_5	, $BtnWidthL, $BtnHeight)
+	Local $idBtnCollectLogs			= GUICtrlCreateButton($captionCollectLogs		, $Col_4, $ROW_5	, $BtnWidthL, $BtnHeight)
+			
+	Local $idBtnSnipPos				= GUICtrlCreateButton($captionSnipPos   		, $Col_1, $ROW_6	, $BtnWidthL, $BtnHeight)	
+	Local $idBtnSnipScreen			= GUICtrlCreateButton($captionSnipScreen		, $Col_2, $ROW_6	, $BtnWidthL, $BtnHeight)		
+	Local $idBtnCleanScanner		= GUICtrlCreateButton($captionCleanScanner		, $Col_3, $ROW_6	, $BtnWidthL, $BtnHeight)
+	Local $idBtnBrowseRabbit		= GUICtrlCreateButton($captionBrowseRabbit		, $Col_4, $ROW_6	, $BtnWidthL, $BtnHeight)
+				
+	Local $idBtnIISReset			= GUICtrlCreateButton($captionIISReset			, $Col_1, $ROW_7	, $BtnWidthL, $BtnHeight)
+	Local $idBtnIISStop				= GUICtrlCreateButton($captionIISStop			, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)
+	Local $idBtnIISStart			= GUICtrlCreateButton($captionIISStart			, $Col_3, $ROW_7	, $BtnWidthL, $BtnHeight)
+	Local $idBtnOpenCMD				= GUICtrlCreateButton($captionOpenCMD			, $Col_4, $ROW_7	, $BtnWidthL, $BtnHeight)
+			
+	Local $idBtnOpenSpooky			= GUICtrlCreateButton($captionOpenSpooky		, $Col_1, $ROW_8	, $BtnWidthL, $BtnHeight)
+	Local $idBtnSQLMgmt				= GUICtrlCreateButton($captionSQLMgmt			, $Col_2, $ROW_8	, $BtnWidthL, $BtnHeight)
+	Local $idBtnOpenSnoop			= GUICtrlCreateButton($captionOpenSnoop			, $Col_3, $ROW_8	, $BtnWidthL, $BtnHeight)
+	Local $idBtnOpenServices		= GUICtrlCreateButton($captionOpenServices		, $Col_4, $ROW_8	, $BtnWidthL, $BtnHeight)		
+		
+	Local $idBtnCopySrvExtToCust	= GUICtrlCreateButton($captionCopySrvExtToCust	, $Col_1, $ROW_9	, $BtnWidthL, $BtnHeight)
+	Local $idBtnCopyPOSExtToCust	= GUICtrlCreateButton($captionCopyPOSExtToCust	, $Col_2, $ROW_9	, $BtnWidthL, $BtnHeight)
+	Local $idBtnCopyOffExtToCust	= GUICtrlCreateButton($captionCopyOffExtToCust	, $Col_3, $ROW_9	, $BtnWidthL, $BtnHeight)
 	 
-	Local $idBtnCopySrvExtToCust	= GUICtrlCreateButton($captionCopySrvExtToCust	, $Col_1, $ROW_9, $BtnWidthL, $BtnHeight)
-	Local $idBtnCopyPOSExtToCust	= GUICtrlCreateButton($captionCopyPOSExtToCust	, $Col_2, $ROW_9, $BtnWidthL, $BtnHeight)
-	Local $idBtnCopyOffExtToCust	= GUICtrlCreateButton($captionCopyOffExtToCust	, $Col_3, $ROW_9, $BtnWidthL, $BtnHeight)
-	 
-	Local $idBtnToEnglish			= GUICtrlCreateButton($captionToEnglish			, $Col_1, $ROW_10, $BtnWidthL, $BtnHeight)
-	Local $idBtnToDutch				= GUICtrlCreateButton($captionToDutch			, $Col_2, $ROW_10, $BtnWidthL, $BtnHeight)
+	Local $idBtnToEnglish			= GUICtrlCreateButton($captionToEnglish			, $Col_1, $ROW_10	, $BtnWidthL, $BtnHeight)
+	Local $idBtnToDutch				= GUICtrlCreateButton($captionToDutch			, $Col_2, $ROW_10	, $BtnWidthL, $BtnHeight)
  
-	;~	Local $idBtnResetLoy		= GUICtrlCreateButton($captionResetLoy			, $Col_4, $ROW_7, $BtnWidthL, $BtnHeight)
-	;~ 	Local $idBtnMsg3On			= GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7, $BtnWidthL, $BtnHeight)
-	;~ 	Local $idBtnMsg3Off			= GUICtrlCreateButton($captionMsg3Off			, $Col_3, $ROW_7, $BtnWidthL, $BtnHeight)
-	;~	Local $idBtnFLDiag			= GUICtrlCreateButton($captionFLDiag			, $Col_1, $ROW_8, $BtnWidthL, $BtnHeight)
+	;~	Local $idBtnResetLoy		= GUICtrlCreateButton($captionResetLoy			, $Col_4, $ROW_7	, $BtnWidthL, $BtnHeight)
+	;~ 	Local $idBtnMsg3On			= GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)
+	;~ 	Local $idBtnMsg3Off			= GUICtrlCreateButton($captionMsg3Off			, $Col_3, $ROW_7	, $BtnWidthL, $BtnHeight)
+	;~	Local $idBtnFLDiag			= GUICtrlCreateButton($captionFLDiag			, $Col_1, $ROW_8	, $BtnWidthL, $BtnHeight)
 
-	If ($ShowLanguageSwitcherLine) Then
+	If $ShowLanguageSwitcherLine Then
 		DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
 	EndIf
 	
@@ -303,7 +304,7 @@ Func Main()
 	Copyrights()
 	
     GUISetState(@SW_SHOW)
-    If (WinExists("R10PosClient")) Then
+    If WinExists("R10PosClient") Then
 		WinActivate("R10PosClient")
     EndIf
 	Sleep(500)
@@ -420,23 +421,23 @@ Func Type()
 	WinActivate("R10PosClient")
 	sleep(200)
 	$Item = GetItemNumberFromCombo()
-	If ($Item  == "") Then
+	If $Item  == "" Then
 		Return
 	EndIf
  	$keys = StringSplit($Item,"")
     MouseClick("left",560,350,2,1)
 	sleep(200)
 	$SleepMsBetweenTypes = 300
-	If ($keys[0]>4) Then
+	If $keys[0] > 4 Then
 		$SleepMsBetweenTypes = 100
 	EndIf
 	For $i = 1 To $keys[0]
 		Send($keys[$i])
 		sleep($SleepMsBetweenTypes)
 	Next
-    MouseClick("left",800,630,1,1)
+    MouseClick("left", 800, 630, 1, 1)
 	sleep(200)
-	MouseMove($pos[0],$pos[1],1)
+	MouseMove($pos[0], $pos[1], 1)
 EndFunc
 
 
@@ -459,7 +460,7 @@ EndFunc
 Func Scan()
 	;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
 	$Scanme = GetItemNumberFromCombo()
-	If ($Scanme  == "") Then
+	If $Scanme == "" Then
 		Return
 	EndIf	
 	$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
@@ -471,7 +472,7 @@ EndFunc
 
 
 Func StartPOS()
-    If (Not WinExists("R10PosClient")) Then
+    If Not WinExists("R10PosClient") Then
 		Run($arrCONFIG[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe", $arrCONFIG[$CFG_POS_PATH][1])
     EndIf
 	Sleep(500)
@@ -488,7 +489,7 @@ Func Login()
 	Sleep(300)
     BlockInput(1)
  	$keys = StringSplit($arrCONFIG[$CFG_USER][1], "")
-	MouseClick("left",750,400,1,1)
+	MouseClick("left", 750, 400, 1, 1)
 	Sleep(300)
 	Send ("{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	For $i = 1 To $keys[0]
@@ -513,27 +514,27 @@ Func ArrangeEmulators()
 		return
 	Endif
 	$WndHnd = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
-	If ($WndHnd > 0) Then
+	If $WndHnd > 0 Then
 		WinMove($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1], "", $arrCONFIG[$CFG_SCANNER_EMU_X][1], $arrCONFIG[$CFG_SCANNER_EMU_Y][1])
 	EndIf
 	$WndHnd = WinActivate($arrCONFIG[$CFG_PRINTER_EMU_CAPTION][1])
-	If ($WndHnd > 0) Then
+	If $WndHnd > 0 Then
 		WinMove($arrCONFIG[$CFG_PRINTER_EMU_CAPTION][1], "", $arrCONFIG[$CFG_PRINTER_EMU_X][1], $arrCONFIG[$CFG_PRINTER_EMU_Y][1])
 	EndIf
 	$WndHnd = WinActivate($arrCONFIG[$CFG_SCALE_EMU_CAPTION][1])
-	If ($WndHnd > 0) Then
+	If $WndHnd > 0 Then
 		WinMove($arrCONFIG[$CFG_SCALE_EMU_CAPTION][1], "", $arrCONFIG[$CFG_SCALE_EMU_X][1], $arrCONFIG[$CFG_SCALE_EMU_Y][1])
 	EndIf
 	$WndHnd = WinActivate($arrCONFIG[$CFG_DRAWER_EMU_CAPTION][1])
-	If ($WndHnd > 0) Then
+	If $WndHnd > 0 Then
 		WinMove($arrCONFIG[$CFG_DRAWER_EMU_CAPTION][1], "", $arrCONFIG[$CFG_DRAWER_EMU_X][1], $arrCONFIG[$CFG_DRAWER_EMU_Y][1])
 	EndIf
 	$WndHnd = WinActivate($arrCONFIG[$CFG_WINEPTS_EMU_CAPTION][1])
-	If ($WndHnd > 0) Then
+	If $WndHnd > 0 Then
 		WinMove($arrCONFIG[$CFG_WINEPTS_EMU_CAPTION][1], "", $arrCONFIG[$CFG_WINEPTS_EMU_X][1], $arrCONFIG[$CFG_WINEPTS_EMU_Y][1])
 	EndIf
 	$WndHnd = WinActivate($arrCONFIG[$CFG_UPB_EMU_CAPTION][1])
-	If ($WndHnd > 0) Then
+	If $WndHnd > 0 Then
 		WinMove($arrCONFIG[$CFG_UPB_EMU_CAPTION][1], "", $arrCONFIG[$CFG_UPB_EMU_X][1], $arrCONFIG[$CFG_UPB_EMU_Y][1])
 	EndIf
 EndFunc
@@ -559,7 +560,7 @@ Func Scenario()
 	FileChangeDir($PostyperDir)
 	$ScenariosFullDir = $ScenariosDir
 	$SubPath = StringReplace($arrCONFIG[$CFG_DIALOG_SCENARIO_SUBPATH][1], '"', '')	
-	if ($SubPath > 0) Then
+	if $SubPath > 0 Then
 		$ScenariosFullDir =  $ScenariosDir & "\" & $SubPath
 	EndIf
     Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosFullDir & "\", "All (*.ini)",1)
@@ -589,16 +590,16 @@ Func Unlock()
 	Local $pos = MouseGetPos()
 	Sleep(300)
     BlockInput(1)
- 	MouseClick("left",400,250,1,1)
+ 	MouseClick("left", 400, 250, 1, 1)
     Sleep(500)
 	Send("{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
- 	$keys = StringSplit($arrCONFIG[$CFG_PASSWORD][1],"")
+ 	$keys = StringSplit($arrCONFIG[$CFG_PASSWORD][1], "")
 	For $i = 1 To $keys[0]
 		Send($keys[$i])
     Next
-	MouseClick("left",920,220,1,1)
+	MouseClick("left", 920, 220, 1, 1)
 	BlockInput(0)
-	MouseMove($pos[0],$pos[1],1)
+	MouseMove($pos[0], $pos[1], 1)
 EndFunc
 
 
@@ -736,10 +737,10 @@ Func SnipPOS()
 	EndIf	
 	Local $hBmp
 	WinActivate($g_hPosTyper)
-	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
-	Sleep (250)
-	$hBmp = _ScreenCapture_Capture("",0,0,1024,768)
-	$ImageName = $CaptureDir  & "\PosSnip_" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
+	WinSetState( $g_hPosTyper, "", @SW_MINIMIZE )
+	Sleep(250)
+	$hBmp = _ScreenCapture_Capture("", 0, 0, 1024, 768)
+	$ImageName = $CaptureDir & "\PosSnip_" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
     _ScreenCapture_SaveImage($ImageName, $hBmp)
 	ShellExecute($ImageName)
 EndFunc
@@ -751,8 +752,8 @@ Func SnipScreen()
 	EndIf	
 	Local $hBmp
 	WinActivate($g_hPosTyper)
-	WinSetState ( $g_hPosTyper, "", @SW_MINIMIZE )
-	Sleep (250)
+	WinSetState( $g_hPosTyper, "", @SW_MINIMIZE )
+	Sleep(250)
 	$hBmp = _ScreenCapture_Capture("")
 	$ImageName = $CaptureDir  & "\ScreenSnip_" & @HOUR & "_" & @MIN & "_" & @SEC & ".jpg"
     _ScreenCapture_SaveImage($ImageName, $hBmp)
@@ -822,7 +823,7 @@ Func CopyServerExtToCust()
 	$arg1 = $arrCONFIG[$CFG_SERVER_DBG_CUST_PATH][1] & " "
 	$arg2 = $arrCONFIG[$CFG_SERVER_DBG_EXT_PATH][1] & " "
 	$arguments = $arg1 & $arg2
-	ShellExecute($cmd,$arguments, "", "", @SW_MAXIMIZE)
+	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc
 
 
@@ -831,7 +832,7 @@ Func CopyPosExtToCust()
 	$arg1 = $arrCONFIG[$CFG_POS_DBG_CUST_PATH][1] & " "
 	$arg2 = $arrCONFIG[$CFG_POS_DBG_EXT_PATH][1] & " "
 	$arguments = $arg1 & $arg2
-	ShellExecute($cmd,$arguments, "", "", @SW_MAXIMIZE)
+	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc
 
 
@@ -840,7 +841,7 @@ Func CopyOfficeExtToCust()
 	$arg1 = $arrCONFIG[$CFG_OFFICE_DBG_CUST_PATH][1] & " "
 	$arg2 = $arrCONFIG[$CFG_OFFICE_DBG_EXT_PATH][1] & " "
 	$arguments = $arg1 & $arg2
-	ShellExecute($cmd,$arguments, "", "", @SW_MAXIMIZE)
+	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc
 
 
@@ -913,16 +914,16 @@ Func GetItemNumberFromCombo()
 	$SelectedItem = StringStripWS(GUICtrlRead($idComboBox), $STR_STRIPALL)
 	$Tokens = StringSplit($SelectedItem, "-")
 	$numberOfTokens = $Tokens[0]
-	if ($numberOfTokens < 1) Then
+	if $numberOfTokens < 1 Then
 		return ""
 	EndIf
 	$Item = StringStripWS($Tokens[1], $STR_STRIPALL)
-	$ItemIsNumber = StringRegExp($Item,"^\d+$")
-	If (Not $ItemIsNumber) Then
+	$ItemIsNumber = StringRegExp($Item, "^\d+$")
+	If Not $ItemIsNumber Then
 		ExtMsgBox($EMB_ICONEXCLAM, $MB_OK, "PosTyper",  $Item & " is not a number", 3, $g_hPosTyper)
 		Return ""
 	EndIf
-	if ($numberOfTokens > 1) Then
+	if $numberOfTokens > 1 Then
 		$Desc = StringStripWS($Tokens[2], $STR_STRIPALL)	
 	EndIf
 	return $Item
@@ -982,9 +983,9 @@ EndFunc
 Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 	$LastBtnClickedOK = True
 	FileChangeDir($PostyperDir)
-	$arrItems=IniReadSection($sFileName,"SCENARIO")
+	$arrItems = IniReadSection($sFileName,"SCENARIO")
 
-	If (WinExists("R10PosClient")) Then
+	If WinExists("R10PosClient") Then
 		WinActivate("R10PosClient")
 	EndIf
 
@@ -1005,23 +1006,23 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 		$KeyToStatusBar = $arrItems[$i][0]
 		$ValToStatusBar = $arrItems[$i][1]
 		
-		if $KeyToStatusBar =  "wait" Then
+		if $KeyToStatusBar = "wait" Then
 			$ValToStatusBar *= $AutomationSpeedFactor
 		EndIf
 		
 		$StatusBarText = $KeyToStatusBar & " = " & $ValToStatusBar
 		WriteToStatusBar("Scenario", $StatusBarText)
 		
-		If $arrItems[$i][0] = "item" Or  $arrItems[$i][0] = "card" Then
+		If $arrItems[$i][0] = "item" Or $arrItems[$i][0] = "card" Then
 			$hWndSCR = WinActivate($arrCONFIG[$CFG_SCANNER_EMU_CAPTION][1])
-			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-			ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$arrItems[$i][1])
-			ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:5]")
+			ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+			ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $arrItems[$i][1])
+			ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
 
 			For $j = 1 To 10
-				Sleep (50)
-				$sText = ControlGetText($hWndSCR,"","[CLASS:Edit; INSTANCE:3]")
-				If $sText = "Claimed,Enabled" Then	ExitLoop
+				Sleep(50)
+				$sText = ControlGetText($hWndSCR, "", "[CLASS:Edit; INSTANCE:3]")
+				If $sText = "Claimed,Enabled" Then ExitLoop
 			Next
 			WinActivate("R10PosClient")		
 		ElseIf $arrItems[$i][0] = "button" Then
@@ -1032,7 +1033,7 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			   PressEnter()
 			EndIf
 			if $arrItems[$i][1] = "DIALOG_MID_OK" Then
-			   MouseClick("left",520,520,1,1)
+			   MouseClick("left", 520, 520, 1, 1)
 		   EndIf
 			if $arrItems[$i][1] = "ADD_CUSTOMER_BACK_BTN" Then
 				$LastBtnClickedOK = SkipAddCustomer()			
@@ -1044,52 +1045,52 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 				$LastBtnClickedOK = SkipSpareChangeCodeDialog()			
 			EndIf			
 			if $arrItems[$i][1] = "TENDER_1" Then
-			   MouseClick("left",930,110,1,1)
+			   MouseClick("left", 930, 110, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "TENDER_2" Then
-			   MouseClick("left",930,170,1,1)
+			   MouseClick("left", 930, 170, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "TENDER_3" Then
-			   MouseClick("left",930,240,1,1)
+			   MouseClick("left", 930, 240, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "TENDER_4" Then
-			   MouseClick("left",930,310,1,1)
+			   MouseClick("left", 930, 310, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "TENDER_5" Then
-			   MouseClick("left",930,370,1,1)
+			   MouseClick("left", 930, 370, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "TENDER_6" Then
-			   MouseClick("left",930,440,1,1)
+			   MouseClick("left", 30, 440, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "TENDER_7" Then
-			   MouseClick("left",930,510,1,1)
+			   MouseClick("left", 930, 510, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "TENDER_UP" Then
-			   MouseClick("left",910,580,1,1)
+			   MouseClick("left", 910, 580, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "TENDER_DOWN" Then
-			   MouseClick("left",960,580,1,1)
+			   MouseClick("left", 960, 580, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "TENDER_BACK" Then
-			   MouseClick("left",930,630,1,1)
+			   MouseClick("left", 930, 630, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "CLOSE_CHANGE" Then
-			   MouseClick("left",730,535,1,1)
+			   MouseClick("left", 730, 535, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "LEFT_TOP" Then
-			   MouseClick("left",585,140,1,1)
+			   MouseClick("left", 585, 140, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "RIGHT_TOP" Then
-			   MouseClick("left",690,140,1,1)
+			   MouseClick("left", 690, 140, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "LEFT_BOTTOM" Then
-			   MouseClick("left",589,195,1,1)
+			   MouseClick("left", 589, 195, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "RIGHT_BOTTOM" Then
-			   MouseClick("left",690,195,1,1)
+			   MouseClick("left", 690, 195, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = "MANUAL_ENTRY" Then
-			   MouseClick("left",795,165,1,1)
+			   MouseClick("left", 795, 165, 1, 1)
 			EndIf
 			if $arrItems[$i][1] = '0' Then
 			  Press0()
@@ -1122,7 +1123,7 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			  Press9()
 			EndIf
 		ElseIf $arrItems[$i][0] = "wait" Then
-			If ($LastBtnClickedOK) Then
+			If $LastBtnClickedOK Then
 				Sleep($ValToStatusBar)
 			EndIf
 			$LastBtnClickedOK = True
@@ -1242,13 +1243,13 @@ EndFunc
 Func GetDialogHeight($Height, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
 	$RowHeight = 30
 	$StatusBarHeight = 20
-	if ($ShowExtDeveloperLine) Then
+	if $ShowExtDeveloperLine Then
 		$Height += $RowHeight
 	EndIf
-	if ($ShowLanguageSwitcherLine) Then
+	if $ShowLanguageSwitcherLine Then
 		$Height += $RowHeight
 	EndIf
-	If ($ShowStatusBar) Then		
+	If $ShowStatusBar Then		
 		$Height += $StatusBarHeight
 	EndIf
 	return $Height
