@@ -1,7 +1,6 @@
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=POStyper.ico
-#Tidy_Parameters=/gds
 #AutoIt3Wrapper_Tidy_Stop_OnError=n
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -18,8 +17,6 @@
 #include ".\lib\UIAWrappers.au3"
 #include ".\lib\ExtMsgBox.au3"
 
-
-;AutoItSetOption("MustDeclareVars", 1)
 
 Global $PostyperDir		= @ScriptDir
 Global $ScenariosDir	= @ScriptDir & "\scenarios"
@@ -97,14 +94,9 @@ If _Singleton("POStyper", 1) = 0 Then
 	Exit
 EndIf
 
-_readItemFile()
+ReadConfigAndItemsFiles()
 
 Main()
-
-Func _readItemFile()
-	ReloadItemsFile()
-	ReloadConfigFile()
-EndFunc   ;==>_readItemFile
 
 Func Main()
 
@@ -147,7 +139,6 @@ Func Main()
 	;Local $captionCD				= "CD"
 	Local $captionType				= "Type"
 	Local $captionAutomationSpeed	= "x" & $DefaultAutomationSpeedFactor
-
 	;Local $captionAuto				= "Gal"
 
 	Local $captionStartPOS			= "Start POS"
@@ -312,7 +303,7 @@ Func Main()
 	EndIf
 	Sleep(500)
 
-	Global $do = 1
+	Global $do = True
 
 	While $do
 		$Btn = GUIGetMsg()
@@ -912,6 +903,11 @@ EndFunc   ;==>ToDutch
 
 ; === Helper Functions ==============================================================================================
 
+Func ReadConfigAndItemsFiles()
+	ReloadItemsFile()
+	ReloadConfigFile()
+EndFunc   ;==>ReadConfigAndItemsFiles
+
 
 Func GetItemNumberFromCombo()
 	$SelectedItem = StringStripWS(GUICtrlRead($idComboBox), $STR_STRIPALL)
@@ -1133,12 +1129,10 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 		ElseIf $arrItems[$i][0] = "user" Then
 			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & @CRLF & "Automation will continue when this dialog is dismissed", Null, False)
 		EndIf
-
 		If $ShowProgressBar Then
 			$Percents = Int($i / $NumOfItems * 100)
 			ProgressSet($Percents, $StatusBarText, $Percents & "%")
 		EndIf
-
 	Next
 	If $ShowProgressBar Then
 		ProgressSet(100, $StatusBarText, $Percents & "%")
@@ -1182,6 +1176,7 @@ Func SkipZipCodeDialog()
 	Return False
 EndFunc   ;==>SkipZipCodeDialog
 
+
 Func SkipSpareChangeCodeDialog()
 	WinActivate("R10PosClient")
 	$oP1 = _UIA_getObjectByFindAll($UIA_oDesktop, "Title:=Retalix.Jumbo.Client.POS.Presentation.ViewModels.ViewModels.CashPaymentChangeExtendedViewModel;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
@@ -1197,7 +1192,6 @@ Func SkipSpareChangeCodeDialog()
 	EndIf
 	Return False
 EndFunc   ;==>SkipSpareChangeCodeDialog
-
 
 
 ;Func SelectCash()
@@ -1241,9 +1235,11 @@ Func IsPosClientRunning()
 	Return True
 EndFunc   ;==>IsPosClientRunning
 
+
 Func NoFilesSelectedMsgBox()
 	ExtMsgBox($EMB_ICONINFO, " ", "PosTyper", "No file(s) were selected", 1, $g_hPosTyper)
 EndFunc   ;==>NoFilesSelectedMsgBox
+
 
 Func GetDialogHeight($Height, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
 	$RowHeight = 30
@@ -1295,14 +1291,17 @@ Func DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
 	EndIf
 EndFunc   ;==>DisableLanguageButtonsIfDbNotReady
 
+
 Func Copyrights()
 	WriteToStatusBar("© Created by Christian H, enhanced by Yossi S", "")
 EndFunc   ;==>Copyrights
+
 
 Func ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin)
 	;_ExtMsgBoxSet(2, $SS_CENTER, -1, -1, -1, -1, Default, Default, "#")
 	$iRetValue = _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin)
 EndFunc   ;==>ExtMsgBox
+
 
 Func GetFileNameFromFullPath($TEST)
 	$FILENAME = ""
@@ -1323,6 +1322,7 @@ Func GetFileNameFromFullPath($TEST)
 	Return $FILENAME
 EndFunc   ;==>GetFileNameFromFullPath
 
+
 Func ReloadConfigFile()
 	$arrUI			= IniReadSection($cfgFile, "UI")
 	$arrEnv			= IniReadSection($cfgFile, "Env")
@@ -1340,6 +1340,7 @@ Func ReloadConfigFile()
 	_ArrayConcatenate($arrCONFIG, $arrEmulators, 1)
 	$arrCONFIG[0][0] = $arrUI[0][0] + $arrEnv[0][0] + $arrPaths[0][0] + $arrDeveloper[0][0] + $arrHelpers[0][0] + $arrPOS[0][0] + $arrEmulators[0][0]
 EndFunc   ;==>ReloadConfigFile
+
 
 Func ReloadItemsFile()
 	$arrItems = IniReadSection($ItemsIniFile, "ITEMS")
