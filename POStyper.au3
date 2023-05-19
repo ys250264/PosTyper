@@ -22,12 +22,12 @@
 ;AutoItSetOption("MustDeclareVars", 1)
 
 Global $PostyperDir		= @ScriptDir
-Global $ScenariosDir	= @ScriptDir &"\scenarios"
-Global $HelpersDir		= @ScriptDir &"\helpers"
-Global $CollectedDir	= @ScriptDir &"\collected_logs"
-Global $CaptureDir		= @ScriptDir &"\captured_images"
-Global $ItemsdDir		= @ScriptDir &"\items"
-Global $TenderingDir	= @ScriptDir &"\tendering"
+Global $ScenariosDir	= @ScriptDir & "\scenarios"
+Global $HelpersDir		= @ScriptDir & "\helpers"
+Global $CollectedDir	= @ScriptDir & "\collected_logs"
+Global $CaptureDir		= @ScriptDir & "\captured_images"
+Global $ItemsdDir		= @ScriptDir & "\items"
+Global $TenderingDir	= @ScriptDir & "\tendering"
 
 Global $ItemsIniFile	= $ItemsdDir & "\Items.ini"
 Global $TenderngIniFile	= $TenderingDir & "\tendering.ini"
@@ -292,10 +292,10 @@ Func Main()
 	Local $idBtnToEnglish			= GUICtrlCreateButton($captionToEnglish			, $Col_1, $ROW_10	, $BtnWidthL, $BtnHeight)
 	Local $idBtnToDutch				= GUICtrlCreateButton($captionToDutch			, $Col_2, $ROW_10	, $BtnWidthL, $BtnHeight)
 
-;~	Local $idBtnResetLoy		= GUICtrlCreateButton($captionResetLoy			, $Col_4, $ROW_7	, $BtnWidthL, $BtnHeight)
-;~ 	Local $idBtnMsg3On			= GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)
-;~ 	Local $idBtnMsg3Off			= GUICtrlCreateButton($captionMsg3Off			, $Col_3, $ROW_7	, $BtnWidthL, $BtnHeight)
-;~	Local $idBtnFLDiag			= GUICtrlCreateButton($captionFLDiag			, $Col_1, $ROW_8	, $BtnWidthL, $BtnHeight)
+;~	Local $idBtnResetLoy			= GUICtrlCreateButton($captionResetLoy			, $Col_4, $ROW_7	, $BtnWidthL, $BtnHeight)
+;~ 	Local $idBtnMsg3On				= GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)
+;~ 	Local $idBtnMsg3Off				= GUICtrlCreateButton($captionMsg3Off			, $Col_3, $ROW_7	, $BtnWidthL, $BtnHeight)
+;~	Local $idBtnFLDiag				= GUICtrlCreateButton($captionFLDiag			, $Col_1, $ROW_8	, $BtnWidthL, $BtnHeight)
 
 	If $ShowLanguageSwitcherLine Then
 		DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
@@ -399,18 +399,18 @@ Func Main()
 				FuncWrapper($Btn, $captionToEnglish, ToEnglish, True)
 			Case $idBtnToDutch
 				FuncWrapper($Btn, $captionToDutch, ToDutch, True)
-				;			Case $idBtnCD
-				;				FuncWrapper($Btn, $caption, Checkdigit)
-				;			Case $idBtnResetLoy
-				;				FuncWrapper($Btn, $captionResetLoy, ResetLoy)
-				;			Case $idBtnFLDiag
-				;				FuncWrapper($Btn, $captionFLDiag, FLDiag)
-				; 			Case $idBtnAuto
-				; 				FuncWrapper($Btn, $captionAuto, Autmation)
-				; 			Case $idBtnMsg3On
-				;				FuncWrapper($Btn, $captionMsg3On, Msg3On)
-				; 			Case $idBtnMsg3Off
-				;				FuncWrapper($Btn, $captionMsg3Off, Msg3off)
+;			Case $idBtnCD
+;				FuncWrapper($Btn, $caption, Checkdigit)
+;			Case $idBtnResetLoy
+;				FuncWrapper($Btn, $captionResetLoy, ResetLoy)
+;			Case $idBtnFLDiag
+;				FuncWrapper($Btn, $captionFLDiag, FLDiag)
+; 			Case $idBtnAuto
+; 				FuncWrapper($Btn, $captionAuto, Autmation)
+; 			Case $idBtnMsg3On
+;				FuncWrapper($Btn, $captionMsg3On, Msg3On)
+; 			Case $idBtnMsg3Off
+;				FuncWrapper($Btn, $captionMsg3Off, Msg3off)
 		EndSwitch
 	WEnd
 EndFunc   ;==>Main
