@@ -1302,11 +1302,11 @@ Func ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin)
 EndFunc
 
 Func GetFileNameFromFullPath($TEST)
-	$FILENAME=""
-	$PATH=""
-	$TITLE=""
-	$EXT_START=0
-	$FILE_START=0
+	$FILENAME = ""
+	$PATH = ""
+	$TITLE = ""
+	$EXT_START = 0
+	$FILE_START = 0
 	For $X = StringLen($TEST) To 2 Step -1
 	   If StringMid($TEST,$X,1) = "." And $EXT_START = 0 Then $EXT_START = $X
 	   If StringMid($TEST,$X,1) = "\" And $FILE_START = 0 Then $FILE_START = $X
@@ -1321,9 +1321,23 @@ Func GetFileNameFromFullPath($TEST)
 EndFunc
 
 Func ReloadConfigFile()
-	$arrCONFIG=IniReadSection($cfgFile,"CONFIG")
+	$arrUI			= IniReadSection($cfgFile, "UI")
+	$arrEnv			= IniReadSection($cfgFile, "Env")
+	$arrPaths		= IniReadSection($cfgFile, "Paths")
+	$arrDeveloper	= IniReadSection($cfgFile, "Developer")
+	$arrHelpers		= IniReadSection($cfgFile, "Helpers")
+	$arrPOS			= IniReadSection($cfgFile, "POS")
+	$arrEmulators	= IniReadSection($cfgFile, "Emulators")
+	$arrCONFIG = $arrUI
+	_ArrayConcatenate($arrCONFIG, $arrEnv, 1)
+	_ArrayConcatenate($arrCONFIG, $arrPaths, 1)
+	_ArrayConcatenate($arrCONFIG, $arrDeveloper, 1)
+	_ArrayConcatenate($arrCONFIG, $arrHelpers, 1)
+	_ArrayConcatenate($arrCONFIG, $arrPOS, 1)
+	_ArrayConcatenate($arrCONFIG, $arrEmulators, 1)
+	$arrCONFIG[0][0] = + $arrUI[0][0] + $arrEnv[0][0] + $arrPaths[0][0] + $arrDeveloper[0][0] + $arrHelpers[0][0] + $arrPOS[0][0] + $arrEmulators[0][0]
 EndFunc
 
 Func ReloadItemsFile()
- 	$arrItems=IniReadSection($ItemsIniFile,"ITEMS")
+ 	$arrItems = IniReadSection($ItemsIniFile, "ITEMS")
 EndFunc
