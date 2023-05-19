@@ -1138,6 +1138,8 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 
 	Next
 	If $ShowProgressBar Then			
+		ProgressSet(100, $StatusBarText, $Percents & "%")
+		sleep(2000)
 		ProgressOff()
 	EndIf
 EndFunc
