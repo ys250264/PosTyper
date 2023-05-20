@@ -414,11 +414,13 @@ EndFunc   ;==>Main
 ; === Main Functions =============================================================================================
 
 
-Func Type()
+Func Type($Item = Null)
 	Local $pos = MouseGetPos()
-	WinActivate("R10PosClient")
-	Sleep(200)
-	$Item = GetItemNumberFromCombo()
+	If Not $Item Then
+		WinActivate("R10PosClient")
+		Sleep(200)
+		$Item = GetItemNumberFromCombo()
+	EndIf
 	If $Item == "" Then
 		Return
 	EndIf
@@ -1031,6 +1033,8 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 				If $sText = "Claimed,Enabled" Then ExitLoop
 			Next
 			WinActivate("R10PosClient")
+		ElseIf $arrItems[$i][0] = "type" Then
+			Type($arrItems[$i][1])
 		ElseIf $arrItems[$i][0] = "button" Then
 			If $arrItems[$i][1] = "QTY" Then
 				PressX()
