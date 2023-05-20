@@ -1042,6 +1042,9 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			If $arrItems[$i][1] = "DIALOG_ZIP_TO_SKIP_BTN" Then
 				$LastBtnClickedOK = SkipZipCodeDialog()
 			EndIf
+			If $arrItems[$i][1] = "DIALOG_SELECTABLE_PROMOTIONS_TO_SKIP_BTN" Then
+				$LastBtnClickedOK = SkipSelectablePromotionDialog()
+			EndIf
 			If $arrItems[$i][1] = "DIALOG_SPARE_CHANGE_CANCEL_BTN" Then
 				$LastBtnClickedOK = SkipSpareChangeCodeDialog()
 			EndIf
@@ -1185,6 +1188,23 @@ Func SkipZipCodeDialog()
 	EndIf
 	Return False
 EndFunc   ;==>SkipZipCodeDialog
+
+
+Func SkipSelectablePromotionDialog()
+	WinActivate("R10PosClient")
+	$oP1 = _UIA_getObjectByFindAll($UIA_oDesktop, "Title:=Retalix.Jumbo.Client.POS.Presentation.ViewModels.ViewModels.SelectablePromotionViewModel;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
+	$oBtnOverslaan = _UIA_getObjectByFindAll($oP1, "title:=Overslaan;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
+	If IsObj($oBtnOverslaan) Then
+		_UIA_action($oBtnOverslaan, "click")
+		Return True
+	EndIf
+	$oBtnToSkip = _UIA_getObjectByFindAll($oP1, "title:=To skip;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
+	If IsObj($oBtnToSkip) Then
+		_UIA_action($oBtnToSkip, "click")
+		Return True
+	EndIf
+	Return False
+EndFunc   ;==>SkipSelectablePromotionDialog
 
 
 Func SkipSpareChangeCodeDialog()
