@@ -105,6 +105,7 @@ Func Main()
 	$PosTyperDialogWidth	= 333
 	$PosTyperDialogHeight	= 285
 
+	Global $EMB_DISPLAY_COUNTDOWN = 128
 	Global $DefaultAutomationSpeedFactor = 1
 	Global $AutomationSpeedFactor = $DefaultAutomationSpeedFactor
 
@@ -1131,7 +1132,7 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 		ElseIf $arrItems[$i][0] = "user" Then
 			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & @CRLF & "Dismiss me to continue scenario", Null, $g_hPosTyper)
 		ElseIf $arrItems[$i][0] = "break" Then
-			$nAnswer = ExtMsgBox($EMB_ICONQUERY, "Yes|~No", "PosTyper Automation - Quit Scenario", $arrItems[$i][1], 7, $g_hPosTyper)
+			$nAnswer = ExtMsgBox($EMB_DISPLAY_COUNTDOWN, "Yes|~No", "PosTyper Automation - Quit Scenario", $arrItems[$i][1], 7, $g_hPosTyper)
 			If $nAnswer = 1 Then
 				$bBreakByUser = True
 				ExitLoop
@@ -1247,7 +1248,7 @@ EndFunc   ;==>IsPosClientRunning
 
 
 Func NoFilesSelectedMsgBox()
-	ExtMsgBox($EMB_ICONINFO, " ", "PosTyper", "No file(s) were selected", 1, $g_hPosTyper)
+	ExtMsgBox($EMB_DISPLAY_COUNTDOWN, " ", "PosTyper", "No file(s) were selected", 3, $g_hPosTyper)
 EndFunc   ;==>NoFilesSelectedMsgBox
 
 
