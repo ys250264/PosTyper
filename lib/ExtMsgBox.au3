@@ -673,8 +673,8 @@ Func _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeOut = 0, $hWin = "", $i
 
 	; Create icon, image or countdown timer
 	If $fCountdown = True Then
-		Local $cCountdown_Label = GUICtrlCreateLabel(StringFormat("%2s", $iTimeOut), 10, 20, 32, 32)
-		GUICtrlSetFont(-1, 18, Default, Default, $g_aEMB_Settings[5])
+		Local $cCountdown_Label = GUICtrlCreateLabel(StringFormat("%2s", $iTimeOut), 20, 25, 32, 32)
+		GUICtrlSetFont(-1, 10, 700, Default, $g_aEMB_Settings[5])
 		GUICtrlSetColor(-1, $g_aEMB_Settings[3])
 	Else
 		If $iIcon_Reduction Then
