@@ -26,14 +26,17 @@ Global $ItemsDir		= @ScriptDir & "\items"
 Global $AutomationDir	= @ScriptDir & "\automation"
 Global $ScenariosDir	= $AutomationDir & "\scenarios"
 Global $TenderingDir	= $AutomationDir & "\tendering"
+Global $SkipDialogsDir	= $AutomationDir & "\skipdialogs"
 
-Global $ItemsIniFile	= $ItemsDir & "\Items.ini"
-Global $TenderngIniFile	= $TenderingDir & "\tendering.ini"
-Global $cfgFile			= @ScriptDir & "\POStyper.ini"
-Global $icoFile			= @ScriptDir & "\POStyper.ico"
+Global $ItemsIniFile		= $ItemsDir & "\Items.ini"
+Global $TenderngIniFile		= $TenderingDir & "\tendering.ini"
+Global $SkipDialogsIniFile	= $SkipDialogsDir & "\dialogs.ini"
+Global $cfgFile				= @ScriptDir & "\POStyper.ini"
+Global $icoFile				= @ScriptDir & "\POStyper.ico"
 
 Global $arrItems
 Global $arrCONFIG
+Global $arrDialogs[0]
 
 Global $CFG_CAPTION					= 1
 Global $CFG_X						= 2
@@ -907,6 +910,7 @@ EndFunc   ;==>ToDutch
 Func ReadConfigAndItemsFiles()
 	ReloadItemsFile()
 	ReloadConfigFile()
+	ReloadDialogsFile()
 EndFunc   ;==>ReadConfigAndItemsFiles
 
 
@@ -1037,21 +1041,6 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			If $arrItems[$i][1] = "DIALOG_MID_OK" Then
 				MouseClick("left", 520, 520, 1, 1)
 			EndIf
-			If $arrItems[$i][1] = "ADD_CUSTOMER_BACK_BTN" Then
-				$LastBtnClickedOK = SkipAddCustomer()
-			EndIf
-			If $arrItems[$i][1] = "DIALOG_ZIP_TO_SKIP_BTN" Then
-				$LastBtnClickedOK = SkipZipCodeDialog()
-			EndIf
-			If $arrItems[$i][1] = "DIALOG_SELECTABLE_PROMOTIONS_TO_SKIP_BTN" Then
-				$LastBtnClickedOK = SkipSelectablePromotionDialog()
-			EndIf
-			If $arrItems[$i][1] = "DIALOG_SELECTABLE_PROMOTIONS_CLL_TO_SKIP_BTN" Then
-				$LastBtnClickedOK = SkipSelectablePromotionFromCllDialog()
-			EndIf
-			If $arrItems[$i][1] = "DIALOG_SPARE_CHANGE_CANCEL_BTN" Then
-				$LastBtnClickedOK = SkipSpareChangeCodeDialog()
-			EndIf
 			If $arrItems[$i][1] = "TENDER_1" Then
 				MouseClick("left", 930, 110, 1, 1)
 			EndIf
@@ -1130,6 +1119,14 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			If $arrItems[$i][1] = '9' Then
 				Press9()
 			EndIf
+			$NumOfDialogs = $arrDialogs[0][0]
+			For $j = 1 To $NumOfDialogs
+				$arrDialog = $arrDialogs[$j][1]
+				If $arrItems[$i][1] = $arrDialog[1] Then
+					$LastBtnClickedOK = SkipDialog($arrDialog)
+					ExitLoop
+				EndIf
+			Next
 		ElseIf $arrItems[$i][0] = "wait" Then
 			If $LastBtnClickedOK Then
 				Sleep($ValToStatusBar)
@@ -1159,98 +1156,21 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 EndFunc   ;==>ScenarioAutomation
 
 
-Func SkipAddCustomer()
+Func SkipDialog($Tokens)
 	WinActivate("R10PosClient")
-	$oP1 = _UIA_getObjectByFindAll($UIA_oDesktop, "Title:=R10PosClient;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
-	$oBtnAnnuleren = _UIA_getObjectByFindAll($oP1, "title:=Annuleren;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnAnnuleren) Then
-		_UIA_action($oBtnAnnuleren, "click")
+	$oP1 = _UIA_getObjectByFindAll($UIA_oDesktop, "Title:=" & $Tokens[2] & ";controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
+	$oText1 = _UIA_getObjectByFindAll($oP1, "title:=" & $Tokens[3] & ";ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
+	If IsObj($oText1) Then
+		_UIA_action($oText1, "click")
 		Return True
 	EndIf
-	$oBtnBack = _UIA_getObjectByFindAll($oP1, "title:=Back;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnBack) Then
-		_UIA_action($oBtnBack, "click")
+	$oText2 = _UIA_getObjectByFindAll($oP1, "title:=" & $Tokens[4] & ";ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
+	If IsObj($oText2) Then
+		_UIA_action($oText2, "click")
 		Return True
 	EndIf
 	Return False
-EndFunc   ;==>SkipAddCustomer
-
-
-Func SkipZipCodeDialog()
-	WinActivate("R10PosClient")
-	$oP1 = _UIA_getObjectByFindAll($UIA_oDesktop, "Title:=Retalix.Jumbo.Client.POS.Presentation.ViewModels.ViewModels.BRM.ZipCodeViewModel;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
-	$oP0 = _UIA_getObjectByFindAll($oP1, "Title:=;controltype:=UIA_CustomControlTypeId;class:=ZipCodeView", $treescope_children)
-	$oBtnOverslaan = _UIA_getObjectByFindAll($oP0, "title:=Overslaan;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnOverslaan) Then
-		_UIA_action($oBtnOverslaan, "click")
-		Return True
-	EndIf
-	$oBtnToSkip = _UIA_getObjectByFindAll($oP0, "title:=To skip;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnToSkip) Then
-		_UIA_action($oBtnToSkip, "click")
-		Return True
-	EndIf
-	Return False
-EndFunc   ;==>SkipZipCodeDialog
-
-
-Func SkipSelectablePromotionDialog()
-	WinActivate("R10PosClient")
-	$oP1 = _UIA_getObjectByFindAll($UIA_oDesktop, "Title:=Retalix.Jumbo.Client.POS.Presentation.ViewModels.ViewModels.SelectablePromotionViewModel;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
-	$oBtnOverslaan = _UIA_getObjectByFindAll($oP1, "title:=Overslaan;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnOverslaan) Then
-		_UIA_action($oBtnOverslaan, "click")
-		Return True
-	EndIf
-	$oBtnToSkip = _UIA_getObjectByFindAll($oP1, "title:=To skip;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnToSkip) Then
-		_UIA_action($oBtnToSkip, "click")
-		Return True
-	EndIf
-	Return False
-EndFunc   ;==>SkipSelectablePromotionDialog
-
-
-Func SkipSelectablePromotionFromCllDialog()
-	WinActivate("R10PosClient")
-	$oP1 = _UIA_getObjectByFindAll($UIA_oDesktop, "Title:=Retalix.Jumbo.Client.POS.Presentation.ViewModels.ViewModels.SelectablePromotionFromCLLViewModel;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
-	$oBtnOverslaan = _UIA_getObjectByFindAll($oP1, "title:=Overslaan;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnOverslaan) Then
-		_UIA_action($oBtnOverslaan, "click")
-		Return True
-	EndIf
-	$oBtnToSkip = _UIA_getObjectByFindAll($oP1, "title:=To skip;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnToSkip) Then
-		_UIA_action($oBtnToSkip, "click")
-		Return True
-	EndIf
-	Return False
-EndFunc   ;==>SkipSelectablePromotionFromCllDialog
-
-
-Func SkipSpareChangeCodeDialog()
-	WinActivate("R10PosClient")
-	$oP1 = _UIA_getObjectByFindAll($UIA_oDesktop, "Title:=Retalix.Jumbo.Client.POS.Presentation.ViewModels.ViewModels.CashPaymentChangeExtendedViewModel;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
-	$oBtnAnnuleren = _UIA_getObjectByFindAll($oP1, "title:=Annuleren;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnAnnuleren) Then
-		_UIA_action($oBtnAnnuleren, "click")
-		Return True
-	EndIf
-	$oBtnCancel = _UIA_getObjectByFindAll($oP1, "title:=Cancel;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-	If IsObj($oBtnCancel) Then
-		_UIA_action($oBtnCancel, "click")
-		Return True
-	EndIf
-	Return False
-EndFunc   ;==>SkipSpareChangeCodeDialog
-
-
-;Func SelectCash()
-;	WinActivate("R10PosClient")
-;	$oP1=_UIA_getObjectByFindAll($UIA_oDesktop, "Title:=R10PosClient;controltype:=UIA_WindowControlTypeId;class:=Window", $treescope_children)
-;	$oUIElement=_UIA_getObjectByFindAll($oP1, "title:=Contant;ControlType:=UIA_ButtonControlTypeId", $treescope_subtree)
-;	_UIA_action($oUIElement,"click")
-;EndFunc
+EndFunc
 
 
 Func WriteToStatusBar($MethodName, $Txt = "")
@@ -1396,6 +1316,19 @@ Func ReloadConfigFile()
 EndFunc   ;==>ReloadConfigFile
 
 
+Func ReloadDialogsFile()
+	$arrDialogsTemp = IniReadSection($SkipDialogsIniFile, "Vocabulary")
+	$NumOfItems = $arrDialogsTemp[0][0]
+	ReDim $arrDialogs[$NumOfItems+1][2]
+	$arrDialogs[0][0] = $NumOfItems
+	For $i = 1 To $NumOfItems
+		$Val = $arrDialogsTemp[$i][1]
+		$Tokens = StringSplit($Val, "|")
+		$arrDialogs[$i][1] = $Tokens
+	Next
+EndFunc   ;==>ReloadDialogsFile
+
+
 Func ReloadItemsFile()
-	$arrItems = IniReadSection($ItemsIniFile, "ITEMS")
+	$arrItems = IniReadSection($ItemsIniFile, "Items")
 EndFunc   ;==>ReloadItemsFile
