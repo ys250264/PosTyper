@@ -1119,6 +1119,12 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			If $arrItems[$i][1] = '9' Then
 				Press9()
 			EndIf
+		ElseIf $arrItems[$i][0] = "wait" Then
+			If $LastBtnClickedOK Then
+				Sleep($ValToStatusBar)
+			EndIf
+			$LastBtnClickedOK = True
+		ElseIf $arrItems[$i][0] = "skip" Then
 			$NumOfDialogs = $arrDialogs[0][0]
 			For $j = 1 To $NumOfDialogs
 				$arrDialog = $arrDialogs[$j][1]
@@ -1127,11 +1133,6 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 					ExitLoop
 				EndIf
 			Next
-		ElseIf $arrItems[$i][0] = "wait" Then
-			If $LastBtnClickedOK Then
-				Sleep($ValToStatusBar)
-			EndIf
-			$LastBtnClickedOK = True
 		ElseIf $arrItems[$i][0] = "user" Then
 			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", $arrItems[$i][1] & @CRLF & @CRLF & "Dismiss me to continue scenario", Null, $g_hPosTyper)
 		ElseIf $arrItems[$i][0] = "break" Then
