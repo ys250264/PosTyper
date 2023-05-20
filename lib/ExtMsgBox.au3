@@ -323,6 +323,10 @@ EndFunc   ;==>_ExtMsgBoxSet
 ;=====================================================================================================================
 Func _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeOut = 0, $hWin = "", $iVPos = 0, $bMain = True)
 
+	; Yossi
+	Local $FocusedButton = Null
+	Local $FocusedButtonText = ""
+
 	; Set default sizes for message box
 	Local $iMsg_Width_Max = $g_aEMB_Settings[6], $iMsg_Width_Min = 150, $iMsg_Width_Abs = $g_aEMB_Settings[7]
 	Local $iMsg_Height_Min = 100
@@ -410,6 +414,11 @@ Func _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeOut = 0, $hWin = "", $i
 			Case "bmp", "jpg", "gif", "png"
 				$sImg = $vIcon
 		EndSwitch
+	EndIf
+
+	; Yossi - Count down not only for 128 case
+	If $iTimeOut > 0 Then
+		$fCountdown = True
 	EndIf
 
 	; Check if two buttons are seeking focus
@@ -672,11 +681,13 @@ Func _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeOut = 0, $hWin = "", $i
 	EndIf
 
 	; Create icon, image or countdown timer
-	If $fCountdown = True Then
-		Local $cCountdown_Label = GUICtrlCreateLabel(StringFormat("%2s", $iTimeOut), 20, 25, 32, 32)
-		GUICtrlSetFont(-1, 10, 700, Default, $g_aEMB_Settings[5])
-		GUICtrlSetColor(-1, $g_aEMB_Settings[3])
-	Else
+	
+	; Yossi - Avoid ugly Label 
+	;If $fCountdown = True Then
+	;	Local $cCountdown_Label = GUICtrlCreateLabel(StringFormat("%2s", $iTimeOut), 20, 25, 32, 32)
+	;	GUICtrlSetFont(-1, 10, 700, Default, $g_aEMB_Settings[5])
+	;	GUICtrlSetColor(-1, $g_aEMB_Settings[3])
+	;Else
 		If $iIcon_Reduction Then
 			Switch StringLower(StringRight($sImg, 3))
 				Case "bmp", "jpg", "gif"
@@ -687,7 +698,7 @@ Func _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeOut = 0, $hWin = "", $i
 					GUICtrlCreateIcon($sDLL, $iIcon_Style, 10, 20)
 			EndSwitch
 		EndIf
-	EndIf
+	;EndIf
 
 	; Create buttons
 	Local $aButtonCID[$aButton_Text[0] + 1] = [9999] ; Placeholder prevent problems if no buttons
@@ -723,6 +734,11 @@ Func _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeOut = 0, $hWin = "", $i
             $aButtonCID[$i + 1] = GUICtrlCreateButton($aButton_Text[$i + 1], $iButton_Xpos + ($i * ($iButton_Width + 10)), $iMsg_Height - 35, $iButton_Width, 25, $iDef_Button_Style)
 			; Set focus if default
 			If $iDef_Button_Style Then
+
+				; Yossi
+				$FocusedButton = $aButtonCID[$i + 1] 
+				$FocusedButtonText = $aButton_Text[$i + 1]
+
 				GUICtrlSetState($aButtonCID[$i + 1], 256) ; $GUI_FOCUS
 			EndIf
             ; Set font if required
@@ -776,7 +792,7 @@ Func _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeOut = 0, $hWin = "", $i
 			Local $iTimeRun = Int(TimerDiff($iTimeout_Begin) / 1000)
 			If $iTimeRun <> $iCounter Then
 				$iCounter = $iTimeRun
-				GUICtrlSetData($cCountdown_Label, StringFormat("%2s", $iTimeOut - $iCounter))
+				GUICtrlSetData($FocusedButton, StringFormat("%s (%s)", $FocusedButtonText, $iTimeOut - $iCounter))
 			EndIf
 		EndIf
 
