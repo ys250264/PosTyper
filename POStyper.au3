@@ -1130,7 +1130,7 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			EndIf
 			$LastBtnClickedOK = True
 		ElseIf $arrItems[$i][0] = "user" Then
-			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & @CRLF & "Dismiss me to continue scenario", Null, $g_hPosTyper)
+			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", $arrItems[$i][1] & @CRLF & @CRLF & "Dismiss me to continue scenario", Null, $g_hPosTyper)
 		ElseIf $arrItems[$i][0] = "break" Then
 			$nAnswer = ExtMsgBox($EMB_DISPLAY_COUNTDOWN, "Yes|~No", "PosTyper Automation - Quit Scenario", $arrItems[$i][1], 7, $g_hPosTyper)
 			If $nAnswer = 1 Then
