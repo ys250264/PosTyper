@@ -988,6 +988,8 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 		WinActivate("R10PosClient")
 	EndIf
 
+	$bBreakByUser = False
+
 	If $ShowProgressBar Then
 		$aPos = WinGetPos($g_hPosTyper)
 		$xPOS = $aPos[0] + 15
@@ -1127,7 +1129,13 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 			EndIf
 			$LastBtnClickedOK = True
 		ElseIf $arrItems[$i][0] = "user" Then
-			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & @CRLF & "Automation will continue when this dialog is dismissed", Null, False)
+			ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper Automation - Wait for User", "Please: " & $arrItems[$i][1] & @CRLF & @CRLF & "Dismiss me to continue scenario", Null, $g_hPosTyper)
+		ElseIf $arrItems[$i][0] = "break" Then
+			$nAnswer = ExtMsgBox($EMB_ICONQUERY, "Yes|~No", "PosTyper Automation - Quit Scenario", $arrItems[$i][1], 7, $g_hPosTyper)
+			If $nAnswer = 1 Then
+				$bBreakByUser = True
+				ExitLoop
+			EndIf
 		EndIf
 		If $ShowProgressBar Then
 			$Percents = Int($i / $NumOfItems * 100)
@@ -1135,8 +1143,10 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 		EndIf
 	Next
 	If $ShowProgressBar Then
-		ProgressSet(100, $StatusBarText, $Percents & "%")
-		Sleep(2000)
+		If Not $bBreakByUser Then
+			ProgressSet(100, $StatusBarText, $Percents & "%")
+			Sleep(2000)
+		EndIf
 		ProgressOff()
 	EndIf
 EndFunc   ;==>ScenarioAutomation
@@ -1299,7 +1309,10 @@ EndFunc   ;==>Copyrights
 
 Func ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin)
 	;_ExtMsgBoxSet(2, $SS_CENTER, -1, -1, -1, -1, Default, Default, "#")
+	_ExtMsgBoxSet(1)
 	$iRetValue = _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin)
+	_ExtMsgBoxSet(Default)
+	return $iRetValue
 EndFunc   ;==>ExtMsgBox
 
 
