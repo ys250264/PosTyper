@@ -19,14 +19,15 @@
 
 
 Global $PostyperDir		= @ScriptDir
-Global $ScenariosDir	= @ScriptDir & "\scenarios"
 Global $HelpersDir		= @ScriptDir & "\helpers"
 Global $CollectedDir	= @ScriptDir & "\collected_logs"
 Global $CaptureDir		= @ScriptDir & "\captured_images"
-Global $ItemsdDir		= @ScriptDir & "\items"
-Global $TenderingDir	= @ScriptDir & "\tendering"
+Global $ItemsDir		= @ScriptDir & "\items"
+Global $AutomationDir	= @ScriptDir & "\automation"
+Global $ScenariosDir	= $AutomationDir & "\scenarios"
+Global $TenderingDir	= $AutomationDir & "\tendering"
 
-Global $ItemsIniFile	= $ItemsdDir & "\Items.ini"
+Global $ItemsIniFile	= $ItemsDir & "\Items.ini"
 Global $TenderngIniFile	= $TenderingDir & "\tendering.ini"
 Global $cfgFile			= @ScriptDir & "\POStyper.ini"
 Global $icoFile			= @ScriptDir & "\POStyper.ico"
