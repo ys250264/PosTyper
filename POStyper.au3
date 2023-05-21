@@ -30,13 +30,13 @@ Global $SkipDialogsDir	= $AutomationDir & "\skipdialogs"
 
 Global $ItemsIniFile		= $ItemsDir & "\Items.ini"
 Global $TenderngIniFile		= $TenderingDir & "\tendering.ini"
-Global $SkipDialogsIniFile	= $SkipDialogsDir & "\dialogs.ini"
 Global $cfgFile				= @ScriptDir & "\POStyper.ini"
 Global $icoFile				= @ScriptDir & "\POStyper.ico"
 
 Global $arrItems
 Global $arrCONFIG
 Global $arrDialogs[0]
+Global $arrEmulators[0]
 
 Global $CFG_POSTYPER				= 1
 Global $CFG_STATUS_BAR				= 2
@@ -72,12 +72,19 @@ Global $CFG_SNOOP					= 31
 Global $CFG_USER					= 32
 Global $CFG_PASSWORD				= 33
 Global $CFG_LOYALTY_CARD			= 34
-Global $CFG_SCANNER					= 35
-Global $CFG_PRINTER					= 36
-Global $CFG_SCALE					= 37
-Global $CFG_DRAWER					= 38
-Global $CFG_WINEPTS					= 39
-Global $CFG_UPB						= 40
+
+Global $CFG_SCANNER					= 1
+Global $CFG_PRINTER					= 2
+Global $CFG_SCALE					= 3
+Global $CFG_DRAWER					= 4
+Global $CFG_WINEPTS					= 5
+Global $CFG_UPB						= 6
+
+Global $CFG_SCREEN_ADD				= 1
+Global $CFG_DIALOG_ZIP				= 2
+Global $CFG_DIALOG_SEL_PROMO		= 3
+Global $CFG_DIALOG_SEL_PROMO_CLL	= 4
+Global $CFG_DIALOG_SPARE_CHANGE		= 5
 
 If _Singleton("POStyper", 1) = 0 Then
 	ExtMsgBox($EMB_ICONINFO, $MB_OK, "PosTyper", "PosTyper is already running", 3, False)
@@ -89,6 +96,10 @@ ReadConfigAndItemsFiles()
 Main()
 
 Func Main()
+
+	Global $CFG_CAPTION	= 1
+	Global $CFG_X		= 2
+	Global $CFG_Y		= 3
 
 	$PosTyperDialogX		= @DesktopWidth - 333
 	$PosTyperDialogY		= 0
@@ -105,16 +116,14 @@ Func Main()
 
 	$PosTyperDialogHeight = GetDialogHeight($PosTyperDialogHeight, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
 
-	$CFG_POSTYPER_CAPTION	= GetTupleCaption($CFG_POSTYPER)
-	$CFG_POSTYPER_X			= GetTupleX($CFG_POSTYPER)
-	$CFG_POSTYPER_Y			= GetTupleY($CFG_POSTYPER)
+	$CFG_POSTYPER = StringSplit($arrCONFIG[$CFG_POSTYPER][1], "|")
 
-	If ($CFG_POSTYPER_X >= 0 And $CFG_POSTYPER_Y >= 0) Then
-		$PosTyperDialogX = $CFG_POSTYPER_X
-		$PosTyperDialogY = $CFG_POSTYPER_Y
+	If ($CFG_POSTYPER[$CFG_X] >= 0 And $CFG_POSTYPER[$CFG_Y] >= 0) Then
+		$PosTyperDialogX =$CFG_POSTYPER[$CFG_X]
+		$PosTyperDialogY = $CFG_POSTYPER[$CFG_Y]
 	EndIf
 
-	Global $g_hPosTyper = GUICreate($CFG_POSTYPER_CAPTION, $PosTyperDialogWidth, $PosTyperDialogHeight, $PosTyperDialogX, $PosTyperDialogY, -1, $WS_EX_ACCEPTFILES)
+	Global $g_hPosTyper = GUICreate($CFG_POSTYPER[$CFG_CAPTION], $PosTyperDialogWidth, $PosTyperDialogHeight, $PosTyperDialogX, $PosTyperDialogY, -1, $WS_EX_ACCEPTFILES)
 
 	GUISetIcon($icoFile)
 
@@ -453,7 +462,7 @@ Func Scan()
 	If $Scanme == "" Then
 		Return
 	EndIf
-	$hWndSCR = WinActivate(GetTupleCaption($CFG_SCANNER))
+	$hWndSCR = ActivateScanner()
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $Scanme)
 	ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
@@ -503,30 +512,14 @@ Func ArrangeEmulators()
 	If Not IsPosClientRunning() Then
 		Return
 	EndIf
-	$WndHnd = WinActivate(GetTupleCaption($CFG_SCANNER))
-	If $WndHnd > 0 Then
-		WinMove(GetTupleCaption($CFG_SCANNER), "", GetTupleX($CFG_SCANNER), GetTupleY($CFG_SCANNER))
-	EndIf
-	$WndHnd = WinActivate(GetTupleCaption($CFG_PRINTER))
-	If $WndHnd > 0 Then
-		WinMove(GetTupleCaption($CFG_PRINTER), "", GetTupleX($CFG_PRINTER), GetTupleY($CFG_PRINTER))
-	EndIf
-	$WndHnd = WinActivate(GetTupleCaption($CFG_SCALE))
-	If $WndHnd > 0 Then
-		WinMove(GetTupleCaption($CFG_SCALE), "", GetTupleX($CFG_SCALE), GetTupleY($CFG_SCALE))
-	EndIf
-	$WndHnd = WinActivate(GetTupleCaption($CFG_DRAWER))
-	If $WndHnd > 0 Then
-		WinMove(GetTupleCaption($CFG_DRAWER), "", GetTupleX($CFG_DRAWER), GetTupleY($CFG_DRAWER))
-	EndIf
-	$WndHnd = WinActivate(GetTupleCaption($CFG_WINEPTS))
-	If $WndHnd > 0 Then
-		WinMove(GetTupleCaption($CFG_WINEPTS), "", GetTupleX($CFG_WINEPTS), GetTupleY($CFG_WINEPTS))
-	EndIf
-	$WndHnd = WinActivate(GetTupleCaption($CFG_UPB))
-	If $WndHnd > 0 Then
-		WinMove(GetTupleCaption($CFG_UPB), "", GetTupleX($CFG_WINEPTS), GetTupleY($CFG_UPB))
-	EndIf
+	$NumOfEmulators = $arrEmulators[0][0]
+	For $i = 1 To $NumOfEmulators
+		$arrEmulator = $arrEmulators[$i][1]
+		$WndHnd = WinActivate($arrEmulator[$CFG_CAPTION])
+		If $WndHnd > 0 Then
+			WinMove($arrEmulator[$CFG_CAPTION], "", $arrEmulator[$CFG_X], $arrEmulator[$CFG_Y])
+		EndIf	
+	Next
 EndFunc   ;==>ArrangeEmulators
 
 
@@ -535,7 +528,7 @@ Func ScanLoyaltyCard()
 		Return
 	EndIf
 	$Scanme = StringStripWS(GUICtrlRead($idComboBox), 8)
-	$hWndSCR = WinActivate(GetTupleCaption($CFG_SCANNER))
+	$hWndSCR = ActivateScanner()
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $arrCONFIG[$CFG_LOYALTY_CARD][1])
 	ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
@@ -755,7 +748,7 @@ Func CleanScanner()
 	If Not IsPosClientRunning() Then
 		Return
 	EndIf
-	$hWndSCR = WinActivate(GetTupleCaption($CFG_SCANNER))
+	$hWndSCR = ActivateScanner()
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 EndFunc   ;==>CleanScanner
 
@@ -858,7 +851,7 @@ EndFunc   ;==>ToDutch
 ;~ 	If WinExists("R10PosClient") == 1 Then
 ;~ 		WinActivate("R10PosClient")
 ;~     EndIf
-;~ 	$hWndSCR = WinActivate($arrCONFIG[GetTupleCaption($CFG_SCANNER))
+;~  $hWndSCR = ActivateScanner()
 ;~ 	ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]","{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 ;~     ControlSend($hWndSCR,"","[CLASS:Edit; INSTANCE:1]",$keys[2])
 ;~     ControlClick($hWndSCR,"","[CLASS:Button; INSTANCE:4]")
@@ -902,7 +895,6 @@ EndFunc   ;==>ToDutch
 Func ReadConfigAndItemsFiles()
 	ReloadItemsFile()
 	ReloadConfigFile()
-	ReloadDialogsFile()
 EndFunc   ;==>ReadConfigAndItemsFiles
 
 
@@ -1012,7 +1004,7 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 		WriteToStatusBar("Scenario", $StatusBarText)
 
 		If $arrItems[$i][0] = "item" Or $arrItems[$i][0] = "card" Then
-			$hWndSCR = WinActivate(GetTupleCaption($CFG_SCANNER))
+			$hWndSCR = ActivateScanner()
 			ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 			ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $arrItems[$i][1])
 			ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
@@ -1299,20 +1291,32 @@ Func ReloadConfigFile()
 	$arrDev			= IniReadSection($cfgFile, "Dev")
 	$arrHelpers		= IniReadSection($cfgFile, "Helpers")
 	$arrPOS			= IniReadSection($cfgFile, "POS")
-	$arrEmulators	= IniReadSection($cfgFile, "Emulators")
 	$arrCONFIG = $arrPosTyper
 	_ArrayConcatenate($arrCONFIG, $arrEnv, 1)
 	_ArrayConcatenate($arrCONFIG, $arrR10, 1)
 	_ArrayConcatenate($arrCONFIG, $arrDev, 1)
 	_ArrayConcatenate($arrCONFIG, $arrHelpers, 1)
 	_ArrayConcatenate($arrCONFIG, $arrPOS, 1)
-	_ArrayConcatenate($arrCONFIG, $arrEmulators, 1)
-	$arrCONFIG[0][0] = $arrPosTyper[0][0] + $arrEnv[0][0] + $arrR10[0][0] + $arrDev[0][0] + $arrHelpers[0][0] + $arrPOS[0][0] + $arrEmulators[0][0]
+	$arrCONFIG[0][0] = $arrPosTyper[0][0] + $arrEnv[0][0] + $arrR10[0][0] + $arrDev[0][0] + $arrHelpers[0][0] + $arrPOS[0][0]
+	ReloadEmulatorSection()
+	ReloadDialogsSection()
 EndFunc   ;==>ReloadConfigFile
 
 
-Func ReloadDialogsFile()
-	$arrDialogsTemp = IniReadSection($SkipDialogsIniFile, "Vocabulary")
+Func ReloadEmulatorSection()
+	$arrEmulatorsTemp = IniReadSection($cfgFile, "Emulators")
+	$NumOfItems = $arrEmulatorsTemp[0][0]
+	ReDim $arrEmulators[$NumOfItems+1][2]
+	$arrEmulators[0][0] = $NumOfItems
+	For $i = 1 To $NumOfItems
+		$Val = $arrEmulatorsTemp[$i][1]
+		$Tokens = StringSplit($Val, "|")
+		$arrEmulators[$i][1] = $Tokens
+	Next
+EndFunc   ;==>ReloadEmulatorSection
+
+Func ReloadDialogsSection()
+	$arrDialogsTemp = IniReadSection($cfgFile, "Dialogs")
 	$NumOfItems = $arrDialogsTemp[0][0]
 	ReDim $arrDialogs[$NumOfItems+1][2]
 	$arrDialogs[0][0] = $NumOfItems
@@ -1321,27 +1325,13 @@ Func ReloadDialogsFile()
 		$Tokens = StringSplit($Val, "|")
 		$arrDialogs[$i][1] = $Tokens
 	Next
-EndFunc   ;==>ReloadDialogsFile
-
+EndFunc   ;==>ReloadDialogsSection
 
 Func ReloadItemsFile()
 	$arrItems = IniReadSection($ItemsIniFile, "Items")
 EndFunc   ;==>ReloadItemsFile
 
-
-Func GetTupleCaption($Key)
-	$Tokens = StringSplit($arrCONFIG[$Key][1], "|")
-	Return $Tokens[1]
-EndFunc
-
-
-Func GetTupleX($Key)
-	$Tokens = StringSplit($arrCONFIG[$Key][1], "|")
-	Return $Tokens[2]
-EndFunc
-
-
-Func GetTupleY($Key)
-	$Tokens = StringSplit($arrCONFIG[$Key][1], "|")
-	Return $Tokens[3]
+Func ActivateScanner()
+	$arrEmulatorScanner = $arrEmulators[$CFG_SCANNER][1]
+	Return WinActivate($arrEmulatorScanner[$CFG_CAPTION])
 EndFunc
