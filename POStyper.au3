@@ -426,9 +426,8 @@ EndFunc   ;==>Main
 Func Type($Item = Null)
 	Local $pos = MouseGetPos()
 	If Not $Item Then
-		WinActivate("R10PosClient")
-		Sleep(200)
 		$Item = GetItemNumberFromCombo()
+		WinActivate("R10PosClient")
 	EndIf
 	If $Item == "" Then
 		Return
@@ -1302,14 +1301,13 @@ Func ReloadConfigFile()
 	$arrHelpers		= IniReadSection($cfgFile, "Helpers")
 	$arrPOS			= IniReadSection($cfgFile, "POS")
 	$arrEmulatorsTemp = IniReadSection($cfgFile, "Emulators")
-	$arrDialogsTemp = IniReadSection($cfgFile, "Dialogs")
-	ReloadEmulatorSection($arrEmulatorsTemp)
-	ReloadDialogsSection($arrDialogsTemp)
+	$arrDialogsTemp = IniReadSection($cfgFile, "DialogsToSkip")
+	SplitEmulatorValueToTokensArray($arrEmulatorsTemp)
+	SplitDialogsValueToTokensArray($arrDialogsTemp)
 EndFunc   ;==>ReloadConfigFile
 
 
-Func ReloadEmulatorSection($arrEmulatorsTemp)
-	;$arrEmulatorsTemp = IniReadSection($cfgFile, "Emulators")
+Func SplitEmulatorValueToTokensArray($arrEmulatorsTemp)
 	$NumOfItems = $arrEmulatorsTemp[0][0]
 	ReDim $arrEmulators[$NumOfItems+1][2]
 	$arrEmulators[0][0] = $NumOfItems
@@ -1318,10 +1316,9 @@ Func ReloadEmulatorSection($arrEmulatorsTemp)
 		$Tokens = StringSplit($Val, "|")
 		$arrEmulators[$i][1] = $Tokens
 	Next
-EndFunc   ;==>ReloadEmulatorSection
+EndFunc   ;==>SplitEmulatorValueToTokensArray
 
-Func ReloadDialogsSection($arrDialogsTemp)
-	;$arrDialogsTemp = IniReadSection($cfgFile, "Dialogs")
+Func SplitDialogsValueToTokensArray($arrDialogsTemp)
 	$NumOfItems = $arrDialogsTemp[0][0]
 	ReDim $arrDialogs[$NumOfItems+1][2]
 	$arrDialogs[0][0] = $NumOfItems
@@ -1330,7 +1327,7 @@ Func ReloadDialogsSection($arrDialogsTemp)
 		$Tokens = StringSplit($Val, "|")
 		$arrDialogs[$i][1] = $Tokens
 	Next
-EndFunc   ;==>ReloadDialogsSection
+EndFunc   ;==>SplitDialogsValueToTokensArray
 
 Func ReloadItemsFile()
 	$arrItems = IniReadSection($ItemsIniFile, "Items")
