@@ -34,9 +34,14 @@ Global $cfgFile				= @ScriptDir & "\POStyper.ini"
 Global $icoFile				= @ScriptDir & "\POStyper.ico"
 
 Global $arrItems
-Global $arrCONFIG
-Global $arrDialogs[0]
+Global $arrPosTyper
+Global $arrEnv		
+Global $arrR10		
+Global $arrDev		
+Global $arrHelpers	
+Global $arrPOS		
 Global $arrEmulators[0]
+Global $arrDialogs[0]
 
 Global $CFG_POSTYPER				= 1
 Global $CFG_STATUS_BAR				= 2
@@ -45,33 +50,38 @@ Global $CFG_EXT_DEVELOPER			= 4
 Global $CFG_LANG_SWITCHER			= 5
 Global $CFG_SCENARIO_SUBPATH		= 6
 Global $CFG_AUTO_SPEED_FACTOR		= 7
-Global $CFG_RETAIL_DB_NAME			= 8
-Global $CFG_SERVER_WEBSITE			= 9
-Global $CFG_RABBITMQ_WEBSITE		= 10
-Global $CFG_SERVER_PATH				= 11
-Global $CFG_POS_PATH				= 12
-Global $CFG_OFFICE_PATH				= 13
-Global $CFG_TLOG_PATH				= 14
-Global $CFG_DMS_PATH				= 15
-Global $CFG_SPOOKY_PATH				= 16
-Global $CFG_ARSGATEWAY_PATH			= 17
-Global $CFG_RETAILGATEWAY_PATH		= 18
-Global $CFG_STOREGATEWAY_PATH		= 19
-Global $CFG_WINEPTS_PATH			= 20
-Global $CFG_SERVER_DBG_CUST_PATH	= 21
-Global $CFG_SERVER_DBG_EXT_PATH		= 22
-Global $CFG_POS_DBG_CUST_PATH		= 23
-Global $CFG_POS_DBG_EXT_PATH		= 24
-Global $CFG_OFFICE_DBG_CUST_PATH	= 25
-Global $CFG_OFFICE_DBG_EXT_PATH		= 26
-Global $CFG_CMD						= 27
-Global $CFG_SQLMGR					= 28
-Global $CFG_EDITOR					= 29
-Global $CFG_BROWSER					= 30
-Global $CFG_SNOOP					= 31
-Global $CFG_USER					= 32
-Global $CFG_PASSWORD				= 33
-Global $CFG_LOYALTY_CARD			= 34
+
+Global $CFG_RETAIL_DB_NAME			= 1
+Global $CFG_SERVER_WEBSITE			= 2
+Global $CFG_RABBITMQ_WEBSITE		= 3
+
+Global $CFG_SERVER_PATH				= 1
+Global $CFG_POS_PATH				= 2
+Global $CFG_OFFICE_PATH				= 3
+Global $CFG_TLOG_PATH				= 4
+Global $CFG_DMS_PATH				= 5
+Global $CFG_SPOOKY_PATH				= 6
+Global $CFG_ARSGATEWAY_PATH			= 7
+Global $CFG_RETAILGATEWAY_PATH		= 8
+Global $CFG_STOREGATEWAY_PATH		= 9
+Global $CFG_WINEPTS_PATH			= 10
+
+Global $CFG_SERVER_DBG_CUST_PATH	= 1
+Global $CFG_SERVER_DBG_EXT_PATH		= 2
+Global $CFG_POS_DBG_CUST_PATH		= 3
+Global $CFG_POS_DBG_EXT_PATH		= 4
+Global $CFG_OFFICE_DBG_CUST_PATH	= 5
+Global $CFG_OFFICE_DBG_EXT_PATH		= 6
+
+Global $CFG_CMD						= 1
+Global $CFG_SQLMGR					= 2
+Global $CFG_EDITOR					= 3
+Global $CFG_BROWSER					= 4
+Global $CFG_SNOOP					= 5
+
+Global $CFG_USER					= 1
+Global $CFG_PASSWORD				= 2
+Global $CFG_LOYALTY_CARD			= 3
 
 Global $CFG_SCANNER					= 1
 Global $CFG_PRINTER					= 2
@@ -109,14 +119,14 @@ Func Main()
 	Global $DefaultAutomationSpeedFactor = 1
 	Global $AutomationSpeedFactor = $DefaultAutomationSpeedFactor
 
-	Global $ShowStatusBar				= StringIsTrue($arrCONFIG[$CFG_STATUS_BAR][1])
-	Global $ShowExtDeveloperLine		= StringIsTrue($arrCONFIG[$CFG_EXT_DEVELOPER][1])
-	Global $ShowLanguageSwitcherLine	= StringIsTrue($arrCONFIG[$CFG_LANG_SWITCHER][1])
-	Global $ShowProgressBar				= StringIsTrue($arrCONFIG[$CFG_PROGRESS_BAR][1])
+	Global $ShowStatusBar				= StringIsTrue($arrPosTyper[$CFG_STATUS_BAR][1])
+	Global $ShowExtDeveloperLine		= StringIsTrue($arrPosTyper[$CFG_EXT_DEVELOPER][1])
+	Global $ShowLanguageSwitcherLine	= StringIsTrue($arrPosTyper[$CFG_LANG_SWITCHER][1])
+	Global $ShowProgressBar				= StringIsTrue($arrPosTyper[$CFG_PROGRESS_BAR][1])
 
 	$PosTyperDialogHeight = GetDialogHeight($PosTyperDialogHeight, $ShowStatusBar, $ShowExtDeveloperLine, $ShowLanguageSwitcherLine)
 
-	$CFG_POSTYPER = StringSplit($arrCONFIG[$CFG_POSTYPER][1], "|")
+	$CFG_POSTYPER = StringSplit($arrPosTyper[$CFG_POSTYPER][1], "|")
 
 	If ($CFG_POSTYPER[$CFG_X] >= 0 And $CFG_POSTYPER[$CFG_Y] >= 0) Then
 		$PosTyperDialogX =$CFG_POSTYPER[$CFG_X]
@@ -441,7 +451,7 @@ EndFunc   ;==>Type
 
 
 Func AutomationSpeed()
-	$UserAutomationSpeedFactor = $arrCONFIG[$CFG_AUTO_SPEED_FACTOR][1]
+	$UserAutomationSpeedFactor = $arrPosTyper[$CFG_AUTO_SPEED_FACTOR][1]
 	$DefaultSpeedFactorText = "x" & $DefaultAutomationSpeedFactor
 	$UserSpeedFactorText = "x" & $UserAutomationSpeedFactor
 	If GUICtrlRead($idBtnAutomationSpeed) = $DefaultSpeedFactorText Then
@@ -472,7 +482,7 @@ EndFunc   ;==>Scan
 
 Func StartPOS()
 	If Not WinExists("R10PosClient") Then
-		Run($arrCONFIG[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe", $arrCONFIG[$CFG_POS_PATH][1])
+		Run($arrR10[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe", $arrR10[$CFG_POS_PATH][1])
 	EndIf
 	Sleep(500)
 	WinActivate("R10PosClient")
@@ -487,7 +497,7 @@ Func Login()
 	Local $pos = MouseGetPos()
 	Sleep(300)
 	BlockInput(1)
-	$keys = StringSplit($arrCONFIG[$CFG_USER][1], "")
+	$keys = StringSplit($arrPOS[$CFG_USER][1], "")
 	MouseClick("left", 750, 400, 1, 1)
 	Sleep(300)
 	Send("{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
@@ -498,7 +508,7 @@ Func Login()
 	Send("{TAB}")
 	Sleep(500)
 	Send("{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-	$keys = StringSplit($arrCONFIG[$CFG_PASSWORD][1], "")
+	$keys = StringSplit($arrPOS[$CFG_PASSWORD][1], "")
 	For $i = 1 To $keys[0]
 		Send($keys[$i])
 	Next
@@ -530,7 +540,7 @@ Func ScanLoyaltyCard()
 	$Scanme = StringStripWS(GUICtrlRead($idComboBox), 8)
 	$hWndSCR = ActivateScanner()
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $arrCONFIG[$CFG_LOYALTY_CARD][1])
+	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $arrPOS[$CFG_LOYALTY_CARD][1])
 	ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
 	WinActivate("R10PosClient")
 EndFunc   ;==>ScanLoyaltyCard
@@ -542,7 +552,7 @@ Func Scenario()
 	EndIf
 	FileChangeDir($PostyperDir)
 	$ScenariosFullDir = $ScenariosDir
-	$SubPath = StringReplace($arrCONFIG[$CFG_SCENARIO_SUBPATH][1], '"', '')
+	$SubPath = StringReplace($arrPosTyper[$CFG_SCENARIO_SUBPATH][1], '"', '')
 	If $SubPath > 0 Then
 		$ScenariosFullDir = $ScenariosDir & "\" & $SubPath
 	EndIf
@@ -576,7 +586,7 @@ Func Unlock()
 	MouseClick("left", 400, 250, 1, 1)
 	Sleep(500)
 	Send("{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-	$keys = StringSplit($arrCONFIG[$CFG_PASSWORD][1], "")
+	$keys = StringSplit($arrPOS[$CFG_PASSWORD][1], "")
 	For $i = 1 To $keys[0]
 		Send($keys[$i])
 	Next
@@ -593,36 +603,36 @@ EndFunc   ;==>KillPOS
 
 Func CleanLogs()
 	$cmd = $HelpersDir & "\CleanLogs.cmd"
-	$arg1 = $arrCONFIG[$CFG_SERVER_PATH][1] & " "
-	$arg2 = $arrCONFIG[$CFG_POS_PATH][1] & " "
-	$arg3 = $arrCONFIG[$CFG_OFFICE_PATH][1] & " "
-	$arg4 = $arrCONFIG[$CFG_DMS_PATH][1] & " "
-	$arg5 = $arrCONFIG[$CFG_ARSGATEWAY_PATH][1] & " "
-	$arg6 = $arrCONFIG[$CFG_RETAILGATEWAY_PATH][1] & " "
-	$arg7 = $arrCONFIG[$CFG_STOREGATEWAY_PATH][1] & " "
-	$arg8 = $arrCONFIG[$CFG_WINEPTS_PATH][1] & " "
+	$arg1 = $arrR10[$CFG_SERVER_PATH][1] & " "
+	$arg2 = $arrR10[$CFG_POS_PATH][1] & " "
+	$arg3 = $arrR10[$CFG_OFFICE_PATH][1] & " "
+	$arg4 = $arrR10[$CFG_DMS_PATH][1] & " "
+	$arg5 = $arrR10[$CFG_ARSGATEWAY_PATH][1] & " "
+	$arg6 = $arrR10[$CFG_RETAILGATEWAY_PATH][1] & " "
+	$arg7 = $arrR10[$CFG_STOREGATEWAY_PATH][1] & " "
+	$arg8 = $arrR10[$CFG_WINEPTS_PATH][1] & " "
 	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CleanLogs
 
 
 Func BrowseServer()
-	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_SERVER_WEBSITE][1])
+	ShellExecute($arrHelpers[$CFG_BROWSER][1], $arrEnv[$CFG_SERVER_WEBSITE][1])
 EndFunc   ;==>BrowseServer
 
 
 Func MonitorSrvLog()
-	$ServerLogsDir = $arrCONFIG[$CFG_SERVER_PATH][1] & "\Logs\"
+	$ServerLogsDir = $arrR10[$CFG_SERVER_PATH][1] & "\Logs\"
 	$hSearch = FileFindFirstFile($ServerLogsDir & "GPOSWebService_*.log")
 	If $hSearch > 0 Then
 		$LastGpos = FileFindNextFile($hSearch)
-		ShellExecute($arrCONFIG[$CFG_EDITOR][1], " -monitor " & $ServerLogsDir & $LastGpos)
+		ShellExecute($arrHelpers[$CFG_EDITOR][1], " -monitor " & $ServerLogsDir & $LastGpos)
 	EndIf
 EndFunc   ;==>MonitorSrvLog
 
 
 Func EditIni()
-	ShellExecute($arrCONFIG[$CFG_EDITOR][1], $cfgFile)
+	ShellExecute($arrHelpers[$CFG_EDITOR][1], $cfgFile)
 	Sleep(5000)
 	ReloadItemsFile()
 	ReloadConfigFile()
@@ -631,24 +641,24 @@ EndFunc   ;==>EditIni
 
 Func DebugOn()
 	FileChangeDir($HelpersDir)
-	$WebLoggerConfig = $arrCONFIG[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
+	$WebLoggerConfig = $arrR10[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
 	ShellExecute($HelpersDir & "\SetLogger.exe", $WebLoggerConfig & " DEBUG", "", "", @SW_MAXIMIZE)
 	FileChangeDir(@ScriptDir)
 EndFunc   ;==>DebugOn
 
 
 Func DebugOff()
-	$WebLoggerConfig = $arrCONFIG[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
+	$WebLoggerConfig = $arrR10[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
 	ShellExecute($HelpersDir & "\SetLogger.exe", $WebLoggerConfig & " ERROR", "", "", @SW_MAXIMIZE)
 EndFunc   ;==>DebugOff
 
 
 Func ExposeLogs()
-	$PosLogs = $arrCONFIG[$CFG_POS_PATH][1] & "\Logs"
+	$PosLogs = $arrR10[$CFG_POS_PATH][1] & "\Logs"
 	If FileExists($PosLogs) Then
 		ShellExecute("C:\Windows\explorer.exe", $PosLogs)
 	EndIf
-	$ServerLogs = $arrCONFIG[$CFG_SERVER_PATH][1] & "\Logs"
+	$ServerLogs = $arrR10[$CFG_SERVER_PATH][1] & "\Logs"
 	If FileExists($ServerLogs) Then
 		ShellExecute("C:\Windows\explorer.exe", $ServerLogs)
 	EndIf
@@ -661,14 +671,14 @@ Func CollectLogs()
 	EndIf
 	$cmd = $HelpersDir & "\CollectLogs.cmd"
 	$arg1 = $CollectedDir & " "
-	$arg2 = $arrCONFIG[$CFG_SERVER_PATH][1] & " "
-	$arg3 = $arrCONFIG[$CFG_POS_PATH][1] & " "
-	$arg4 = $arrCONFIG[$CFG_OFFICE_PATH][1] & " "
-	$arg5 = $arrCONFIG[$CFG_DMS_PATH][1] & " "
-	$arg6 = $arrCONFIG[$CFG_ARSGATEWAY_PATH][1] & " "
-	$arg7 = $arrCONFIG[$CFG_RETAILGATEWAY_PATH][1] & " "
-	$arg8 = $arrCONFIG[$CFG_STOREGATEWAY_PATH][1] & " "
-	$arg9 = $arrCONFIG[$CFG_WINEPTS_PATH][1] & " "
+	$arg2 = $arrR10[$CFG_SERVER_PATH][1] & " "
+	$arg3 = $arrR10[$CFG_POS_PATH][1] & " "
+	$arg4 = $arrR10[$CFG_OFFICE_PATH][1] & " "
+	$arg5 = $arrR10[$CFG_DMS_PATH][1] & " "
+	$arg6 = $arrR10[$CFG_ARSGATEWAY_PATH][1] & " "
+	$arg7 = $arrR10[$CFG_RETAILGATEWAY_PATH][1] & " "
+	$arg8 = $arrR10[$CFG_STOREGATEWAY_PATH][1] & " "
+	$arg9 = $arrR10[$CFG_WINEPTS_PATH][1] & " "
 	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8 & $arg9
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CollectLogs
@@ -676,20 +686,20 @@ EndFunc   ;==>CollectLogs
 
 Func ReceiptDebugOn()
 	FileChangeDir($HelpersDir)
-	ShellExecute($HelpersDir & "\receiptdebug.cmd", $arrCONFIG[$CFG_RETAIL_DB_NAME][1], "", "", @SW_MAXIMIZE)
+	ShellExecute($HelpersDir & "\receiptdebug.cmd", $arrEnv[$CFG_RETAIL_DB_NAME][1], "", "", @SW_MAXIMIZE)
 	FileChangeDir(@ScriptDir)
 EndFunc   ;==>ReceiptDebugOn
 
 
 Func ReceiptDebugOff()
 	FileChangeDir($HelpersDir)
-	ShellExecute($HelpersDir & "\receiptdebugoff.cmd", $arrCONFIG[$CFG_RETAIL_DB_NAME][1], "", "", @SW_MAXIMIZE)
+	ShellExecute($HelpersDir & "\receiptdebugoff.cmd", $arrEnv[$CFG_RETAIL_DB_NAME][1], "", "", @SW_MAXIMIZE)
 	FileChangeDir(@ScriptDir)
 EndFunc   ;==>ReceiptDebugOff
 
 
 Func ViewSlip()
-	Local $sFileOpenDialog = FileOpenDialog("Select input file", $arrCONFIG[$CFG_TLOG_PATH][1], "TLOG (RetailTransactionLog*.xml)", 1)
+	Local $sFileOpenDialog = FileOpenDialog("Select input file", $arrR10[$CFG_TLOG_PATH][1], "TLOG (RetailTransactionLog*.xml)", 1)
 	If @error Then
 		NoFilesSelectedMsgBox()
 		FileChangeDir(@ScriptDir)
@@ -704,7 +714,7 @@ EndFunc   ;==>ViewSlip
 
 
 Func ExposeTLog()
-	$TLogs = $arrCONFIG[$CFG_TLOG_PATH][1]
+	$TLogs = $arrR10[$CFG_TLOG_PATH][1]
 	If FileExists($TLogs) Then
 		ShellExecute("C:\Windows\explorer.exe", $TLogs)
 	EndIf
@@ -754,7 +764,7 @@ EndFunc   ;==>CleanScanner
 
 
 Func BrowseRabbit()
-	ShellExecute($arrCONFIG[$CFG_BROWSER][1], $arrCONFIG[$CFG_RABBITMQ_WEBSITE][1])
+	ShellExecute($arrHelpers[$CFG_BROWSER][1], $arrEnv[$CFG_RABBITMQ_WEBSITE][1])
 EndFunc   ;==>BrowseRabbit
 
 
@@ -774,14 +784,14 @@ EndFunc   ;==>IISStart
 
 
 Func OpenCMD()
-	Run($arrCONFIG[$CFG_CMD][1])
+	Run($arrHelpers[$CFG_CMD][1])
 EndFunc   ;==>OpenCMD
 
 
 Func OpenSpooky()
-	$SpookyExe = $arrCONFIG[$CFG_SPOOKY_PATH][1] & "\" & "R10WebClient.exe"
+	$SpookyExe = $arrR10[$CFG_SPOOKY_PATH][1] & "\" & "R10WebClient.exe"
 	If FileExists($SpookyExe) Then
-		Run($SpookyExe, $arrCONFIG[$CFG_SPOOKY_PATH][1] & "\")
+		Run($SpookyExe, $arrR10[$CFG_SPOOKY_PATH][1] & "\")
 	EndIf
 EndFunc   ;==>OpenSpooky
 
@@ -792,19 +802,19 @@ EndFunc   ;==>OpenServices
 
 
 Func OpenSSMS()
-	ShellExecute($arrCONFIG[$CFG_SQLMGR][1], "-E")
+	ShellExecute($arrHelpers[$CFG_SQLMGR][1], "-E")
 EndFunc   ;==>OpenSSMS
 
 
 Func OpenSnoop()
-	ShellExecute($arrCONFIG[$CFG_SNOOP][1], "")
+	ShellExecute($arrHelpers[$CFG_SNOOP][1], "")
 EndFunc   ;==>OpenSnoop
 
 
 Func CopyServerExtToCust()
 	$cmd = $HelpersDir & "\CopyServerExtToCust.cmd"
-	$arg1 = $arrCONFIG[$CFG_SERVER_DBG_CUST_PATH][1] & " "
-	$arg2 = $arrCONFIG[$CFG_SERVER_DBG_EXT_PATH][1] & " "
+	$arg1 = $arrDev[$CFG_SERVER_DBG_CUST_PATH][1] & " "
+	$arg2 = $arrDev[$CFG_SERVER_DBG_EXT_PATH][1] & " "
 	$arguments = $arg1 & $arg2
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyServerExtToCust
@@ -812,8 +822,8 @@ EndFunc   ;==>CopyServerExtToCust
 
 Func CopyPosExtToCust()
 	$cmd = $HelpersDir & "\CopyPosExtToCust.cmd"
-	$arg1 = $arrCONFIG[$CFG_POS_DBG_CUST_PATH][1] & " "
-	$arg2 = $arrCONFIG[$CFG_POS_DBG_EXT_PATH][1] & " "
+	$arg1 = $arrDev[$CFG_POS_DBG_CUST_PATH][1] & " "
+	$arg2 = $arrDev[$CFG_POS_DBG_EXT_PATH][1] & " "
 	$arguments = $arg1 & $arg2
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyPosExtToCust
@@ -821,8 +831,8 @@ EndFunc   ;==>CopyPosExtToCust
 
 Func CopyOfficeExtToCust()
 	$cmd = $HelpersDir & "\CopyOfficeExtToCust.cmd"
-	$arg1 = $arrCONFIG[$CFG_OFFICE_DBG_CUST_PATH][1] & " "
-	$arg2 = $arrCONFIG[$CFG_OFFICE_DBG_EXT_PATH][1] & " "
+	$arg1 = $arrDev[$CFG_OFFICE_DBG_CUST_PATH][1] & " "
+	$arg2 = $arrDev[$CFG_OFFICE_DBG_EXT_PATH][1] & " "
 	$arguments = $arg1 & $arg2
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyOfficeExtToCust
@@ -830,14 +840,14 @@ EndFunc   ;==>CopyOfficeExtToCust
 
 Func ToEnglish()
 	FileChangeDir($HelpersDir)
-	ShellExecute($HelpersDir & "\jumbo_update_to_english.cmd", $arrCONFIG[$CFG_RETAIL_DB_NAME][1], "", "", @SW_MAXIMIZE)
+	ShellExecute($HelpersDir & "\jumbo_update_to_english.cmd", $arrEnv[$CFG_RETAIL_DB_NAME][1], "", "", @SW_MAXIMIZE)
 	FileChangeDir(@ScriptDir)
 EndFunc   ;==>ToEnglish
 
 
 Func ToDutch()
 	FileChangeDir($HelpersDir)
-	ShellExecute($HelpersDir & "\jumbo_update_to_dutch.cmd", $arrCONFIG[$CFG_RETAIL_DB_NAME][1], "", "", @SW_MAXIMIZE)
+	ShellExecute($HelpersDir & "\jumbo_update_to_dutch.cmd", $arrEnv[$CFG_RETAIL_DB_NAME][1], "", "", @SW_MAXIMIZE)
 	FileChangeDir(@ScriptDir)
 EndFunc   ;==>ToDutch
 
@@ -1222,7 +1232,7 @@ EndFunc   ;==>StringIsTrue
 
 Func IsEnglishBackupDbTablesExist()
 	FileChangeDir($HelpersDir)
-	EnvSet("RETAIL_DB_NAME_TEMP_VAR", $arrCONFIG[$CFG_RETAIL_DB_NAME][1])
+	EnvSet("RETAIL_DB_NAME_TEMP_VAR", $arrEnv[$CFG_RETAIL_DB_NAME][1])
 	$retCode = RunWait($HelpersDir & "\jumbo_test_english_exists.cmd", "", @SW_HIDE)
 	$BackupExists = $retCode == 1
 	FileChangeDir(@ScriptDir)
@@ -1232,7 +1242,7 @@ EndFunc   ;==>IsEnglishBackupDbTablesExist
 
 Func IsDutchBackupDbTablesExist()
 	FileChangeDir($HelpersDir)
-	EnvSet("RETAIL_DB_NAME_TEMP_VAR", $arrCONFIG[$CFG_RETAIL_DB_NAME][1])
+	EnvSet("RETAIL_DB_NAME_TEMP_VAR", $arrEnv[$CFG_RETAIL_DB_NAME][1])
 	$retCode = RunWait($HelpersDir & "\jumbo_test_dutch_exists.cmd", "", @SW_HIDE)
 	$BackupExists = $retCode == 1
 	FileChangeDir(@ScriptDir)
@@ -1291,20 +1301,15 @@ Func ReloadConfigFile()
 	$arrDev			= IniReadSection($cfgFile, "Dev")
 	$arrHelpers		= IniReadSection($cfgFile, "Helpers")
 	$arrPOS			= IniReadSection($cfgFile, "POS")
-	$arrCONFIG = $arrPosTyper
-	_ArrayConcatenate($arrCONFIG, $arrEnv, 1)
-	_ArrayConcatenate($arrCONFIG, $arrR10, 1)
-	_ArrayConcatenate($arrCONFIG, $arrDev, 1)
-	_ArrayConcatenate($arrCONFIG, $arrHelpers, 1)
-	_ArrayConcatenate($arrCONFIG, $arrPOS, 1)
-	$arrCONFIG[0][0] = $arrPosTyper[0][0] + $arrEnv[0][0] + $arrR10[0][0] + $arrDev[0][0] + $arrHelpers[0][0] + $arrPOS[0][0]
-	ReloadEmulatorSection()
-	ReloadDialogsSection()
+	$arrEmulatorsTemp = IniReadSection($cfgFile, "Emulators")
+	$arrDialogsTemp = IniReadSection($cfgFile, "Dialogs")
+	ReloadEmulatorSection($arrEmulatorsTemp)
+	ReloadDialogsSection($arrDialogsTemp)
 EndFunc   ;==>ReloadConfigFile
 
 
-Func ReloadEmulatorSection()
-	$arrEmulatorsTemp = IniReadSection($cfgFile, "Emulators")
+Func ReloadEmulatorSection($arrEmulatorsTemp)
+	;$arrEmulatorsTemp = IniReadSection($cfgFile, "Emulators")
 	$NumOfItems = $arrEmulatorsTemp[0][0]
 	ReDim $arrEmulators[$NumOfItems+1][2]
 	$arrEmulators[0][0] = $NumOfItems
@@ -1315,8 +1320,8 @@ Func ReloadEmulatorSection()
 	Next
 EndFunc   ;==>ReloadEmulatorSection
 
-Func ReloadDialogsSection()
-	$arrDialogsTemp = IniReadSection($cfgFile, "Dialogs")
+Func ReloadDialogsSection($arrDialogsTemp)
+	;$arrDialogsTemp = IniReadSection($cfgFile, "Dialogs")
 	$NumOfItems = $arrDialogsTemp[0][0]
 	ReDim $arrDialogs[$NumOfItems+1][2]
 	$arrDialogs[0][0] = $NumOfItems
