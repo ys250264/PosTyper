@@ -34,6 +34,7 @@ Global $PayingEFTIniFile	= $FlowsDir & "\paying_eft.ini"
 Global $cfgFile				= @ScriptDir & "\POStyper.ini"
 Global $icoFile				= @ScriptDir & "\POStyper.ico"
 
+Global $sLastScenarioFileName
 Global $arrItems
 Global $arrPosTyper
 Global $arrEnv		
@@ -265,7 +266,7 @@ Func Main()
 	Local $idBtnPayingEFT			= GUICtrlCreateButton($captionPayingEFT			, $Col_4, $ROW_2	, $BtnWidthL, $BtnHeight)
 
 	Local $idBtnUnlock				= GUICtrlCreateButton($captionUnlock			, $Col_1, $ROW_3	, $BtnWidthL, $BtnHeight)
-	Local $idBtnEditIni				= GUICtrlCreateButton($captionEditIni			, $Col_3, $ROW_3	, $BtnWidthL, $BtnHeight)
+	Local $idBtnEditIni				= GUICtrlCreateButton($captionEditIni			, $Col_2, $ROW_3	, $BtnWidthL, $BtnHeight)
 	Local $idBtnKillPOS				= GUICtrlCreateButton($captionKillPOS 	    	, $Col_4, $ROW_3	, $BtnWidthL, $BtnHeight)
 				
 	Local $idBtnCleanLogs			= GUICtrlCreateButton($captionCleanLogs			, $Col_1, $ROW_4	, $BtnWidthL, $BtnHeight)
@@ -567,7 +568,8 @@ Func Scenario()
 	If $SubPath > 0 Then
 		$ScenariosFullDir = $ScenariosDir & "\" & $SubPath
 	EndIf
-	Local $sScenarioFileName = FileOpenDialog("Select input file", $ScenariosFullDir & "\", "All (*.ini)", 1)
+	$sScenarioFileName = FileOpenDialog("Select input file", $ScenariosFullDir & "\", "All (*.ini)", 1)
+	$sLastScenarioFileName = $sScenarioFileName 
 	If @error Then
 		NoFilesSelectedMsgBox()
 		FileChangeDir($PostyperDir)
@@ -1015,20 +1017,16 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 
 	$bBreakByUser = False
 
-	If $ShowProgressBar Then
-		$aPos = WinGetPos($g_hPosTyper)
-		$xPOS = $aPos[0] + 15
-		$yPOS = $aPos[1] + $aPos[3] / 4 + 30
-		ProgressOn($ProgressBarCaption, "", "0%", $xPOS, $yPOS, $DLG_MOVEABLE)
-	EndIf
+	StartProgressBar($ProgressBarCaption)
 
 	$NumOfItems = $arrItems[0][0]
+
+	$NumItemsUpToNextFlow = GetNumItemsUpToNextFlow($arrItems)
 
 	For $i = 1 To $NumOfItems
 
 		WinActivate("R10PosClient")
-		;MsgBox($MB_SYSTEMMODAL, "", "Key: " & $arrItems[$i][0] & @CRLF & "Value: " & $arrItems[$i][1])
-
+		
 		$KeyToStatusBar = $arrItems[$i][0]
 		$ValToStatusBar = $arrItems[$i][1]
 
@@ -1163,19 +1161,13 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 				$bBreakByUser = True
 				ExitLoop
 			EndIf
+		ElseIf $arrItems[$i][0] = "flow" Then
+			$arrItems = ExecuteFlowAndReloadArrItems($arrItems[$i][1], $StatusBarText, $ProgressBarCaption)
 		EndIf
-		If $ShowProgressBar Then
-			$Percents = Int($i / $NumOfItems * 100)
-			ProgressSet($Percents, $StatusBarText, $Percents & "%")
-		EndIf
+		UpdateProgressBar($i, $NumOfItems, $StatusBarText)
 	Next
-	If $ShowProgressBar Then
-		If Not $bBreakByUser Then
-			ProgressSet(100, $StatusBarText, $Percents & "%")
-			Sleep(2000)
-		EndIf
-		ProgressOff()
-	EndIf
+	$EndGracefully = Not $bBreakByUser
+	StopProgressBar($EndGracefully, $StatusBarText)
 EndFunc   ;==>ScenarioAutomation
 
 
@@ -1363,4 +1355,64 @@ EndFunc   ;==>ReloadItemsFile
 Func ActivateScanner()
 	$arrEmulatorScanner = $arrEmulators[$CFG_SCANNER][1]
 	Return WinActivate($arrEmulatorScanner[$CFG_CAPTION])
-EndFunc
+EndFunc   ;==>ActivateScanner
+
+
+Func StartProgressBar($ProgressBarCaption)
+	If $ShowProgressBar Then
+		Global $ProgressBarPercents = 0
+		$aPos = WinGetPos($g_hPosTyper)
+		$xPOS = $aPos[0] + 15
+		$yPOS = $aPos[1] + $aPos[3] / 4 + 30
+		ProgressOn($ProgressBarCaption, "", $ProgressBarPercents & "%", $xPOS, $yPOS, $DLG_MOVEABLE)
+	EndIf
+EndFunc   ;==>StartProgressBar
+
+
+Func UpdateProgressBar($i, $NumOfItems, $StatusBarText)
+	If $ShowProgressBar Then
+		$ProgressBarPercents = Int($i / $NumOfItems * 100)
+		ProgressSet($ProgressBarPercents, $StatusBarText, $ProgressBarPercents & "%")
+	EndIf
+EndFunc   ;==>UpdateProgressBar
+
+
+Func StopProgressBar($EndGracefully, $StatusBarText)
+	If $ShowProgressBar Then
+		If $EndGracefully Then
+			ProgressSet(100, $StatusBarText, $ProgressBarPercents & "%")
+			Sleep(500)
+		EndIf
+		ProgressOff()
+	EndIf
+EndFunc   ;==>StopProgressBar
+
+
+Func GetNumItemsUpToNextFlow($arrItems)
+	For $i = 1 To $arrItems[0][0]
+		If $arrItems[$i][0] = "flow" Then
+			Return $i-1
+		EndIf
+	Next
+	Return $arrItems[0][0]
+EndFunc   ;==>GetNumItemsUpToNextFlow
+
+
+Func ExecuteFlowAndReloadArrItems($FlowName, $StatusBarText, $ProgressBarCaption)
+	Local $FuncName
+	Switch $FlowName
+        Case "TENDERING"
+            $FuncName = Tendering
+		Case "PAYING_CASH"
+			$FuncName = PayingCash
+		Case "PAYING_EFT"
+			$FuncName = PayingEFT
+		Case Else
+			Return
+	EndSwitch
+	StopProgressBar(True, $StatusBarText)
+	$FuncName()
+	$arrItems = IniReadSection($sLastScenarioFileName, "SCENARIO")
+	StartProgressBar($ProgressBarCaption)
+	return $arrItems
+EndFunc   ;==>ExecuteFlowAndReloadArrItems
