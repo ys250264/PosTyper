@@ -325,7 +325,7 @@ Func Main()
 	EndIf
 	Sleep(500)
 
-	Global $do = True
+	Local $do = True
 
 	While $do
 		$Btn = GUIGetMsg()
@@ -462,6 +462,20 @@ Func Type($Item = Null)
 EndFunc   ;==>Type
 
 
+Func Scan()
+;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
+	$Scanme = GetItemNumberFromCombo()
+	If $Scanme == "" Then
+		Return
+	EndIf
+	$hWndSCR = ActivateScanner()
+	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
+	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $Scanme)
+	ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
+	WinActivate("R10PosClient")
+EndFunc   ;==>Scan
+
+
 Func AutomationSpeed()
 	$UserAutomationSpeedFactor = $arrPosTyper[$CFG_AUTO_SPEED_FACTOR][1]
 	$DefaultSpeedFactorText = "x" & $DefaultAutomationSpeedFactor
@@ -476,20 +490,6 @@ Func AutomationSpeed()
 		$AutomationSpeedFactor = $DefaultAutomationSpeedFactor
 	EndIf
 EndFunc   ;==>AutomationSpeed
-
-
-Func Scan()
-;~$Scanme = StringStripWS(GUICtrlRead($idComboBox),8)
-	$Scanme = GetItemNumberFromCombo()
-	If $Scanme == "" Then
-		Return
-	EndIf
-	$hWndSCR = ActivateScanner()
-	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
-	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", $Scanme)
-	ControlClick($hWndSCR, "", "[CLASS:Button; INSTANCE:5]")
-	WinActivate("R10PosClient")
-EndFunc   ;==>Scan
 
 
 Func StartPOS()
@@ -659,12 +659,9 @@ Func MonitorSrvLog()
 EndFunc   ;==>MonitorSrvLog
 
 
-Func EditIni()
-	ShellExecute($arrHelpers[$CFG_EDITOR][1], $cfgFile)
-	Sleep(5000)
-	ReloadItemsFile()
-	ReloadConfigFile()
-EndFunc   ;==>EditIni
+Func BrowseRabbit()
+	ShellExecute($arrHelpers[$CFG_BROWSER][1], $arrEnv[$CFG_RABBITMQ_WEBSITE][1])
+EndFunc   ;==>BrowseRabbit
 
 
 Func DebugOn()
@@ -693,23 +690,12 @@ Func ExposeLogs()
 EndFunc   ;==>ExposeLogs
 
 
-Func CollectLogs()
-	If Not FileExists($CollectedDir) Then
-		DirCreate($CollectedDir)
+Func ExposeTLog()
+	$TLogs = $arrR10[$CFG_TLOG_PATH][1]
+	If FileExists($TLogs) Then
+		ShellExecute("C:\Windows\explorer.exe", $TLogs)
 	EndIf
-	$cmd = $HelpersDir & "\CollectLogs.cmd"
-	$arg1 = $CollectedDir & " "
-	$arg2 = $arrR10[$CFG_SERVER_PATH][1] & " "
-	$arg3 = $arrR10[$CFG_POS_PATH][1] & " "
-	$arg4 = $arrR10[$CFG_OFFICE_PATH][1] & " "
-	$arg5 = $arrR10[$CFG_DMS_PATH][1] & " "
-	$arg6 = $arrR10[$CFG_ARSGATEWAY_PATH][1] & " "
-	$arg7 = $arrR10[$CFG_RETAILGATEWAY_PATH][1] & " "
-	$arg8 = $arrR10[$CFG_STOREGATEWAY_PATH][1] & " "
-	$arg9 = $arrR10[$CFG_WINEPTS_PATH][1] & " "
-	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8 & $arg9
-	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
-EndFunc   ;==>CollectLogs
+EndFunc   ;==>ExposeTLog
 
 
 Func ReceiptDebugOn()
@@ -741,12 +727,23 @@ Func ViewSlip()
 EndFunc   ;==>ViewSlip
 
 
-Func ExposeTLog()
-	$TLogs = $arrR10[$CFG_TLOG_PATH][1]
-	If FileExists($TLogs) Then
-		ShellExecute("C:\Windows\explorer.exe", $TLogs)
+Func CollectLogs()
+	If Not FileExists($CollectedDir) Then
+		DirCreate($CollectedDir)
 	EndIf
-EndFunc   ;==>ExposeTLog
+	$cmd = $HelpersDir & "\CollectLogs.cmd"
+	$arg1 = $CollectedDir & " "
+	$arg2 = $arrR10[$CFG_SERVER_PATH][1] & " "
+	$arg3 = $arrR10[$CFG_POS_PATH][1] & " "
+	$arg4 = $arrR10[$CFG_OFFICE_PATH][1] & " "
+	$arg5 = $arrR10[$CFG_DMS_PATH][1] & " "
+	$arg6 = $arrR10[$CFG_ARSGATEWAY_PATH][1] & " "
+	$arg7 = $arrR10[$CFG_RETAILGATEWAY_PATH][1] & " "
+	$arg8 = $arrR10[$CFG_STOREGATEWAY_PATH][1] & " "
+	$arg9 = $arrR10[$CFG_WINEPTS_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8 & $arg9
+	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
+EndFunc   ;==>CollectLogs
 
 
 Func SnipPOS()
@@ -791,9 +788,12 @@ Func CleanScanner()
 EndFunc   ;==>CleanScanner
 
 
-Func BrowseRabbit()
-	ShellExecute($arrHelpers[$CFG_BROWSER][1], $arrEnv[$CFG_RABBITMQ_WEBSITE][1])
-EndFunc   ;==>BrowseRabbit
+Func EditIni()
+	ShellExecute($arrHelpers[$CFG_EDITOR][1], $cfgFile)
+	Sleep(5000)
+	ReloadItemsFile()
+	ReloadConfigFile()
+EndFunc   ;==>EditIni
 
 
 Func IISReset()
@@ -824,11 +824,6 @@ Func OpenSpooky()
 EndFunc   ;==>OpenSpooky
 
 
-Func OpenServices()
-	ShellExecute("C:\Windows\System32\services.msc")
-EndFunc   ;==>OpenServices
-
-
 Func OpenSSMS()
 	ShellExecute($arrHelpers[$CFG_SQLMGR][1], "-E")
 EndFunc   ;==>OpenSSMS
@@ -837,6 +832,11 @@ EndFunc   ;==>OpenSSMS
 Func OpenSnoop()
 	ShellExecute($arrHelpers[$CFG_SNOOP][1], "")
 EndFunc   ;==>OpenSnoop
+
+
+Func OpenServices()
+	ShellExecute("C:\Windows\System32\services.msc")
+EndFunc   ;==>OpenServices
 
 
 Func CopyServerExtToCust()
