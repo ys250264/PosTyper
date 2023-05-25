@@ -266,7 +266,6 @@ Func Main()
 	Local $idBtnPayingEFT			= GUICtrlCreateButton($captionPayingEFT			, $Col_4, $ROW_2	, $BtnWidthL, $BtnHeight)
 
 	Local $idBtnUnlock				= GUICtrlCreateButton($captionUnlock			, $Col_1, $ROW_3	, $BtnWidthL, $BtnHeight)
-	Local $idBtnEditIni				= GUICtrlCreateButton($captionEditIni			, $Col_3, $ROW_3	, $BtnWidthL, $BtnHeight)
 	Local $idBtnKillPOS				= GUICtrlCreateButton($captionKillPOS 	    	, $Col_4, $ROW_3	, $BtnWidthL, $BtnHeight)
 				
 	Local $idBtnCleanLogs			= GUICtrlCreateButton($captionCleanLogs			, $Col_1, $ROW_4	, $BtnWidthL, $BtnHeight)
@@ -287,6 +286,7 @@ Func Main()
 	Local $idBtnSnipPos				= GUICtrlCreateButton($captionSnipPos   		, $Col_1, $ROW_7	, $BtnWidthL, $BtnHeight)	
 	Local $idBtnSnipScreen			= GUICtrlCreateButton($captionSnipScreen		, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)		
 	Local $idBtnCleanScanner		= GUICtrlCreateButton($captionCleanScanner		, $Col_3, $ROW_7	, $BtnWidthL, $BtnHeight)
+	Local $idBtnEditIni				= GUICtrlCreateButton($captionEditIni			, $Col_4, $ROW_7	, $BtnWidthL, $BtnHeight)
 				
 	Local $idBtnIISReset			= GUICtrlCreateButton($captionIISReset			, $Col_1, $ROW_8	, $BtnWidthL, $BtnHeight)
 	Local $idBtnIISStop				= GUICtrlCreateButton($captionIISStop			, $Col_2, $ROW_8	, $BtnWidthL, $BtnHeight)
