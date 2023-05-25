@@ -103,7 +103,7 @@ If _Singleton("POStyper", 1) = 0 Then
 	Exit
 EndIf
 
-ReadConfigAndItemsFiles()
+ReadIniFiles()
 
 Main()
 
@@ -930,10 +930,10 @@ EndFunc   ;==>ToDutch
 
 ; === Helper Functions ==============================================================================================
 
-Func ReadConfigAndItemsFiles()
+Func ReadIniFiles()
 	ReloadItemsFile()
 	ReloadConfigFile()
-EndFunc   ;==>ReadConfigAndItemsFiles
+EndFunc   ;==>ReadIniFiles
 
 
 Func GetItemNumberFromCombo()
@@ -1337,6 +1337,7 @@ Func SplitEmulatorValueToTokensArray($arrEmulatorsTemp)
 	Next
 EndFunc   ;==>SplitEmulatorValueToTokensArray
 
+
 Func SplitDialogsValueToTokensArray($arrDialogsTemp)
 	$NumOfItems = $arrDialogsTemp[0][0]
 	ReDim $arrDialogs[$NumOfItems+1][2]
@@ -1348,9 +1349,11 @@ Func SplitDialogsValueToTokensArray($arrDialogsTemp)
 	Next
 EndFunc   ;==>SplitDialogsValueToTokensArray
 
+
 Func ReloadItemsFile()
 	$arrItems = IniReadSection($ItemsIniFile, "Items")
 EndFunc   ;==>ReloadItemsFile
+
 
 Func ActivateScanner()
 	$arrEmulatorScanner = $arrEmulators[$CFG_SCANNER][1]
