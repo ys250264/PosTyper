@@ -498,6 +498,8 @@ Func StartPOS()
 		$arguments = $arrR10[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe"
 		ShellExecute($cmd, $arguments, "", "", @SW_MINIMIZE)
 	EndIf
+	Sleep(500)
+	WinActivate("R10PosClient")
 EndFunc   ;==>StartPOS
 
 
