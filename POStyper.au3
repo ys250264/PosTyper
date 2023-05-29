@@ -494,10 +494,10 @@ EndFunc   ;==>AutomationSpeed
 
 Func StartPOS()
 	If Not WinExists("R10PosClient") Then
-		Run($arrR10[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe", $arrR10[$CFG_POS_PATH][1])
+		$cmd = $HelpersDir & "\StartPOS.cmd"
+		$arguments = $arrR10[$CFG_POS_PATH][1] & "\Retalix.Client.POS.Shell.exe"
+		ShellExecute($cmd, $arguments, "", "", @SW_MINIMIZE)
 	EndIf
-	Sleep(500)
-	WinActivate("R10PosClient")
 EndFunc   ;==>StartPOS
 
 
