@@ -214,18 +214,18 @@ Func Main()
 
 	$RowHeight = 30
 
-	Local $ROW_0 = 10
-	Local $ROW_1 = $ROW_0 + $RowHeight
-	Local $ROW_2 = $ROW_1 + $RowHeight
-	Local $ROW_3 = $ROW_2 + $RowHeight
-	Local $ROW_4 = $ROW_3 + $RowHeight
-	Local $ROW_5 = $ROW_4 + $RowHeight
-	Local $ROW_6 = $ROW_5 + $RowHeight
-	Local $ROW_7 = $ROW_6 + $RowHeight
-	Local $ROW_8 = $ROW_7 + $RowHeight
-	Local $ROW_9 = $ROW_8 + $RowHeight
-	Local $ROW_10 = $ROW_9 + $RowHeight
-	Local $ROW_11 = $ROW_10 + $RowHeight
+	Local $ROW_0	= 10
+	Local $ROW_1	= $ROW_0  + $RowHeight
+	Local $ROW_2	= $ROW_1  + $RowHeight
+	Local $ROW_3	= $ROW_2  + $RowHeight
+	Local $ROW_4	= $ROW_3  + $RowHeight
+	Local $ROW_5	= $ROW_4  + $RowHeight
+	Local $ROW_6	= $ROW_5  + $RowHeight
+	Local $ROW_7	= $ROW_6  + $RowHeight
+	Local $ROW_8	= $ROW_7  + $RowHeight
+	Local $ROW_9	= $ROW_8  + $RowHeight
+	Local $ROW_10	= $ROW_9  + $RowHeight
+	Local $ROW_11	= $ROW_10 + $RowHeight
 
 	$INVALID_HEIGHT = -100
 	If Not $ShowLanguageSwitcherLine Then
