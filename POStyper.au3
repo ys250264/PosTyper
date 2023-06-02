@@ -1,6 +1,7 @@
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=POStyper.ico
+#AutoIt3Wrapper_Run_Tidy=y
 #AutoIt3Wrapper_Tidy_Stop_OnError=n
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
@@ -37,11 +38,11 @@ Global $icoFile				= @ScriptDir & "\POStyper.ico"
 Global $sLastScenarioFileName
 Global $arrItems
 Global $arrPosTyper
-Global $arrEnv		
-Global $arrR10		
-Global $arrDev		
-Global $arrHelpers	
-Global $arrPOS		
+Global $arrEnv
+Global $arrR10
+Global $arrDev
+Global $arrHelpers
+Global $arrPOS
 Global $arrEmulators[0]
 Global $arrDialogs[0]
 
@@ -131,7 +132,7 @@ Func Main()
 	$CFG_POSTYPER = StringSplit($arrPosTyper[$CFG_POSTYPER][1], "|")
 
 	If ($CFG_POSTYPER[$CFG_X] >= 0 And $CFG_POSTYPER[$CFG_Y] >= 0) Then
-		$PosTyperDialogX =$CFG_POSTYPER[$CFG_X]
+		$PosTyperDialogX = $CFG_POSTYPER[$CFG_X]
 		$PosTyperDialogY = $CFG_POSTYPER[$CFG_Y]
 	EndIf
 
@@ -416,18 +417,18 @@ Func Main()
 				FuncWrapper($Btn, $captionToEnglish, ToEnglish, True)
 			Case $idBtnToDutch
 				FuncWrapper($Btn, $captionToDutch, ToDutch, True)
-;			Case $idBtnCD
-;				FuncWrapper($Btn, $caption, Checkdigit)
-;			Case $idBtnResetLoy
-;				FuncWrapper($Btn, $captionResetLoy, ResetLoy)
-;			Case $idBtnFLDiag
-;				FuncWrapper($Btn, $captionFLDiag, FLDiag)
-; 			Case $idBtnAuto
-; 				FuncWrapper($Btn, $captionAuto, Autmation)
-; 			Case $idBtnMsg3On
-;				FuncWrapper($Btn, $captionMsg3On, Msg3On)
-; 			Case $idBtnMsg3Off
-;				FuncWrapper($Btn, $captionMsg3Off, Msg3off)
+				;			Case $idBtnCD
+				;				FuncWrapper($Btn, $caption, Checkdigit)
+				;			Case $idBtnResetLoy
+				;				FuncWrapper($Btn, $captionResetLoy, ResetLoy)
+				;			Case $idBtnFLDiag
+				;				FuncWrapper($Btn, $captionFLDiag, FLDiag)
+				; 			Case $idBtnAuto
+				; 				FuncWrapper($Btn, $captionAuto, Autmation)
+				; 			Case $idBtnMsg3On
+				;				FuncWrapper($Btn, $captionMsg3On, Msg3On)
+				; 			Case $idBtnMsg3Off
+				;				FuncWrapper($Btn, $captionMsg3Off, Msg3off)
 		EndSwitch
 	WEnd
 EndFunc   ;==>Main
@@ -542,7 +543,7 @@ Func ArrangeEmulators()
 		$WndHnd = WinActivate($arrEmulator[$CFG_CAPTION])
 		If $WndHnd > 0 Then
 			WinMove($arrEmulator[$CFG_CAPTION], "", $arrEmulator[$CFG_X], $arrEmulator[$CFG_Y])
-		EndIf	
+		EndIf
 	Next
 EndFunc   ;==>ArrangeEmulators
 
@@ -571,7 +572,7 @@ Func Scenario()
 		$ScenariosFullDir = $ScenariosDir & "\" & $SubPath
 	EndIf
 	$sScenarioFileName = FileOpenDialog("Select input file", $ScenariosFullDir & "\", "All (*.ini)", 1)
-	$sLastScenarioFileName = $sScenarioFileName 
+	$sLastScenarioFileName = $sScenarioFileName
 	If @error Then
 		NoFilesSelectedMsgBox()
 		FileChangeDir($PostyperDir)
@@ -1028,7 +1029,7 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 	For $i = 1 To $NumOfItems
 
 		WinActivate("R10PosClient")
-		
+
 		$KeyToStatusBar = $arrItems[$i][0]
 		$ValToStatusBar = $arrItems[$i][1]
 
@@ -1187,7 +1188,7 @@ Func SkipDialog($Tokens)
 		Return True
 	EndIf
 	Return False
-EndFunc
+EndFunc   ;==>SkipDialog
 
 
 Func WriteToStatusBar($MethodName, $Txt = "")
@@ -1290,7 +1291,7 @@ Func ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin)
 	_ExtMsgBoxSet(1)
 	$iRetValue = _ExtMsgBox($vIcon, $vButton, $sTitle, $sText, $iTimeout, $hWin)
 	_ExtMsgBoxSet(Default)
-	return $iRetValue
+	Return $iRetValue
 EndFunc   ;==>ExtMsgBox
 
 
@@ -1330,7 +1331,7 @@ EndFunc   ;==>ReloadConfigFile
 
 Func SplitEmulatorValueToTokensArray($arrEmulatorsTemp)
 	$NumOfItems = $arrEmulatorsTemp[0][0]
-	ReDim $arrEmulators[$NumOfItems+1][2]
+	ReDim $arrEmulators[$NumOfItems + 1][2]
 	$arrEmulators[0][0] = $NumOfItems
 	For $i = 1 To $NumOfItems
 		$Val = $arrEmulatorsTemp[$i][1]
@@ -1342,7 +1343,7 @@ EndFunc   ;==>SplitEmulatorValueToTokensArray
 
 Func SplitDialogsValueToTokensArray($arrDialogsTemp)
 	$NumOfItems = $arrDialogsTemp[0][0]
-	ReDim $arrDialogs[$NumOfItems+1][2]
+	ReDim $arrDialogs[$NumOfItems + 1][2]
 	$arrDialogs[0][0] = $NumOfItems
 	For $i = 1 To $NumOfItems
 		$Val = $arrDialogsTemp[$i][1]
@@ -1396,7 +1397,7 @@ EndFunc   ;==>StopProgressBar
 Func GetNumItemsUpToNextFlow($arrItems)
 	For $i = 1 To $arrItems[0][0]
 		If $arrItems[$i][0] = "flow" Then
-			Return $i-1
+			Return $i - 1
 		EndIf
 	Next
 	Return $arrItems[0][0]
@@ -1406,8 +1407,8 @@ EndFunc   ;==>GetNumItemsUpToNextFlow
 Func ExecuteFlowAndReloadArrItems($FlowName, $StatusBarText, $ProgressBarCaption)
 	Local $FuncName
 	Switch $FlowName
-        Case "TENDERING"
-            $FuncName = Tendering
+		Case "TENDERING"
+			$FuncName = Tendering
 		Case "PAYING_CASH"
 			$FuncName = PayingCash
 		Case "PAYING_EFT"
@@ -1419,5 +1420,5 @@ Func ExecuteFlowAndReloadArrItems($FlowName, $StatusBarText, $ProgressBarCaption
 	$FuncName()
 	$arrItems = IniReadSection($sLastScenarioFileName, "SCENARIO")
 	StartProgressBar($ProgressBarCaption)
-	return $arrItems
+	Return $arrItems
 EndFunc   ;==>ExecuteFlowAndReloadArrItems
