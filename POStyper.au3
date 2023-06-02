@@ -214,18 +214,18 @@ Func Main()
 
 	$RowHeight = 30
 
-	Local $ROW_0	= 10
-	Local $ROW_1	= $ROW_0  + $RowHeight
-	Local $ROW_2	= $ROW_1  + $RowHeight
-	Local $ROW_3	= $ROW_2  + $RowHeight
-	Local $ROW_4	= $ROW_3  + $RowHeight
-	Local $ROW_5	= $ROW_4  + $RowHeight
-	Local $ROW_6	= $ROW_5  + $RowHeight
-	Local $ROW_7	= $ROW_6  + $RowHeight
-	Local $ROW_8	= $ROW_7  + $RowHeight
-	Local $ROW_9	= $ROW_8  + $RowHeight
-	Local $ROW_10	= $ROW_9  + $RowHeight
-	Local $ROW_11	= $ROW_10 + $RowHeight
+	Local $ROW_0 = 10
+	Local $ROW_1 = $ROW_0 + $RowHeight
+	Local $ROW_2 = $ROW_1 + $RowHeight
+	Local $ROW_3 = $ROW_2 + $RowHeight
+	Local $ROW_4 = $ROW_3 + $RowHeight
+	Local $ROW_5 = $ROW_4 + $RowHeight
+	Local $ROW_6 = $ROW_5 + $RowHeight
+	Local $ROW_7 = $ROW_6 + $RowHeight
+	Local $ROW_8 = $ROW_7 + $RowHeight
+	Local $ROW_9 = $ROW_8 + $RowHeight
+	Local $ROW_10 = $ROW_9 + $RowHeight
+	Local $ROW_11 = $ROW_10 + $RowHeight
 
 	$INVALID_HEIGHT = -100
 	If Not $ShowLanguageSwitcherLine Then
@@ -251,10 +251,10 @@ Func Main()
 	Local $BtnHeight = 20
 
 	Local $idBtnScan = GUICtrlCreateButton($captionScan, 225, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
-	;Local $idBtnCD					= GUICtrlCreateButton($captionCD				, 225	, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	;Local $idBtnCD					= GUICtrlCreateButton($captionCD,				225, $ROW_0 - 1,	$BtnWidthS, $BtnHeightS)
 	Local $idBtnType = GUICtrlCreateButton($captionType, 260, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
 	Global $idBtnAutomationSpeed = GUICtrlCreateButton($captionAutomationSpeed, 295, $ROW_0 - 1, $BtnWidthT, $BtnHeightS)
-	;Local $idBtnAuto				= GUICtrlCreateButton($captionAuto				, 170	, $ROW_0 - 1, $BtnWidthS, $BtnHeightS)
+	;Local $idBtnAuto				= GUICtrlCreateButton($captionAuto,				170, $ROW_0 - 1,	$BtnWidthS, $BtnHeightS)
 
 	Local $idBtnStartPOS = GUICtrlCreateButton($captionStartPOS, $Col_1, $ROW_1, $BtnWidthL, $BtnHeight)
 	Local $idBtnLogin = GUICtrlCreateButton($captionLogin, $Col_2, $ROW_1, $BtnWidthL, $BtnHeight)
@@ -306,10 +306,10 @@ Func Main()
 	Local $idBtnToEnglish = GUICtrlCreateButton($captionToEnglish, $Col_1, $ROW_11, $BtnWidthL, $BtnHeight)
 	Local $idBtnToDutch = GUICtrlCreateButton($captionToDutch, $Col_2, $ROW_11, $BtnWidthL, $BtnHeight)
 
-;~	Local $idBtnResetLoy			= GUICtrlCreateButton($captionResetLoy			, $Col_4, $ROW_7	, $BtnWidthL, $BtnHeight)
-;~ 	Local $idBtnMsg3On				= GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)
-;~ 	Local $idBtnMsg3Off				= GUICtrlCreateButton($captionMsg3Off			, $Col_3, $ROW_7	, $BtnWidthL, $BtnHeight)
-;~	Local $idBtnFLDiag				= GUICtrlCreateButton($captionFLDiag			, $Col_1, $ROW_8	, $BtnWidthL, $BtnHeight)
+;~	Local $idBtnResetLoy			= GUICtrlCreateButton($captionResetLoy,			$Col_4, $ROW_7,		$BtnWidthL, $BtnHeight)
+;~ 	Local $idBtnMsg3On				= GUICtrlCreateButton($captionMsg3On,			$Col_2, $ROW_7,		$BtnWidthL, $BtnHeight)
+;~ 	Local $idBtnMsg3Off				= GUICtrlCreateButton($captionMsg3Off,			$Col_3, $ROW_7,		$BtnWidthL, $BtnHeight)
+;~	Local $idBtnFLDiag				= GUICtrlCreateButton($captionFLDiag,			$Col_1, $ROW_8,		$BtnWidthL, $BtnHeight)
 
 	If $ShowLanguageSwitcherLine Then
 		DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
