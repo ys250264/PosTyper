@@ -69,10 +69,11 @@ Global $CFG_WINEPTS_PATH			= 10
 
 Global $CFG_SERVER_DBG_CUST_PATH	= 1
 Global $CFG_SERVER_DBG_EXT_PATH		= 2
-Global $CFG_POS_DBG_CUST_PATH		= 3
-Global $CFG_POS_DBG_EXT_PATH		= 4
-Global $CFG_OFFICE_DBG_CUST_PATH	= 5
-Global $CFG_OFFICE_DBG_EXT_PATH		= 6
+Global $CFG_LOYALTY_DBG_EXT_PATH	= 3
+Global $CFG_POS_DBG_CUST_PATH		= 4
+Global $CFG_POS_DBG_EXT_PATH		= 5
+Global $CFG_OFFICE_DBG_CUST_PATH	= 6
+Global $CFG_OFFICE_DBG_EXT_PATH		= 7
 
 Global $CFG_CMD						= 1
 Global $CFG_SQLMGR					= 2
@@ -844,7 +845,8 @@ Func CopyServerExtToCust()
 	$cmd = $HelpersDir & "\CopyServerExtToCust.cmd"
 	$arg1 = $arrDev[$CFG_SERVER_DBG_CUST_PATH][1] & " "
 	$arg2 = $arrDev[$CFG_SERVER_DBG_EXT_PATH][1] & " "
-	$arguments = $arg1 & $arg2
+	$arg3 = $arrDev[$CFG_LOYALTY_DBG_EXT_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyServerExtToCust
 
