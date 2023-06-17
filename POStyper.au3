@@ -202,6 +202,7 @@ Func Main()
 	Local $captionCopySrvExtToCust	= "Copy SrvExt"
 	Local $captionCopyPOSExtToCust	= "Copy PosExt"
 	Local $captionCopyOffExtToCust	= "Copy OfcExt"
+	Local $captionCopyFromMsiFolder	= "Copy MSI"
 	 
 	Local $captionToEnglish			= "To English"
 	Local $captionToDutch			= "To Dutch"
@@ -301,6 +302,7 @@ Func Main()
 	Local $idBtnCopySrvExtToCust	= GUICtrlCreateButton($captionCopySrvExtToCust	, $Col_1, $ROW_10	, $BtnWidthL, $BtnHeight)
 	Local $idBtnCopyPOSExtToCust	= GUICtrlCreateButton($captionCopyPOSExtToCust	, $Col_2, $ROW_10	, $BtnWidthL, $BtnHeight)
 	Local $idBtnCopyOffExtToCust	= GUICtrlCreateButton($captionCopyOffExtToCust	, $Col_3, $ROW_10	, $BtnWidthL, $BtnHeight)
+	Local $idBtnCopyFromMsiFolder	= GUICtrlCreateButton($captionCopyFromMsiFolder	, $Col_4, $ROW_10	, $BtnWidthL, $BtnHeight)
 	 
 	Local $idBtnToEnglish			= GUICtrlCreateButton($captionToEnglish			, $Col_1, $ROW_11	, $BtnWidthL, $BtnHeight)
 	Local $idBtnToDutch				= GUICtrlCreateButton($captionToDutch			, $Col_2, $ROW_11	, $BtnWidthL, $BtnHeight)
@@ -412,6 +414,8 @@ Func Main()
 				FuncWrapper($Btn, $captionCopyPOSExtToCust, CopyPosExtToCust, True)
 			Case $idBtnCopyOffExtToCust
 				FuncWrapper($Btn, $captionCopyOffExtToCust, CopyOfficeExtToCust, True)
+			Case $idBtnCopyFromMsiFolder
+				FuncWrapper($Btn, $captionCopyFromMsiFolder, CopyFromMsiFolder, True)
 			Case $idBtnToEnglish
 				FuncWrapper($Btn, $captionToEnglish, ToEnglish, True)
 			Case $idBtnToDutch
@@ -868,6 +872,14 @@ Func CopyOfficeExtToCust()
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyOfficeExtToCust
 
+Func CopyFromMsiFolder()
+	$cmd = $HelpersDir & "\CopyFromMsiFolder.cmd"
+	$arg1 = $arrR10[$CFG_SERVER_PATH][1] & " "
+	$arg2 = $arrR10[$CFG_POS_PATH][1] & " "
+	$arg3 = $arrR10[$CFG_OFFICE_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3
+	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
+EndFunc   ;==>CopyFromMsiFolder
 
 Func ToEnglish()
 	FileChangeDir($HelpersDir)
