@@ -54,7 +54,8 @@ Global $CFG_AUTO_SPEED_FACTOR		= 7
 
 Global $CFG_RETAIL_DB_NAME			= 1
 Global $CFG_SERVER_WEBSITE			= 2
-Global $CFG_RABBITMQ_WEBSITE		= 3
+Global $CFG_OFFICE_WEBSITE			= 3
+Global $CFG_RABBITMQ_WEBSITE		= 4
 
 Global $CFG_SERVER_PATH				= 1
 Global $CFG_POS_PATH				= 2
@@ -167,27 +168,28 @@ Func Main()
 	Local $captionPayingEFT			= "Pay PIN"
 
 	Local $captionUnlock			= "Unlock"
-	Local $captionKillPOS			= "Kill POS"
+	Local $captionBrowseServer		= "Server"
+	Local $captionBrowseOffice		= "Office"
+	Local $captionBrowseRabbit		= "Rabbit"
 	 
 	Local $captionCleanLogs			= "Clean Logs"
-	Local $captionBrowseServer		= "Browse Srv"
-	Local $captionMonitoSrvLog		= "View Gpos"
-	Local $captionEditIni			= "Edit Ini"
+	Local $captionExposeLogs		= "Expose Logs"
+	Local $captionExposeTLog		= "Expose Tlog"
+	Local $captionCollectLogs		= "Collect Logs"
  
 	Local $captionDebugOn			= "Gpos DBG"
 	Local $captionDebugOff			= "Gpos ERR"
-	Local $captionExposeLogs		= "Expose Logs"
-	Local $captionExposeTLog		= "Expose Tlog"
+	Local $captionMonitoSrvLog		= "View Gpos"
+	Local $captionKillPOS			= "Kill POS"
  
 	Local $captionReceiptDebugOn	= "Slip Dbg"
 	Local $captionReceiptDebugOff	= "No Slip Dbg"
 	Local $captionViewSlip			= "View Slip"
-	Local $captionCollectLogs		= "Collect Logs"
+	Local $captionEditIni			= "Edit Ini"
 	 
 	Local $captionSnipPos			= "Snip POS"
 	Local $captionSnipScreen		= "Snip Screen"
 	Local $captionCleanScanner		= "Clean Scan"
-	Local $captionBrowseRabbit		= "Rabbit"
 	 
 	Local $captionIISReset			= "IISReset"
 	Local $captionIISStop			= "IISStop"
@@ -267,27 +269,28 @@ Func Main()
 	Local $idBtnPayingEFT			= GUICtrlCreateButton($captionPayingEFT			, $Col_4, $ROW_2	, $BtnWidthL, $BtnHeight)
 
 	Local $idBtnUnlock				= GUICtrlCreateButton($captionUnlock			, $Col_1, $ROW_3	, $BtnWidthL, $BtnHeight)
-	Local $idBtnKillPOS				= GUICtrlCreateButton($captionKillPOS 	    	, $Col_4, $ROW_3	, $BtnWidthL, $BtnHeight)
+	Local $idBtnBrowseServer		= GUICtrlCreateButton($captionBrowseServer		, $Col_2, $ROW_3	, $BtnWidthL, $BtnHeight)
+	Local $idBtnBrowseOffice		= GUICtrlCreateButton($captionBrowseOffice		, $Col_3, $ROW_3	, $BtnWidthL, $BtnHeight)
+	Local $idBtnBrowseRabbit		= GUICtrlCreateButton($captionBrowseRabbit		, $Col_4, $ROW_3	, $BtnWidthL, $BtnHeight)	
 				
 	Local $idBtnCleanLogs			= GUICtrlCreateButton($captionCleanLogs			, $Col_1, $ROW_4	, $BtnWidthL, $BtnHeight)
-	Local $idBtnBrowseServer		= GUICtrlCreateButton($captionBrowseServer		, $Col_2, $ROW_4	, $BtnWidthL, $BtnHeight)
-	Local $idBtnMonitoSrvLog		= GUICtrlCreateButton($captionMonitoSrvLog		, $Col_3, $ROW_4	, $BtnWidthL, $BtnHeight)
-	Local $idBtnBrowseRabbit		= GUICtrlCreateButton($captionBrowseRabbit		, $Col_4, $ROW_4	, $BtnWidthL, $BtnHeight)
-			
+	Local $idBtnExposeLogs			= GUICtrlCreateButton($captionExposeLogs		, $Col_2, $ROW_4	, $BtnWidthL, $BtnHeight)
+	Local $idBtnExposeTLog			= GUICtrlCreateButton($captionExposeTLog		, $Col_3, $ROW_4	, $BtnWidthL, $BtnHeight)
+	Local $idBtnCollectLogs			= GUICtrlCreateButton($captionCollectLogs		, $Col_4, $ROW_4	, $BtnWidthL, $BtnHeight)
+	
 	Local $idBtnDebugOn				= GUICtrlCreateButton($captionDebugOn			, $Col_1, $ROW_5	, $BtnWidthL, $BtnHeight)
 	Local $idBtnDebugOff			= GUICtrlCreateButton($captionDebugOff			, $Col_2, $ROW_5	, $BtnWidthL, $BtnHeight)
-	Local $idBtnExposeLogs			= GUICtrlCreateButton($captionExposeLogs		, $Col_3, $ROW_5	, $BtnWidthL, $BtnHeight)
-	Local $idBtnExposeTLog			= GUICtrlCreateButton($captionExposeTLog		, $Col_4, $ROW_5	, $BtnWidthL, $BtnHeight)
+	Local $idBtnMonitoSrvLog		= GUICtrlCreateButton($captionMonitoSrvLog		, $Col_3, $ROW_5	, $BtnWidthL, $BtnHeight)
+	Local $idBtnKillPOS				= GUICtrlCreateButton($captionKillPOS 	    	, $Col_4, $ROW_5	, $BtnWidthL, $BtnHeight)
 			
 	Local $idBtnReceiptDebugOn		= GUICtrlCreateButton($captionReceiptDebugOn	, $Col_1, $ROW_6	, $BtnWidthL, $BtnHeight)
 	Local $idBtnReceiptDebugOff		= GUICtrlCreateButton($captionReceiptDebugOff	, $Col_2, $ROW_6	, $BtnWidthL, $BtnHeight)
 	Local $idBtnViewSlip			= GUICtrlCreateButton($captionViewSlip			, $Col_3, $ROW_6	, $BtnWidthL, $BtnHeight)
-	Local $idBtnCollectLogs			= GUICtrlCreateButton($captionCollectLogs		, $Col_4, $ROW_6	, $BtnWidthL, $BtnHeight)
+	Local $idBtnEditIni				= GUICtrlCreateButton($captionEditIni			, $Col_4, $ROW_6	, $BtnWidthL, $BtnHeight)
 			
 	Local $idBtnSnipPos				= GUICtrlCreateButton($captionSnipPos   		, $Col_1, $ROW_7	, $BtnWidthL, $BtnHeight)	
 	Local $idBtnSnipScreen			= GUICtrlCreateButton($captionSnipScreen		, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)		
 	Local $idBtnCleanScanner		= GUICtrlCreateButton($captionCleanScanner		, $Col_3, $ROW_7	, $BtnWidthL, $BtnHeight)
-	Local $idBtnEditIni				= GUICtrlCreateButton($captionEditIni			, $Col_4, $ROW_7	, $BtnWidthL, $BtnHeight)
 				
 	Local $idBtnIISReset			= GUICtrlCreateButton($captionIISReset			, $Col_1, $ROW_8	, $BtnWidthL, $BtnHeight)
 	Local $idBtnIISStop				= GUICtrlCreateButton($captionIISStop			, $Col_2, $ROW_8	, $BtnWidthL, $BtnHeight)
@@ -358,40 +361,42 @@ Func Main()
 				FuncWrapper($Btn, $captionPayingEFT, PayingEFT, True)
 			Case $idBtnUnlock
 				FuncWrapper($Btn, $captionUnlock, Unlock, True)
-			Case $idBtnKillPOS
-				FuncWrapper($Btn, $captionKillPOS, KillPOS)
-			Case $idBtnCleanLogs
-				FuncWrapper($Btn, $captionCleanLogs, CleanLogs, True)
 			Case $idBtnBrowseServer
 				FuncWrapper($Btn, $captionBrowseServer, BrowseServer)
-			Case $idBtnMonitoSrvLog
-				FuncWrapper($Btn, $captionMonitoSrvLog, MonitorSrvLog)
-			Case $idBtnEditIni
-				FuncWrapper($Btn, $captionEditIni, EditIni)
+			Case $idBtnBrowseOffice
+				FuncWrapper($Btn, $captionBrowseOffice, BrowseOffice)
+			Case $idBtnBrowseRabbit
+				FuncWrapper($Btn, $captionBrowseRabbit, BrowseRabbit)
+			Case $idBtnCleanLogs
+				FuncWrapper($Btn, $captionCleanLogs, CleanLogs, True)
+			Case $idBtnExposeLogs
+				FuncWrapper($Btn, $captionExposeLogs, ExposeLogs)
+			Case $idBtnExposeTLog
+				FuncWrapper($Btn, $captionExposeTLog, ExposeTLog)
+			Case $idBtnCollectLogs
+				FuncWrapper($Btn, $captionCollectLogs, CollectLogs, True)
 			Case $idBtnDebugOn
 				FuncWrapper($Btn, $captionDebugOn, DebugOn)
 			Case $idBtnDebugOff
 				FuncWrapper($Btn, $captionDebugOff, DebugOff)
-			Case $idBtnExposeLogs
-				FuncWrapper($Btn, $captionExposeLogs, ExposeLogs)
-			Case $idBtnCollectLogs
-				FuncWrapper($Btn, $captionCollectLogs, CollectLogs, True)
+			Case $idBtnMonitoSrvLog
+				FuncWrapper($Btn, $captionMonitoSrvLog, MonitorSrvLog)
+			Case $idBtnKillPOS
+				FuncWrapper($Btn, $captionKillPOS, KillPOS)
 			Case $idBtnReceiptDebugOn
 				FuncWrapper($Btn, $captionReceiptDebugOn, ReceiptDebugOn, True)
 			Case $idBtnReceiptDebugOff
 				FuncWrapper($Btn, $captionReceiptDebugOff, ReceiptDebugOff, True)
 			Case $idBtnViewSlip
 				FuncWrapper($Btn, $captionViewSlip, ViewSlip)
-			Case $idBtnExposeTLog
-				FuncWrapper($Btn, $captionExposeTLog, ExposeTLog)
+			Case $idBtnEditIni
+				FuncWrapper($Btn, $captionEditIni, EditIni)
 			Case $idBtnSnipPos
 				FuncWrapper($Btn, $captionSnipPos, SnipPOS)
 			Case $idBtnSnipScreen
 				FuncWrapper($Btn, $captionSnipScreen, SnipScreen)
 			Case $idBtnCleanScanner
 				FuncWrapper($Btn, $captionCleanScanner, CleanScanner)
-			Case $idBtnBrowseRabbit
-				FuncWrapper($Btn, $captionBrowseRabbit, BrowseRabbit)
 			Case $idBtnIISReset
 				FuncWrapper($Btn, $captionIISReset, IISReset, True)
 			Case $idBtnIISStop
@@ -630,9 +635,19 @@ Func Unlock()
 EndFunc   ;==>Unlock
 
 
-Func KillPOS()
-	ShellExecute($HelpersDir & "\killPOS.cmd", "", "", "", @SW_MINIMIZE)
-EndFunc   ;==>KillPOS
+Func BrowseServer()
+	ShellExecute($arrHelpers[$CFG_BROWSER][1], $arrEnv[$CFG_SERVER_WEBSITE][1])
+EndFunc   ;==>BrowseServer
+
+
+Func BrowseOffice()
+	ShellExecute($arrHelpers[$CFG_BROWSER][1], $arrEnv[$CFG_OFFICE_WEBSITE][1])
+EndFunc   ;==>BrowseOffice
+
+
+Func BrowseRabbit()
+	ShellExecute($arrHelpers[$CFG_BROWSER][1], $arrEnv[$CFG_RABBITMQ_WEBSITE][1])
+EndFunc   ;==>BrowseRabbit
 
 
 Func CleanLogs()
@@ -648,40 +663,6 @@ Func CleanLogs()
 	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CleanLogs
-
-
-Func BrowseServer()
-	ShellExecute($arrHelpers[$CFG_BROWSER][1], $arrEnv[$CFG_SERVER_WEBSITE][1])
-EndFunc   ;==>BrowseServer
-
-
-Func MonitorSrvLog()
-	$ServerLogsDir = $arrR10[$CFG_SERVER_PATH][1] & "\Logs\"
-	$hSearch = FileFindFirstFile($ServerLogsDir & "GPOSWebService_*.log")
-	If $hSearch > 0 Then
-		$LastGpos = FileFindNextFile($hSearch)
-		ShellExecute($arrHelpers[$CFG_EDITOR][1], " -monitor " & $ServerLogsDir & $LastGpos)
-	EndIf
-EndFunc   ;==>MonitorSrvLog
-
-
-Func BrowseRabbit()
-	ShellExecute($arrHelpers[$CFG_BROWSER][1], $arrEnv[$CFG_RABBITMQ_WEBSITE][1])
-EndFunc   ;==>BrowseRabbit
-
-
-Func DebugOn()
-	FileChangeDir($HelpersDir)
-	$WebLoggerConfig = $arrR10[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
-	ShellExecute($HelpersDir & "\SetLogger.exe", $WebLoggerConfig & " DEBUG", "", "", @SW_MAXIMIZE)
-	FileChangeDir(@ScriptDir)
-EndFunc   ;==>DebugOn
-
-
-Func DebugOff()
-	$WebLoggerConfig = $arrR10[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
-	ShellExecute($HelpersDir & "\SetLogger.exe", $WebLoggerConfig & " ERROR", "", "", @SW_MAXIMIZE)
-EndFunc   ;==>DebugOff
 
 
 Func ExposeLogs()
@@ -702,6 +683,54 @@ Func ExposeTLog()
 		ShellExecute("C:\Windows\explorer.exe", $TLogs)
 	EndIf
 EndFunc   ;==>ExposeTLog
+
+
+Func CollectLogs()
+	If Not FileExists($CollectedDir) Then
+		DirCreate($CollectedDir)
+	EndIf
+	$cmd = $HelpersDir & "\CollectLogs.cmd"
+	$arg1 = $CollectedDir & " "
+	$arg2 = $arrR10[$CFG_SERVER_PATH][1] & " "
+	$arg3 = $arrR10[$CFG_POS_PATH][1] & " "
+	$arg4 = $arrR10[$CFG_OFFICE_PATH][1] & " "
+	$arg5 = $arrR10[$CFG_DMS_PATH][1] & " "
+	$arg6 = $arrR10[$CFG_ARSGATEWAY_PATH][1] & " "
+	$arg7 = $arrR10[$CFG_RETAILGATEWAY_PATH][1] & " "
+	$arg8 = $arrR10[$CFG_STOREGATEWAY_PATH][1] & " "
+	$arg9 = $arrR10[$CFG_WINEPTS_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8 & $arg9
+	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
+EndFunc   ;==>CollectLogs
+
+
+Func DebugOn()
+	FileChangeDir($HelpersDir)
+	$WebLoggerConfig = $arrR10[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
+	ShellExecute($HelpersDir & "\SetLogger.exe", $WebLoggerConfig & " DEBUG", "", "", @SW_MAXIMIZE)
+	FileChangeDir(@ScriptDir)
+EndFunc   ;==>DebugOn
+
+
+Func DebugOff()
+	$WebLoggerConfig = $arrR10[$CFG_SERVER_PATH][1] & "\" & "WebLoggerConfig.xml"
+	ShellExecute($HelpersDir & "\SetLogger.exe", $WebLoggerConfig & " ERROR", "", "", @SW_MAXIMIZE)
+EndFunc   ;==>DebugOff
+
+
+Func MonitorSrvLog()
+	$ServerLogsDir = $arrR10[$CFG_SERVER_PATH][1] & "\Logs\"
+	$hSearch = FileFindFirstFile($ServerLogsDir & "GPOSWebService_*.log")
+	If $hSearch > 0 Then
+		$LastGpos = FileFindNextFile($hSearch)
+		ShellExecute($arrHelpers[$CFG_EDITOR][1], " -monitor " & $ServerLogsDir & $LastGpos)
+	EndIf
+EndFunc   ;==>MonitorSrvLog
+
+
+Func KillPOS()
+	ShellExecute($HelpersDir & "\killPOS.cmd", "", "", "", @SW_MINIMIZE)
+EndFunc   ;==>KillPOS
 
 
 Func ReceiptDebugOn()
@@ -733,23 +762,12 @@ Func ViewSlip()
 EndFunc   ;==>ViewSlip
 
 
-Func CollectLogs()
-	If Not FileExists($CollectedDir) Then
-		DirCreate($CollectedDir)
-	EndIf
-	$cmd = $HelpersDir & "\CollectLogs.cmd"
-	$arg1 = $CollectedDir & " "
-	$arg2 = $arrR10[$CFG_SERVER_PATH][1] & " "
-	$arg3 = $arrR10[$CFG_POS_PATH][1] & " "
-	$arg4 = $arrR10[$CFG_OFFICE_PATH][1] & " "
-	$arg5 = $arrR10[$CFG_DMS_PATH][1] & " "
-	$arg6 = $arrR10[$CFG_ARSGATEWAY_PATH][1] & " "
-	$arg7 = $arrR10[$CFG_RETAILGATEWAY_PATH][1] & " "
-	$arg8 = $arrR10[$CFG_STOREGATEWAY_PATH][1] & " "
-	$arg9 = $arrR10[$CFG_WINEPTS_PATH][1] & " "
-	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8 & $arg9
-	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
-EndFunc   ;==>CollectLogs
+Func EditIni()
+	ShellExecute($arrHelpers[$CFG_EDITOR][1], $cfgFile)
+	Sleep(5000)
+	ReloadItemsFile()
+	ReloadConfigFile()
+EndFunc   ;==>EditIni
 
 
 Func SnipPOS()
@@ -792,14 +810,6 @@ Func CleanScanner()
 	$hWndSCR = ActivateScanner()
 	ControlSend($hWndSCR, "", "[CLASS:Edit; INSTANCE:1]", "{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 EndFunc   ;==>CleanScanner
-
-
-Func EditIni()
-	ShellExecute($arrHelpers[$CFG_EDITOR][1], $cfgFile)
-	Sleep(5000)
-	ReloadItemsFile()
-	ReloadConfigFile()
-EndFunc   ;==>EditIni
 
 
 Func IISReset()
