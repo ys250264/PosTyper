@@ -41,6 +41,7 @@ IF not exist %POSPath%\Logs\*.log* goto POSLOGE
 echo Clean POS Logs...
 del %POSPath%\Logs\*.log*
 del %POSPath%\Logs\EPS\*.log*
+del %POSPath%\Logs\EPS\*.xml*
 del %POSPath%\Logs\*.stf*
 :POSLOGE
 
