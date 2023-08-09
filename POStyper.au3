@@ -75,6 +75,7 @@ Global $CFG_POS_DBG_CUST_PATH		= 4
 Global $CFG_POS_DBG_EXT_PATH		= 5
 Global $CFG_OFFICE_DBG_CUST_PATH	= 6
 Global $CFG_OFFICE_DBG_EXT_PATH		= 7
+Global $CFG_SERVER_DBG_RTI_PATH		= 8
 
 Global $CFG_CMD						= 1
 Global $CFG_SQLMGR					= 2
@@ -208,6 +209,7 @@ Func Main()
 	 
 	Local $captionToEnglish			= "To English"
 	Local $captionToDutch			= "To Dutch"
+	Local $captionFixRTIs			= "Fix RTIs"
 
 	;Local $captionResetLoy			= "Reset Loy"
 	;Local $captionMsg3On			= "MSG3"
@@ -309,6 +311,7 @@ Func Main()
 	 
 	Local $idBtnToEnglish			= GUICtrlCreateButton($captionToEnglish			, $Col_1, $ROW_11	, $BtnWidthL, $BtnHeight)
 	Local $idBtnToDutch				= GUICtrlCreateButton($captionToDutch			, $Col_2, $ROW_11	, $BtnWidthL, $BtnHeight)
+	Local $idBtnFixRTIs				= GUICtrlCreateButton($captionFixRTIs			, $Col_3, $ROW_11	, $BtnWidthL, $BtnHeight)
 
 ;~	Local $idBtnResetLoy			= GUICtrlCreateButton($captionResetLoy			, $Col_4, $ROW_7	, $BtnWidthL, $BtnHeight)
 ;~ 	Local $idBtnMsg3On				= GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)
@@ -425,6 +428,9 @@ Func Main()
 				FuncWrapper($Btn, $captionToEnglish, ToEnglish, True)
 			Case $idBtnToDutch
 				FuncWrapper($Btn, $captionToDutch, ToDutch, True)
+			Case $idBtnFixRTIs
+				FuncWrapper($Btn, $captionFixRTIs, FixRTIs, True)
+	
 				;			Case $idBtnCD
 				;				FuncWrapper($Btn, $caption, Checkdigit)
 				;			Case $idBtnResetLoy
@@ -882,6 +888,7 @@ Func CopyOfficeExtToCust()
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyOfficeExtToCust
 
+
 Func CopyFromMsiFolder()
 	$cmd = $HelpersDir & "\CopyFromMsiFolder.cmd"
 	$arg1 = $arrR10[$CFG_SERVER_PATH][1] & " "
@@ -890,6 +897,7 @@ Func CopyFromMsiFolder()
 	$arguments = $arg1 & $arg2 & $arg3
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyFromMsiFolder
+
 
 Func ToEnglish()
 	FileChangeDir($HelpersDir)
@@ -903,6 +911,15 @@ Func ToDutch()
 	ShellExecute($HelpersDir & "\jumbo_update_to_dutch.cmd", $arrEnv[$CFG_RETAIL_DB_NAME][1], "", "", @SW_MAXIMIZE)
 	FileChangeDir(@ScriptDir)
 EndFunc   ;==>ToDutch
+
+
+Func FixRTIs()
+	$cmd = $HelpersDir & "\FixRTIs.cmd"
+	$arg1 = $arrDev[$CFG_SERVER_DBG_EXT_PATH][1] & " "
+	$arg2 = $arrDev[$CFG_SERVER_DBG_RTI_PATH][1] & " "
+	$arguments = $arg1 & $arg2
+	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
+EndFunc   ;==>FixRTIs
 
 
 ; === Currently Unused Functions ================================================================================

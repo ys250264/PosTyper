@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoLoadMaintenanceRequest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" MajorVersion="1" xmlns="http://retalix.com/R10/services">
+	<Header>
+		<MessageId>137</MessageId>
+	</Header>
+	<!-- Supported actions: AddOrUpdate, Delete -->
+	<AutoLoadConfiguration Action="AddOrUpdate">
+		<AutoLoad>
+			<BusinessUnitId>0049</BusinessUnitId>
+			<TouchPointGroupId>7</TouchPointGroupId>
+			<AutoLoad>true</AutoLoad>
+			<NotificationServerUrl>http://WILYS250264-7AU/JumboTrunk_Server/NotificationServer</NotificationServerUrl>
+		</AutoLoad>
+		<AutoLoad>
+			<BusinessUnitId>0049</BusinessUnitId>
+			<TouchPointGroupId>12</TouchPointGroupId>
+			<AutoLoad>true</AutoLoad>
+			<NotificationServerUrl>http://WILYS250264-7AU/JumboTrunk_Server/NotificationServer</NotificationServerUrl>
+		</AutoLoad>
+	</AutoLoadConfiguration>
+</AutoLoadMaintenanceRequest>

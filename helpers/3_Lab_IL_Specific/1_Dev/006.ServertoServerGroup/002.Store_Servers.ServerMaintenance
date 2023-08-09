@@ -1,0 +1,15 @@
+<ServerMaintenanceRequest xsi:schemaLocation="http://retalix.com/R10/services ServerMaintenance.xsd" xmlns="http://retalix.com/R10/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Header>
+		<MessageId>21</MessageId>
+	</Header>
+	<Server Action="Add">
+		<Name>WILYS250264-7AU</Name>
+		<BusinessUnitId>0049</BusinessUnitId>
+    <Url>http://WILYS250264-7AU/JumboTrunk_Server/</Url>
+		<ServerGroups>
+			<ServerGroup>
+				<Name>Store_Servers</Name>
+			</ServerGroup>
+		</ServerGroups>
+	</Server>
+</ServerMaintenanceRequest>
