@@ -21,7 +21,6 @@ if exist %FileToRemove% del /f /q %FileToRemove%
 
 :RUN_LAST
 set FolderToMove=1_Dev\090_EligibilityPolicy
-if not exist "%TargetBase%\%RunLast%" mkdir %TargetBase%\%RunLast%
 robocopy %TargetBase%\%LabSpecific%\%FolderToMove% %TargetBase%\%RunLast%\%FolderToMove% /MOVE /NFL /NDL /NJH /NJS /nc /ns /np
 
 :END
