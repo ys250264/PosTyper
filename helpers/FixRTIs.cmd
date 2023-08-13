@@ -10,12 +10,19 @@ set TargetBase=%ServerDebugExtPath%\%RTIsPath%
 set SourceBase=.\helpers
 set Configuration=1_Configuration
 set LabSpecific=3_Lab_IL_Specific
+set RunLast=9_Run_Last
 
 :COPY_RTIS_WITH_MACHINE_NAME
 xcopy %SourceBase%\%LabSpecific%\*.* %TargetBase%\%LabSpecific%\ /y /s
 
 :REMOVE_ECOM_RTI
-del /f /q %TargetBase%\%Configuration%\028_ConfigurationEntry\*.RUN_ON_ECOMM_ONLY
+set FileToRemove=%TargetBase%\%Configuration%\028_ConfigurationEntry\*.RUN_ON_ECOMM_ONLY
+if exist %FileToRemove% del /f /q %FileToRemove%
+
+:RUN_LAST
+set FolderToMove=1_Dev\090_EligibilityPolicy
+if not exist "%TargetBase%\%RunLast%" mkdir %TargetBase%\%RunLast%
+robocopy %TargetBase%\%LabSpecific%\%FolderToMove% %TargetBase%\%RunLast%\%FolderToMove% /MOVE /NFL /NDL /NJH /NJS /nc /ns /np
 
 :END
 pause
