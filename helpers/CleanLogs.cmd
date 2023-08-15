@@ -2,59 +2,94 @@
 
 
 :SET_PATHS_FROM_ARGS
-set ServerPath=%1
-set POSPath=%2
-set OfficePath=%3
-set DmsPath=%4
-set ArsGatewayPath=%5
-set RetailGatewayPath=%6
-set StoreGatewayPath=%7
-set WinEPTSPath=%8
+set ServerAppPool=%1
+set OfficeAppPool=%2
+set ServerPath=%3
+set POSPath=%4
+set OfficePath=%5
+set DmsPath=%6
+set ArsGatewayPath=%7
+set RetailGatewayPath=%8
+set StoreGatewayPath=%9
+set WinEPTSPath=%10
 
-:IISSTOP
-Echo **********   Stopping IIS
+:SET_MORE_PATHS
+rem set UseIISReset=
+set FullPathAppCmd=C:\Windows\System32\inetsrv\appcmd
+
+
+:APPPOOLS_STOP
+IF DEFINED UseIISReset GOTO:IISREST_STOP
+Echo:
+Echo ********** Stopping AppPools *************************************************************************************************************************
+%FullPathAppCmd% stop apppool /apppool.name:%OfficeAppPool%
+%FullPathAppCmd% stop apppool /apppool.name:%ServerAppPool%
+GOTO:APPPOOLS_STOP_END
+:IISREST_STOP
+Echo:
+Echo ********** Stopping IISRESET *************************************************************************************************************************
 C:\Windows\System32\iisreset.exe /stop
-Echo **********   Stopping IIS done
+:APPPOOLS_STOP_END
+
 
 :SRVLOG
-IF not exist %ServerPath%\Logs\*.log goto SRVLOGE
-echo Clean Server Logs ...
-del /S %ServerPath%\Logs\*.log*
-:SRVLOGE
+IF not exist %ServerPath%\Logs\*.log GOTO:SRVLOG_END
+Echo:
+Echo ********** Clean Server Logs *************************************************************************************************************************
+del /S /F /Q %ServerPath%\Logs\*.log*
+:SRVLOG_END
+
 
 :STRGWLOG
-IF not exist %StoreGatewayPath%\Logs\*.log goto STRGWLOGE
-echo Clean StoreGateway Logs ...
-del /S %StoreGatewayPath%\Logs\*.log*
-:STRGWLOGE
+IF not exist %StoreGatewayPath%\Logs\*.log GOTO:STRGWLOG_END
+Echo:
+Echo ********** Clean StoreGateway Logs *******************************************************************************************************************
+del /S /F /Q %StoreGatewayPath%\Logs\*.log*
+:STRGWLOG_END
 
 
 :OFFLOG
-IF not exist %OfficePath%\Logs\*.log* goto OFFLOGE
-echo Clean OfficeClient Logs ...
-del /S %OfficePath%\Logs\*.log*
-:OFFLOGE
+IF not exist %OfficePath%\Logs\*.* GOTO:OFFLOG_END
+Echo:
+Echo ********** Clean OfficeClient Logs *******************************************************************************************************************
+del /S /F /Q %OfficePath%\Logs\*.*
+:OFFLOG_END
 
 
 :POSLOG
-IF not exist %POSPath%\Logs\*.log* goto POSLOGE
-echo Clean POS Logs...
+IF not exist %POSPath%\Logs\*.* GOTO:POSLOG_END
+Echo:
+Echo ********** Clean POS Logs ****************************************************************************************************************************
 del %POSPath%\Logs\*.log*
 del %POSPath%\Logs\EPS\*.log*
 del %POSPath%\Logs\EPS\*.xml*
 del %POSPath%\Logs\*.stf*
-:POSLOGE
+:POSLOG_END
+
 
 :EPSLOG
-IF not exist %WinEPTSPath%\traces\*.txt goto EPSLOGE
-echo Clean EPS Logs...
+IF not exist %WinEPTSPath%\traces\*.txt GOTO:EPSLOG_END
+Echo:
+Echo ********** Clean EPS Logs ****************************************************************************************************************************
 del %WinEPTSPath%\traces\*.txt
-:EPSLOGE
+:EPSLOG_END
 
 
-:IISSTART
-Echo **********   Starting IIS
+:APPPOOLS_START
+IF DEFINED UseIISReset GOTO:IISREST_START
+Echo:
+Echo ********** Stopping AppPools *************************************************************************************************************************
+%FullPathAppCmd% start apppool /apppool.name:%ServerAppPool%
+%FullPathAppCmd% start apppool /apppool.name:%OfficeAppPool%
+GOTO:APPPOOLS_START_END
+:IISREST_START
+Echo:
+Echo ********** Stopping IISRESET 8************************************************************************************************************************
 C:\Windows\System32\iisreset.exe /start
-Echo **********   Starting IIS done
+:APPPOOLS_START_END
+
 
 :END
+Echo:
+Echo:
+IF %ERRORLEVEL% NEQ 0 pause

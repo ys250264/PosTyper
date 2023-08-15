@@ -53,9 +53,11 @@ Global $CFG_SCENARIO_SUBPATH		= 6
 Global $CFG_AUTO_SPEED_FACTOR		= 7
 
 Global $CFG_RETAIL_DB_NAME			= 1
-Global $CFG_SERVER_WEBSITE			= 2
-Global $CFG_OFFICE_WEBSITE			= 3
-Global $CFG_RABBITMQ_WEBSITE		= 4
+Global $CFG_SERVER_APPPOOL			= 2
+Global $CFG_OFFICE_APPPOOL			= 3
+Global $CFG_SERVER_WEBSITE			= 4
+Global $CFG_OFFICE_WEBSITE			= 5
+Global $CFG_RABBITMQ_WEBSITE		= 6
 
 Global $CFG_SERVER_PATH				= 1
 Global $CFG_POS_PATH				= 2
@@ -658,15 +660,17 @@ EndFunc   ;==>BrowseRabbit
 
 Func CleanLogs()
 	$cmd = $HelpersDir & "\CleanLogs.cmd"
-	$arg1 = $arrR10[$CFG_SERVER_PATH][1] & " "
-	$arg2 = $arrR10[$CFG_POS_PATH][1] & " "
-	$arg3 = $arrR10[$CFG_OFFICE_PATH][1] & " "
-	$arg4 = $arrR10[$CFG_DMS_PATH][1] & " "
-	$arg5 = $arrR10[$CFG_ARSGATEWAY_PATH][1] & " "
-	$arg6 = $arrR10[$CFG_RETAILGATEWAY_PATH][1] & " "
-	$arg7 = $arrR10[$CFG_STOREGATEWAY_PATH][1] & " "
-	$arg8 = $arrR10[$CFG_WINEPTS_PATH][1] & " "
-	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8
+	$arg1  = $arrEnv[$CFG_SERVER_APPPOOL][1] & " "
+	$arg2  = $arrEnv[$CFG_OFFICE_APPPOOL][1] & " "
+	$arg3  = $arrR10[$CFG_SERVER_PATH][1] & " "
+	$arg4  = $arrR10[$CFG_POS_PATH][1] & " "
+	$arg5  = $arrR10[$CFG_OFFICE_PATH][1] & " "
+	$arg6  = $arrR10[$CFG_DMS_PATH][1] & " "
+	$arg7  = $arrR10[$CFG_ARSGATEWAY_PATH][1] & " "
+	$arg8  = $arrR10[$CFG_RETAILGATEWAY_PATH][1] & " "
+	$arg9  = $arrR10[$CFG_STOREGATEWAY_PATH][1] & " "
+	$arg10 = $arrR10[$CFG_WINEPTS_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3 & $arg4 & $arg5 & $arg6 & $arg7 & $arg8 & $arg9 & $arg10
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CleanLogs
 
@@ -863,10 +867,11 @@ EndFunc   ;==>OpenServices
 
 Func CopyServerExtToCust()
 	$cmd = $HelpersDir & "\CopyServerExtToCust.cmd"
-	$arg1 = $arrDev[$CFG_SERVER_DBG_CUST_PATH][1] & " "
-	$arg2 = $arrDev[$CFG_SERVER_DBG_EXT_PATH][1] & " "
-	$arg3 = $arrDev[$CFG_LOYALTY_DBG_EXT_PATH][1] & " "
-	$arguments = $arg1 & $arg2 & $arg3
+	$arg1 = $arrEnv[$CFG_SERVER_APPPOOL][1] & " "
+	$arg2 = $arrDev[$CFG_SERVER_DBG_CUST_PATH][1] & " "
+	$arg3 = $arrDev[$CFG_SERVER_DBG_EXT_PATH][1] & " "
+	$arg4 = $arrDev[$CFG_LOYALTY_DBG_EXT_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3 & $arg4
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyServerExtToCust
 
@@ -882,9 +887,10 @@ EndFunc   ;==>CopyPosExtToCust
 
 Func CopyOfficeExtToCust()
 	$cmd = $HelpersDir & "\CopyOfficeExtToCust.cmd"
-	$arg1 = $arrDev[$CFG_OFFICE_DBG_CUST_PATH][1] & " "
-	$arg2 = $arrDev[$CFG_OFFICE_DBG_EXT_PATH][1] & " "
-	$arguments = $arg1 & $arg2
+	$arg1 = $arrEnv[$CFG_OFFICE_APPPOOL][1] & " "
+	$arg2 = $arrDev[$CFG_OFFICE_DBG_CUST_PATH][1] & " "
+	$arg3 = $arrDev[$CFG_OFFICE_DBG_EXT_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyOfficeExtToCust
 

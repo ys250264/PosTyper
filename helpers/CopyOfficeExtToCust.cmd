@@ -3,21 +3,48 @@ cls
 
 
 :SET_PATHS_FROM_ARGS
-set OfficeDebugCustPath=%1
-set OfficeDebugExtPath=%2
+set OfficeAppPool=%1
+set OfficeDebugCustPath=%2
+set OfficeDebugExtPath=%3
 
-:IISSTOP
-Echo **********   Stopping IIS
+:SET_MORE_PATHS
+rem set UseIISReset=
+set FullPathAppCmd=C:\Windows\System32\inetsrv\appcmd
+
+
+:APPPOOLS_STOP
+IF DEFINED UseIISReset GOTO:IISREST_STOP
+Echo:
+Echo ********** Stopping AppPools *************************************************************************************************************************
+%FullPathAppCmd% stop apppool /apppool.name:%OfficeAppPool%
+GOTO:APPPOOLS_STOP_END
+:IISREST_STOP
+Echo:
+Echo ********** Stopping IISRESET *************************************************************************************************************************
 C:\Windows\System32\iisreset.exe /stop
-Echo **********   Stopping IIS done
+:APPPOOLS_STOP_END
 
-:COPY
+
+:COPY_EXT_TO_CUST
+Echo:
+Echo ********** Copy Ext to Cust **************************************************************************************************************************
 xcopy %OfficeDebugExtPath%\Output\Debug\Extensions\*.* %OfficeDebugCustPath%\Src\Web\Extensions\ /y /e
 
-:IISSTART
-Echo **********   Starting IIS
+
+:APPPOOLS_START
+IF DEFINED UseIISReset GOTO:IISREST_START
+Echo:
+Echo ********** Stopping AppPools *************************************************************************************************************************
+%FullPathAppCmd% start apppool /apppool.name:%OfficeAppPool%
+GOTO:APPPOOLS_START_END
+:IISREST_START
+Echo:
+Echo ********** Stopping IISRESET 8************************************************************************************************************************
 C:\Windows\System32\iisreset.exe /start
-Echo **********   Starting IIS done
+:APPPOOLS_START_END
+
 
 :END
-pause
+Echo:
+Echo:
+IF %ERRORLEVEL% NEQ 0 pause
