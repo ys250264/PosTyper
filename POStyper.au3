@@ -265,7 +265,7 @@ Func Main()
 	Local $idBtnStartPOS			= GUICtrlCreateButton($captionStartPOS			, $Col_1, $ROW_1	, $BtnWidthL, $BtnHeight)
 	Local $idBtnLogin				= GUICtrlCreateButton($captionLogin				, $Col_2, $ROW_1	, $BtnWidthL, $BtnHeight)
 	Local $idBtnEmuArrange			= GUICtrlCreateButton($captionEmuArrange		, $Col_3, $ROW_1	, $BtnWidthL, $BtnHeight)
-	Local $idBtnScanLoyaltyCard		= GUICtrlCreateButton($captionScanLoyaltyCard	, $Col_4, $ROW_1	, $BtnWidthL, $BtnHeight)
+	Global $idBtnScanLoyaltyCard	= GUICtrlCreateButton($captionScanLoyaltyCard	, $Col_4, $ROW_1	, $BtnWidthL, $BtnHeight)
 			
 	Local $idBtnScenario			= GUICtrlCreateButton($captionScenario			, $Col_1, $ROW_2	, $BtnWidthL, $BtnHeight)
 	Local $idBtnTendering			= GUICtrlCreateButton($captionTendering			, $Col_2, $ROW_2	, $BtnWidthL, $BtnHeight)
@@ -306,14 +306,14 @@ Func Main()
 	Local $idBtnOpenSnoop			= GUICtrlCreateButton($captionOpenSnoop			, $Col_3, $ROW_9	, $BtnWidthL, $BtnHeight)
 	Local $idBtnOpenServices		= GUICtrlCreateButton($captionOpenServices		, $Col_4, $ROW_9	, $BtnWidthL, $BtnHeight)		
 		
-	Local $idBtnCopySrvExtToCust	= GUICtrlCreateButton($captionCopySrvExtToCust	, $Col_1, $ROW_10	, $BtnWidthL, $BtnHeight)
-	Local $idBtnCopyPOSExtToCust	= GUICtrlCreateButton($captionCopyPOSExtToCust	, $Col_2, $ROW_10	, $BtnWidthL, $BtnHeight)
-	Local $idBtnCopyOffExtToCust	= GUICtrlCreateButton($captionCopyOffExtToCust	, $Col_3, $ROW_10	, $BtnWidthL, $BtnHeight)
-	Local $idBtnCopyFromMsiFolder	= GUICtrlCreateButton($captionCopyFromMsiFolder	, $Col_4, $ROW_10	, $BtnWidthL, $BtnHeight)
+	Global $idBtnCopySrvExtToCust	= GUICtrlCreateButton($captionCopySrvExtToCust	, $Col_1, $ROW_10	, $BtnWidthL, $BtnHeight)
+	Global $idBtnCopyPOSExtToCust	= GUICtrlCreateButton($captionCopyPOSExtToCust	, $Col_2, $ROW_10	, $BtnWidthL, $BtnHeight)
+	Global $idBtnCopyOffExtToCust	= GUICtrlCreateButton($captionCopyOffExtToCust	, $Col_3, $ROW_10	, $BtnWidthL, $BtnHeight)
+	Global $idBtnCopyFromMsiFolder	= GUICtrlCreateButton($captionCopyFromMsiFolder	, $Col_4, $ROW_10	, $BtnWidthL, $BtnHeight)
 	 
 	Local $idBtnToEnglish			= GUICtrlCreateButton($captionToEnglish			, $Col_1, $ROW_11	, $BtnWidthL, $BtnHeight)
 	Local $idBtnToDutch				= GUICtrlCreateButton($captionToDutch			, $Col_2, $ROW_11	, $BtnWidthL, $BtnHeight)
-	Local $idBtnFixRTIs				= GUICtrlCreateButton($captionFixRTIs			, $Col_3, $ROW_11	, $BtnWidthL, $BtnHeight)
+	Global $idBtnFixRTIs			= GUICtrlCreateButton($captionFixRTIs			, $Col_3, $ROW_11	, $BtnWidthL, $BtnHeight)
 
 ;~	Local $idBtnResetLoy			= GUICtrlCreateButton($captionResetLoy			, $Col_4, $ROW_7	, $BtnWidthL, $BtnHeight)
 ;~ 	Local $idBtnMsg3On				= GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)
@@ -323,6 +323,8 @@ Func Main()
 	If $ShowLanguageSwitcherLine Then
 		DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
 	EndIf
+
+	DisableButtonsOnStartup()
 
 	GUICtrlSetColor($idBtnStartPOS, 0x000088)
 	GUICtrlSetColor($idBtnKillPOS, 0xFF0000)
@@ -524,27 +526,34 @@ Func Login()
 	If Not IsPosClientRunning() Then
 		Return
 	EndIf
+
 	WinActivate("R10PosClient")
 	Local $pos = MouseGetPos()
+
 	Sleep(300)
-	BlockInput(1)
-	$keys = StringSplit($arrPOS[$CFG_USER][1], "")
 	MouseClick("left", 750, 400, 1, 1)
+	;BlockInput(1)
+
+	$keys = StringSplit($arrPOS[$CFG_USER][1], "")
 	Sleep(300)
 	Send("{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	For $i = 1 To $keys[0]
 		Send($keys[$i])
 	Next
+
 	Sleep(1000)
 	Send("{TAB}")
 	Sleep(500)
+
 	Send("{HOME}{SHIFTDOWN}{END}{SHIFTUP}{DEL}")
 	$keys = StringSplit($arrPOS[$CFG_PASSWORD][1], "")
 	For $i = 1 To $keys[0]
 		Send($keys[$i])
 	Next
+
 	MouseClick("left", 920, 220, 1, 1)
-	BlockInput(0)
+	;BlockInput(0)
+
 	MouseMove($pos[0], $pos[1], 1)
 EndFunc   ;==>Login
 
@@ -1318,12 +1327,36 @@ EndFunc   ;==>IsDutchBackupDbTablesExist
 
 Func DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
 	If Not IsEnglishBackupDbTablesExist() Then
-		GUICtrlSetState($idBtnToEnglish, $GUI_DISABLE)
+		DisableButton($idBtnToEnglish)
 	EndIf
 	If Not IsDutchBackupDbTablesExist() Then
-		GUICtrlSetState($idBtnToDutch, $GUI_DISABLE)
+		DisableButton($idBtnToDutch)
 	EndIf
 EndFunc   ;==>DisableLanguageButtonsIfDbNotReady
+
+
+Func DisableButtonsOnStartup()
+	If (StringLen($arrPOS[$CFG_LOYALTY_CARD][1]) = 0) Then
+		DisableButton($idBtnScanLoyaltyCard)
+	EndIf
+	If ((StringLen($arrDev[$CFG_SERVER_DBG_CUST_PATH][1]) = 0) Or (StringLen($arrDev[$CFG_SERVER_DBG_EXT_PATH][1]) = 0) Or (StringLen($arrDev[$CFG_LOYALTY_DBG_EXT_PATH][1]) = 0) ) Then
+		DisableButton($idBtnCopySrvExtToCust)
+	EndIf
+	If ((StringLen($arrDev[$CFG_POS_DBG_CUST_PATH][1]) = 0) Or (StringLen($arrDev[$CFG_POS_DBG_EXT_PATH][1]) = 0)) Then
+		DisableButton($idBtnCopyPOSExtToCust)
+	EndIf
+	If ((StringLen($arrDev[$CFG_OFFICE_DBG_CUST_PATH][1]) = 0) Or (StringLen($arrDev[$CFG_OFFICE_DBG_EXT_PATH][1]) = 0)) Then
+		DisableButton($idBtnCopyOffExtToCust)
+	EndIf
+	If ((StringLen($arrDev[$CFG_SERVER_DBG_RTI_PATH][1]) = 0) Or (StringLen($arrDev[$CFG_SERVER_DBG_EXT_PATH][1]) = 0)) Then
+		DisableButton($idBtnFixRTIs)
+	EndIf
+EndFunc   ;==>DisableButtonsOnStartup
+
+
+Func DisableButton($idBtn)
+	GUICtrlSetState($idBtn, $GUI_DISABLE)
+EndFunc   ;==>DisableButton
 
 
 Func Copyrights()
