@@ -6,7 +6,6 @@
 /collected_logs/
 /captured_images/
 automation/scenarios/03. Bugs/
-automation/flows/tendering.ini
-automation/flows/tendering_git.ini
-items/items.ini
+automation/flows/
+items/
 BackUp/
