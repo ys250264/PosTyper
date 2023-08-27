@@ -95,6 +95,7 @@ Global $CFG_SCALE					= 3
 Global $CFG_DRAWER					= 4
 Global $CFG_WINEPTS					= 5
 Global $CFG_UPB						= 6
+Global $CFG_MTX						= 7
 
 Global $CFG_SCREEN_ADD				= 1
 Global $CFG_DIALOG_ZIP				= 2
