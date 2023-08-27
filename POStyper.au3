@@ -269,9 +269,9 @@ Func Main()
 	Global $idBtnScanLoyaltyCard	= GUICtrlCreateButton($captionScanLoyaltyCard	, $Col_4, $ROW_1	, $BtnWidthL, $BtnHeight)
 			
 	Local $idBtnScenario			= GUICtrlCreateButton($captionScenario			, $Col_1, $ROW_2	, $BtnWidthL, $BtnHeight)
-	Local $idBtnTendering			= GUICtrlCreateButton($captionTendering			, $Col_2, $ROW_2	, $BtnWidthL, $BtnHeight)
-	Local $idBtnPayingCash			= GUICtrlCreateButton($captionPayingCash		, $Col_3, $ROW_2	, $BtnWidthL, $BtnHeight)
-	Local $idBtnPayingEFT			= GUICtrlCreateButton($captionPayingEFT			, $Col_4, $ROW_2	, $BtnWidthL, $BtnHeight)
+	Global $idBtnTendering			= GUICtrlCreateButton($captionTendering			, $Col_2, $ROW_2	, $BtnWidthL, $BtnHeight)
+	Global $idBtnPayingCash			= GUICtrlCreateButton($captionPayingCash		, $Col_3, $ROW_2	, $BtnWidthL, $BtnHeight)
+	Global $idBtnPayingEFT			= GUICtrlCreateButton($captionPayingEFT			, $Col_4, $ROW_2	, $BtnWidthL, $BtnHeight)
 
 	Local $idBtnUnlock				= GUICtrlCreateButton($captionUnlock			, $Col_1, $ROW_3	, $BtnWidthL, $BtnHeight)
 	Local $idBtnBrowseServer		= GUICtrlCreateButton($captionBrowseServer		, $Col_2, $ROW_3	, $BtnWidthL, $BtnHeight)
@@ -1351,6 +1351,15 @@ Func DisableButtonsOnStartup()
 	EndIf
 	If ((StringLen($arrDev[$CFG_SERVER_DBG_RTI_PATH][1]) = 0) Or (StringLen($arrDev[$CFG_SERVER_DBG_EXT_PATH][1]) = 0)) Then
 		DisableButton($idBtnFixRTIs)
+	EndIf
+	If Not FileExists($TenderingIniFile) Then
+		DisableButton($idBtnTendering)
+	EndIf
+	If Not FileExists($PayingCashIniFile) Then
+		DisableButton($idBtnPayingCash)
+	EndIf
+	If Not FileExists($PayingEFTIniFile) Then
+		DisableButton($idBtnPayingEFT)
 	EndIf
 EndFunc   ;==>DisableButtonsOnStartup
 
