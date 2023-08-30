@@ -69,6 +69,7 @@ Global $CFG_ARSGATEWAY_PATH			= 7
 Global $CFG_RETAILGATEWAY_PATH		= 8
 Global $CFG_STOREGATEWAY_PATH		= 9
 Global $CFG_WINEPTS_PATH			= 10
+Global $CFG_RTIS_FIX_PATH			= 11
 
 Global $CFG_SERVER_DBG_CUST_PATH	= 1
 Global $CFG_SERVER_DBG_EXT_PATH		= 2
@@ -931,9 +932,10 @@ EndFunc   ;==>ToDutch
 
 Func FixRTIs()
 	$cmd = $HelpersDir & "\FixRTIs.cmd"
-	$arg1 = $arrDev[$CFG_SERVER_DBG_EXT_PATH][1] & " "
-	$arg2 = $arrDev[$CFG_SERVER_DBG_RTI_PATH][1] & " "
-	$arguments = $arg1 & $arg2
+	$arg1 = $arrR10[$CFG_RTIS_FIX_PATH][1] & " "
+	$arg2 = $arrDev[$CFG_SERVER_DBG_EXT_PATH][1] & " "
+	$arg3 = $arrDev[$CFG_SERVER_DBG_RTI_PATH][1] & " "
+	$arguments = $arg1 & $arg2 & $arg3
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>FixRTIs
 

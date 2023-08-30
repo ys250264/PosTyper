@@ -2,20 +2,17 @@
 cls
 
 :SET_PATHS_FROM_ARGS
-set ServerDebugExtPath=%1
-set RTIsPath=%2
-set TargetBase=%ServerDebugExtPath%\%RTIsPath%
+set Source=%1
+set ServerDebugExtPath=%2
+set RTIsPath=%3
+set Target=%ServerDebugExtPath%\%RTIsPath%
 
-:SET_MORE_VARS:
-set SourceBase=.\helpers
-set Configuration=1_Configuration
-set LabSpecific=3_Lab_IL_Specific
-
-:COPY_RTIS_WITH_MACHINE_NAME
-xcopy %SourceBase%\%LabSpecific%\*.* %TargetBase%\%LabSpecific%\ /y /s
+:COPY_RTIS
+IF not exist %Source% GOTO:REMOVE_ECOM_RTI
+xcopy %Source%\*.* %Target%\ /y /s
 
 :REMOVE_ECOM_RTI
-set FileToRemove=%TargetBase%\%Configuration%\028_ConfigurationEntry\*.RUN_ON_ECOMM_ONLY
+set FileToRemove=%Target%\1_Configuration\028_ConfigurationEntry\*.RUN_ON_ECOMM_ONLY
 if exist %FileToRemove% del /f /q %FileToRemove%
 
 :END
