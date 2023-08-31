@@ -3,6 +3,9 @@
 /POStyper.ini
 /POStyper.lnk
 /POStyper_tidy.txt
+/envs/my_pc/JumboTrunk/Debug/root/automation/flows/tendering.ini
+/envs/my_pc/v14_0_1700/Debug/root/automation/flows/tendering.ini
+/envs/my_pc/v23_1/Debug/root/automation/flows/tendering.ini
 /automation/flows/
 /automation/scenarios/03_Bugs/
 /collected_logs/
