@@ -911,7 +911,8 @@ Func CopyFromMsiFolder()
 	$arg1 = $arrR10[$CFG_SERVER_PATH][1] & " "
 	$arg2 = $arrR10[$CFG_POS_PATH][1] & " "
 	$arg3 = $arrR10[$CFG_OFFICE_PATH][1] & " "
-	$arguments = $arg1 & $arg2 & $arg3
+	$arg4 = $arrDev[$CFG_POS_DBG_EXT_PATH][1]	
+	$arguments = $arg1 & $arg2 & $arg3 & $arg4
 	ShellExecute($cmd, $arguments, "", "", @SW_MAXIMIZE)
 EndFunc   ;==>CopyFromMsiFolder
 
