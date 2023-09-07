@@ -12,10 +12,6 @@ for /f "skip=8 tokens=2,3,4,5,6,7,8 delims=:, " %%D in ('robocopy /l * \ \ /ns /
     set "ss=%%J"
 )
 
-rem C:\Windows\System32\iisreset.exe /stop
-
-set R10drive=C:
-rem IF exist E:\Retalix\StoreServices\Server\ set R10drive=E:
 
 :SET_PATHS_FROM_ARGS
 set CollectedLogsFolder=%1
@@ -38,15 +34,31 @@ rem echo %RetailGatewayPath%
 rem echo %StoreGatewayPath%
 rem echo %WinEPTSPath%
 
+
+
+:CREATE_DESTINATIONS
 set dest=%CollectedLogsFolder%\LOGS_%YY%%MM%%DD%_%hh%%mi%%ss%
+set ServerDest=%dest%\01_SERVER
+set LmsDest=%dest%\02_LMS
+set RtiDest=%dest%\03_RTI
+set TlogDest=%dest%\04_TLOG
+set PosDest=%dest%\05_POS
+set EpsDest=%dest%\06_EPS
+set OfficeDest=%dest%\07_OFFICE
+set DmsDest=%dest%\08_DMS
+set RgwDest=%dest%\09_RGW
+set WinEptsDest=%dest%\10_WINEPTS
+set SgwDest=%dest%\11_SGW
+set AgwDest=%dest%\12_AGW
 
 
 :CREATE_SUB_PATHS
 set ServerLogsPath=%ServerPath%\Logs
 set ServerExtensionsPath=%ServerPath%\Extensions
 set ServerTLogsPath=%ServerPath%\Log
-set ServerRTIsPath=%ServerPath%\RtiServices
+set ServerRTIsPath=%ServerLogsPath%\RTI\POS(null)_Message
 set POSLogsPath=%POSPath%\Logs
+set POSEpsLogsPath=%POSPath%\Logs\EPS
 set OfficeLogsPath=%OfficePath%\Logs
 set DmsLogsPath=%DmsPath%\DMSLog
 set ArsGatewayLogsPath=%ArsGatewayPath%\Logs
@@ -54,150 +66,203 @@ set RetailGatewayLogsPath=%RetailGatewayPath%\gatewaylogs
 set StoreGatewayLogsPath=%StoreGatewayPath%\Logs
 set WinEPTSLogsPath=%WinEPTSPath%\traces
 
+set FindStr=findstr /l /v "File(s) copied"
 
-:LMSLOG
-IF not exist %ServerLogsPath%\CustomerAndMarketing\LoyaltyProMessages\ goto SRVLOG
-IF not exist %dest%\LMSMSG\ mkdir %dest%\LMSMSG\
-del /Q %dest%\LMSMSG\*.*
-cd /D %ServerLogsPath%\CustomerAndMarketing\LoyaltyProMessages
-for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 10 goto done
-    copy /y "%%b" %dest%\LMSMSG
-)
-:done
 
-:SRVLOG
-IF not exist %ServerLogsPath%\ goto TLOG
-IF not exist %dest%\SRVLOG\ mkdir %dest%\SRVLOG\
-del /Q %dest%\SRVLOG\*.*
+:SERVER
+if not exist %ServerLogsPath%\ goto LMSLOG
+echo:
+echo ********** Server Logs *************************************************************************************************************************
+if not exist %ServerDest%\ mkdir %ServerDest%\
+del /Q %ServerDest%\*.*
 cd /D  %ServerLogsPath%
 for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 3 goto done
-    copy /y "%%b" %dest%\SRVLOG
+    if %%a gtr 4 goto SERVER_DONE
+    xcopy /y "%%b" %ServerDest% | %FindStr%
 )
-
-:done
+:SERVER_DONE
 cd /D %ServerExtensionsPath%
-copy /y *.txt %dest%\SRVLOG
+if exist *.txt xcopy /y *.txt %ServerDest% | %FindStr%
 cd /D %ServerPath%
-copy /y Server.txt %dest%\SRVLOG
+if exist Server.txt xcopy /y Server.txt %ServerDest% | %FindStr%
 
-:TLOG
-IF not exist %ServerTLogsPath%\ goto RTI
-IF not exist %dest%\TLOG\ mkdir %dest%\TLOG\
-del /Q %dest%\TLOG\*.*
-cd /D %ServerTLogsPath%
+
+:LMSLOG
+if not exist %ServerLogsPath%\CustomerAndMarketing\LoyaltyProMessages\ goto RTI
+echo:
+echo ********** Server LMS Logs *********************************************************************************************************************
+if not exist %LmsDest%\ mkdir %LmsDest%\
+del /Q %LmsDest%\*.*
+cd /D %ServerLogsPath%\CustomerAndMarketing\LoyaltyProMessages
 for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 3 goto done
-    copy /y "%%b" %dest%\TLOG\
+    if %%a gtr 10 goto LMSLOG_DONE
+    xcopy /y "%%b" %LmsDest% | %FindStr%
 )
-:done
+:LMSLOG_DONE
+
 
 :RTI
-IF not exist %ServerRTIsPath%\ goto DMS
-IF not exist %dest%\RTI\ mkdir %dest%\RTI\
-del /Q %dest%\RTI\*.*
+if not exist %ServerRTIsPath%\ goto TLOG
+echo:
+echo ********** Server RTIs *************************************************************************************************************************
+if not exist %RtiDest%\ mkdir %RtiDest%\
+del /Q %RtiDest%\*.*
 cd /D %ServerRTIsPath%
 for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 2 goto done
-    copy /y "%%b" %dest%\RTI\
+    xcopy /y "%%b" %RtiDest%\ | %FindStr%
+	echo %%b | findstr /c:"IDMRequest_IdmLogin" >nul 2>&1
+	if not errorlevel 1  goto RTI_DONE
 )
-:done
+:RTI_DONE
 
-:DMS
-IF not exist %DmsLogsPath%\ goto POS
-IF not exist %dest%\DMS\ mkdir %dest%\DMS\
-del /Q %dest%\DMS\*.*
-cd /D %DmsLogsPath%
-for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 5 goto done
-    copy /y "%%b" %dest%\DMS\
+
+:TLOG
+if not exist %ServerTLogsPath%\ goto POS
+echo:
+echo ********** TLogs *******************************************************************************************************************************
+if not exist %TlogDest%\ mkdir %TlogDest%\
+del /Q %TlogDest%\*.*
+cd /D %ServerTLogsPath%
+for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b Retail* ^| findstr /n "^"') do (
+    if %%a gtr 3 goto TLOG_DONE
+    xcopy /y "%%b" %TlogDest%\ | %FindStr%
 )
-:done
+:TLOG_DONE
 
 
 :POS
-IF not exist %POSLogsPath%\ goto WE
-IF not exist %dest%\POSLOG\ mkdir %dest%\POSLOG\
-del /Q %dest%\POSLOG\*.*
+if not exist %POSLogsPath%\ goto POS_EPS
+echo:
+echo ********** POS Logs ****************************************************************************************************************************
+if not exist %PosDest%\ mkdir %PosDest%\
+del /Q %PosDest%\*.*
 cd /D %POSLogsPath%
 for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 10 goto done
-    copy /y "%%b" %dest%\POSLOG
+    if %%a gtr 15 goto POS_DONE
+    xcopy /y "%%b" %PosDest% | %FindStr%
 )
-
-:done
+:POS_DONE
 cd /D %POSPath%
-copy /y *.txt %dest%\POSLOG
+if exist *.txt xcopy /y *.txt %PosDest% | %FindStr%
 
 
-:WE
-IF not exist %WinEPTSLogsPath%\ goto ARSGW
-IF not exist %dest%\WINEPTS\ mkdir %dest%\WINEPTS\
-del /Q %dest%\WINEPTS\*.*
-cd /D %WinEPTSPath%
+:POS_EPS
+if not exist %POSLogsPath%\ goto OFFICE
+echo:
+echo ********** POS EPS Logs ************************************************************************************************************************
+if not exist %EpsDest% mkdir %EpsDest%
+del /Q %EpsDest%\*.*
+cd /D %POSEpsLogsPath%
 for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 3 goto done
-    copy /y "%%b" %dest%\WINEPTS
+    if %%a gtr 4 goto POS_EPS_DONE
+    xcopy /y "%%b" %EpsDest% | %FindStr%
 )
-:done
-
-:ARSGW
-IF not exist %ArsGatewayLogsPath%\ goto ARSGW
-IF not exist %dest%\ARSLOG\ mkdir %dest%\ARSLOG\
-del /Q %dest%\ARSLOG\*.*
-cd /D %ArsGatewayLogsPath%\
-for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 3 goto done
-    copy /y "%%b" %dest%\ARSLOG
-)
-:done
-
-:ARSGW
-IF not exist %RetailGatewayLogsPath%\ goto STOGW
-IF not exist %dest%\ARSLOG\ mkdir %dest%\RGWLOG\
-del /Q %dest%\RGWLOG\*.*
-cd /D %RetailGatewayLogsPath%\
-for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 3 goto done
-    copy /y "%%b" %dest%\RGWLOG
-)
-:done
-
-:STOGW
-IF not exist %StoreGatewayLogsPath%\ goto OFFICE
-IF not exist %dest%\STOGWLOG\ mkdir %dest%\STOGWLOG\
-del /Q %dest%\STOGWLOG\*.*
-cd /D %StoreGatewayLogsPath%
-for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 3 goto done
-    copy /y "%%b" %dest%\STOGWLOG
-)
-:done
-cd /D %StoreGatewayPath%
-copy /y *.txt %dest%\STOGWLOG
+:POS_EPS_DONE
 
 
 :OFFICE
-IF not exist %OfficeLogsPath%\ goto END
-IF not exist %dest%\OFFICELOG\ mkdir %dest%\OFFICELOG\
-del /Q %dest%\OFFICELOG\*.*
+if not exist %OfficeLogsPath%\ goto DMS
+if not exist %OfficeLogsPath%\*.log* goto DMS
+echo:
+echo ********** Office Logs *************************************************************************************************************************
+if not exist %OfficeDest%\ mkdir %OfficeDest%\
+del /Q %OfficeDest%\*.*
 cd /D %OfficeLogsPath%
+if not exist *.log* goto OFFICE_DONE
 for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
-    if %%a gtr 3 goto done
-    copy /y "%%b" %dest%\OFFICELOG
+    if %%a gtr 3 goto OFFICE_DONE
+    xcopy /y "%%b" %OfficeDest% | %FindStr%
 )
-:done
-cd /D %OfficePath%\Extensions\Coop_Italia
-copy /y *.txt %dest%\OFFICELOG
+:OFFICE_DONE
+rem if not exist %OfficePath%\Extensions\Coop_Italia goto DMS
+rem cd /D %OfficePath%\Extensions\Coop_Italia
+rem xcopy /y *.txt %OfficeDest% | %FindStr%
+if not exist %OfficePath% goto DMS
 cd /D %OfficePath%
-copy /y *.txt %dest%\OFFICELOG
+xcopy /y *.txt %OfficeDest% | %FindStr%
+
+
+:DMS
+if not exist %DmsLogsPath%\ goto RETAIL_GATEWAY
+echo:
+echo ********** DMS Logs ****************************************************************************************************************************
+if not exist %DmsDest%\ mkdir %DmsDest%\
+del /Q %DmsDest%\*.*
+cd /D %DmsLogsPath%
+for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
+    if %%a gtr 5 goto DMS_DONE
+    xcopy /y "%%b" %DmsDest%\ | %FindStr%
+)
+:DMS_DONE
+
+
+
+:RETAIL_GATEWAY
+if not exist %RetailGatewayLogsPath%\ goto WINEPTS
+echo:
+echo ********** RetailGateway Logs ******************************************************************************************************************
+if not exist %RgwDest%\ mkdir %RgwDest%\
+del /Q %RgwDest%\*.*
+cd /D %RetailGatewayLogsPath%\
+for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
+    if %%a gtr 3 goto RETAIL_GATEWAY_DONE
+    xcopy /y "%%b" %RgwDest% | %FindStr%
+)
+:RETAIL_GATEWAY_DONE
+
+
+
+:WINEPTS
+if not exist %WinEPTSLogsPath%\ goto STORE_GATEWAY
+echo:
+echo ********** WinEPTS Logs ************************************************************************************************************************
+if not exist %WinEptsDest%\ mkdir %WinEptsDest%\
+del /Q %WinEptsDest%\*.*
+cd /D %WinEPTSPath%
+for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
+    if %%a gtr 3 goto WINEPTS_DONE
+    xcopy /y "%%b" %WinEptsDest% | %FindStr%
+)
+:WINEPTS_DONE
+
+
+:STORE_GATEWAY
+if not exist %StoreGatewayLogsPath%\ goto ARS_GATEWAY
+echo:
+echo ********** StoreGateway Logs *******************************************************************************************************************
+if not exist %SgwDest%\ mkdir %SgwDest%\
+del /Q %SgwDest%\*.*
+cd /D %StoreGatewayLogsPath%
+for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
+    if %%a gtr 3 goto STORE_GATEWAY_DONE
+    xcopy /y "%%b" %SgwDest% | %FindStr%
+)
+:STORE_GATEWAY_DONE
+cd /D %StoreGatewayPath%
+xcopy /y *.txt %SgwDest% | %FindStr%
+
+
+:ARS_GATEWAY
+if not exist %ArsGatewayLogsPath%\ goto END
+echo:
+echo ********** ArsGateway Logs *********************************************************************************************************************
+if not exist %AgwDest%\ mkdir %AgwDest%\
+del /Q %AgwDest%\*.*
+cd /D %ArsGatewayLogsPath%\
+for /f "tokens=1,* delims=:" %%a in ('dir /o-d /a-d-h /b * ^| findstr /n "^"') do (
+    if %%a gtr 3 goto ARS_GATEWAY_DONE
+    xcopy /y "%%b" %AgwDest% | %FindStr%
+)
+:ARS_GATEWAY_DONE
+
 
 
 :END
+echo:
+echo:
+if %ERRORLEVEL% NEQ 0 pause
+
 
 :COMPRESS
 powershell Compress-Archive -Path %dest% -CompressionLevel Optimal -DestinationPath %dest%.zip
 start %dest%.zip
-
-rem C:\Windows\System32\iisreset.exe /start
