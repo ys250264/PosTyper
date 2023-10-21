@@ -94,9 +94,10 @@ Global $CFG_SCANNER					= 1
 Global $CFG_PRINTER					= 2
 Global $CFG_SCALE					= 3
 Global $CFG_DRAWER					= 4
-Global $CFG_WINEPTS					= 5
-Global $CFG_UPB						= 6
-Global $CFG_MTX						= 7
+Global $CFG_LINCSAFE				= 5
+Global $CFG_WINEPTS					= 6
+Global $CFG_UPB						= 7
+Global $CFG_MTX						= 8
 
 Global $CFG_SCREEN_ADD				= 1
 Global $CFG_DIALOG_ZIP				= 2
@@ -321,6 +322,42 @@ Func Main()
 ;~ 	Local $idBtnMsg3On				= GUICtrlCreateButton($captionMsg3On			, $Col_2, $ROW_7	, $BtnWidthL, $BtnHeight)
 ;~ 	Local $idBtnMsg3Off				= GUICtrlCreateButton($captionMsg3Off			, $Col_3, $ROW_7	, $BtnWidthL, $BtnHeight)
 ;~	Local $idBtnFLDiag				= GUICtrlCreateButton($captionFLDiag			, $Col_1, $ROW_8	, $BtnWidthL, $BtnHeight)
+
+
+	Global $LINCSAFE_DIST_X					= 80
+	Global $LINCSAFE_DIST_Y					= 30
+	Global $LINCSAFE_DIST_Y_COINS			= 75
+
+	Global $LINCSAFE_COL_0					= 800
+	Global $LINCSAFE_COL_1					= $LINCSAFE_COL_0 + $LINCSAFE_DIST_X
+	Global $LINCSAFE_ROW_0					= 225
+	Global $LINCSAFE_ROW_1					= $LINCSAFE_ROW_0 + $LINCSAFE_DIST_Y
+	Global $LINCSAFE_ROW_2					= $LINCSAFE_ROW_0 + $LINCSAFE_DIST_Y_COINS
+	Global $LINCSAFE_ROW_3					= $LINCSAFE_ROW_2 + $LINCSAFE_DIST_Y
+	Global $LINCSAFE_ROW_4					= $LINCSAFE_ROW_3 + $LINCSAFE_DIST_Y
+
+	Global $LINCSAFE_BANKNOTE_50_X_OFFSET	= $LINCSAFE_COL_0
+	Global $LINCSAFE_BANKNOTE_50_Y_OFFSET	= $LINCSAFE_ROW_0
+	Global $LINCSAFE_BANKNOTE_20_X_OFFSET	= $LINCSAFE_COL_1
+	Global $LINCSAFE_BANKNOTE_20_Y_OFFSET	= $LINCSAFE_ROW_0
+	Global $LINCSAFE_BANKNOTE_10_X_OFFSET	= $LINCSAFE_COL_0
+	Global $LINCSAFE_BANKNOTE_10_Y_OFFSET	= $LINCSAFE_ROW_1
+	Global $LINCSAFE_BANKNOTE_5_X_OFFSET	= $LINCSAFE_COL_1
+	Global $LINCSAFE_BANKNOTE_5_Y_OFFSET	= $LINCSAFE_ROW_1
+
+	Global $LINCSAFE_COIN_2_0_X_OFFSET		= $LINCSAFE_COL_0
+	Global $LINCSAFE_COIN_2_0_Y_OFFSET		= $LINCSAFE_ROW_2
+	Global $LINCSAFE_COIN_1_0_X_OFFSET		= $LINCSAFE_COL_1
+	Global $LINCSAFE_COIN_1_0_Y_OFFSET		= $LINCSAFE_ROW_2
+	Global $LINCSAFE_COIN_0_5_X_OFFSET		= $LINCSAFE_COL_0
+	Global $LINCSAFE_COIN_0_5_Y_OFFSET		= $LINCSAFE_ROW_3
+	Global $LINCSAFE_COIN_0_2_X_OFFSET		= $LINCSAFE_COL_1
+	Global $LINCSAFE_COIN_0_2_Y_OFFSET		= $LINCSAFE_ROW_3
+	Global $LINCSAFE_COIN_0_1_X_OFFSET		= $LINCSAFE_COL_0 
+	Global $LINCSAFE_COIN_0_1_Y_OFFSET		= $LINCSAFE_ROW_4
+	Global $LINCSAFE_COIN_0_0_5_X_OFFSET	= $LINCSAFE_COL_1
+	Global $LINCSAFE_COIN_0_0_5_Y_OFFSET	= $LINCSAFE_ROW_4
+
 
 	If $ShowLanguageSwitcherLine Then
 		DisableLanguageButtonsIfDbNotReady($idBtnToEnglish, $idBtnToDutch)
@@ -567,8 +604,7 @@ Func ArrangeEmulators()
 	$NumOfEmulators = $arrEmulators[0][0]
 	For $i = 1 To $NumOfEmulators
 		$arrEmulator = $arrEmulators[$i][1]
-		$WndHnd = WinActivate($arrEmulator[$CFG_CAPTION])
-		If $WndHnd > 0 Then
+		If WinActivate($arrEmulator[$CFG_CAPTION], "") Then		
 			WinMove($arrEmulator[$CFG_CAPTION], "", $arrEmulator[$CFG_X], $arrEmulator[$CFG_Y])
 		EndIf
 	Next
@@ -1110,7 +1146,13 @@ Func ScenarioAutomation($ProgressBarCaption, $sFileName)
 				If $sText = "Claimed,Enabled" Then ExitLoop
 			Next
 			WinActivate("R10PosClient")
-		ElseIf $arrItems[$i][0] = "type" Then
+		ElseIf $arrItems[$i][0] = "linqsafe" Then
+			$hWndLincSafe = ActivateLincSafe()
+			If $hWndLincSafe > 0 Then
+				ClickLincSafeButton($hWndLincSafe, $arrItems[$i][1])		
+			EndIf
+			WinActivate("R10PosClient")
+		ElseIf $arrItems[$i][0] = "type" Then			
 			Type($arrItems[$i][1])
 		ElseIf $arrItems[$i][0] = "button" Then
 			If $arrItems[$i][1] = "QTY" Then
@@ -1453,6 +1495,53 @@ Func ActivateScanner()
 	$arrEmulatorScanner = $arrEmulators[$CFG_SCANNER][1]
 	Return WinActivate($arrEmulatorScanner[$CFG_CAPTION])
 EndFunc   ;==>ActivateScanner
+
+
+Func ActivateLincSafe()
+	$arrEmulatorLincSafe = $arrEmulators[$CFG_LINCSAFE][1]
+	Return WinActivate($arrEmulatorLincSafe[$CFG_CAPTION])
+EndFunc   ;==>ActivateLincSafe
+
+
+Func ClickLincSafeButton($hWndLincSafe, $amount)
+	$xOffset = 0
+	$yOffset = 0
+	If $amount = "50" Then
+		$xOffset = $LINCSAFE_BANKNOTE_50_X_OFFSET
+		$yOffset = $LINCSAFE_BANKNOTE_50_Y_OFFSET
+	ElseIf $amount = "20" Then
+		$xOffset = $LINCSAFE_BANKNOTE_20_X_OFFSET
+		$yOffset = $LINCSAFE_BANKNOTE_20_Y_OFFSET
+	ElseIf $amount = "10" Then
+		$xOffset = $LINCSAFE_BANKNOTE_10_X_OFFSET
+		$yOffset = $LINCSAFE_BANKNOTE_10_Y_OFFSET
+	ElseIf $amount = "5" Then
+		$xOffset = $LINCSAFE_BANKNOTE_5_X_OFFSET
+		$yOffset = $LINCSAFE_BANKNOTE_5_Y_OFFSET
+	ElseIf $amount = "2" Then
+		$xOffset = $LINCSAFE_COIN_2_0_X_OFFSET
+		$yOffset = $LINCSAFE_COIN_2_0_Y_OFFSET
+	ElseIf $amount = "1" Then
+		$xOffset = $LINCSAFE_COIN_1_0_X_OFFSET
+		$yOffset = $LINCSAFE_COIN_1_0_Y_OFFSET
+	ElseIf $amount = "0.5" Then
+		$xOffset = $LINCSAFE_COIN_0_5_X_OFFSET
+		$yOffset = $LINCSAFE_COIN_0_5_Y_OFFSET
+	ElseIf $amount = "0.2" Then
+		$xOffset = $LINCSAFE_COIN_0_2_X_OFFSET
+		$yOffset = $LINCSAFE_COIN_0_2_Y_OFFSET
+	ElseIf $amount = "0.1" Then
+		$xOffset = $LINCSAFE_COIN_0_1_X_OFFSET
+		$yOffset = $LINCSAFE_COIN_0_1_Y_OFFSET
+	ElseIf $amount = "0.05" Then
+		$xOffset = $LINCSAFE_COIN_0_0_5_X_OFFSET
+		$yOffset = $LINCSAFE_COIN_0_0_5_Y_OFFSET
+	EndIf				
+	$aPos = WinGetPos($hWndLincSafe)
+	$x = $aPos[0] + $xOffset
+	$y = $aPos[1] + $yOffset
+	MouseClick("left", $x, $y, 1, 1)
+EndFunc   ;==>ClickLincSafeButton
 
 
 Func StartProgressBar($ProgressBarCaption)
