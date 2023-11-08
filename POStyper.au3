@@ -1041,11 +1041,11 @@ Func GetItemNumberFromCombo()
 		Return ""
 	EndIf
 	$Item = StringStripWS($Tokens[1], $STR_STRIPALL)
-	$ItemIsNumber = StringRegExp($Item, "^\d+$")
-	If Not $ItemIsNumber Then
-		ExtMsgBox($EMB_ICONEXCLAM, $MB_OK, "PosTyper", $Item & " is not a number", 3, $g_hPosTyper)
-		Return ""
-	EndIf
+	;$ItemIsNumber = StringRegExp($Item, "^\d+$")
+	;If Not $ItemIsNumber Then
+	;	ExtMsgBox($EMB_ICONEXCLAM, $MB_OK, "PosTyper", $Item & " is not a number", 3, $g_hPosTyper)
+	;	Return ""
+	;EndIf
 	If $numberOfTokens > 1 Then
 		$Desc = StringStripWS($Tokens[2], $STR_STRIPALL)
 	EndIf
