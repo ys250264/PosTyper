@@ -28,8 +28,17 @@ xcopy %PosDebugExtPath%\Output\Debug\Product\*.* %PosDebugCustPath%\Output\Debug
 Echo:
 Echo ********** Copy Simulator to Plugin ******************************************************************************************************************
 xcopy %PosDebugExtPath%\Src\EPS\Retalix.Jumbo.Client.EPS.Simulator\obj\Debug\Retalix.Jumbo.Client.EPS.Simulator.dll %PosDebugCustPath%\Output\Debug\Product\Plugins\ /y
+
+
+:COPY_CCC_TO_CUST
 Echo:
 Echo ********** Copy SafePay to Cust **********************************************************************************************************************
+IF not exist %PosDebugExtPath%\Libs\SafePay\ccc.dll goto COPY_CCC_TO_CUST_TFS
+xcopy %PosDebugExtPath%\Libs\SafePay\ccc*.dll %PosDebugCustPath%\Output\Debug\Product\ /y
+Echo:
+goto END
+
+:COPY_CCC_TO_CUST_TFS
 xcopy %PosDebugExtPath%\..\Tools\Libs\SafePay\ccc*.dll %PosDebugCustPath%\Output\Debug\Product\ /y
 Echo:
 
