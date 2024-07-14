@@ -38,13 +38,21 @@ Echo:
 Echo ********** Copy Ext to Cust *************************************************************************************************************************
 xcopy %ServerDebugExtPath%\App\Output\Debug\Product\*.* %ServerDebugCustPath%\App\Src\ServiceHost\GPOSWebService\Extensions\ /y /e
 
+:DELETE_FUEL_COMPONENTS_CASTLE_FILE
+IF not exist %ServerDebugCustPath%\App\Src\ServiceHost\GPOSWebService\Extensions\ConfigAdditions\FuelComponents.xml goto APPPOOLS_START
+Echo:
+Echo ********** Delete Extensions\ConfigAdditions\FuelComponents.xml *************************************************************************************
+del /S /F /Q %ServerDebugCustPath%\App\Src\ServiceHost\GPOSWebService\Extensions\ConfigAdditions\FuelComponents.xml
+Echo:
 
 :APPPOOLS_START
 IF DEFINED UseIISReset GOTO:IISREST_START
+
 Echo:
 Echo ********** Stopping AppPools ************************************************************************************************************************
 %FullPathAppCmd% start apppool /apppool.name:%ServerAppPool%
 GOTO:APPPOOLS_START_END
+
 :IISREST_START
 Echo:
 Echo ********** Stopping IISRESET 8***********************************************************************************************************************
@@ -56,3 +64,5 @@ C:\Windows\System32\iisreset.exe /start
 Echo:
 Echo:
 IF %ERRORLEVEL% NEQ 0 pause
+
+rem pause

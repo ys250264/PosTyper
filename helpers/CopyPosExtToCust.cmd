@@ -11,6 +11,13 @@ Echo:
 Echo ********** Kill POS **********************************************************************************************************************************
 call .\helpers\killPOS.cmd
 
+:COPY_CUST_POSAPP_TO_CUST_PRODUCT
+IF not exist %PosDebugCustPath%\Output\Debug\POSApp\ goto COPY_COMMON_TO_CUST_AND_EXT
+Echo:
+Echo ********** Copy POSApp to Product ********************************************************************************************************************
+xcopy %PosDebugCustPath%\Output\Debug\POSApp\*.* %PosDebugCustPath%\Output\Debug\Product\ /y /s /e 
+Echo:
+
 :COPY_COMMON_TO_CUST_AND_EXT
 rem call .\helpers\CopyPosCommonToCustAndExt.cmd %1 %2
 
@@ -22,7 +29,7 @@ Echo:
 Echo ********** Copy Simulator to Plugin ******************************************************************************************************************
 xcopy %PosDebugExtPath%\Src\EPS\Retalix.Jumbo.Client.EPS.Simulator\obj\Debug\Retalix.Jumbo.Client.EPS.Simulator.dll %PosDebugCustPath%\Output\Debug\Product\Plugins\ /y
 Echo:
-Echo ********** Copy SafePay to Cust ******************************************************************************************************************
+Echo ********** Copy SafePay to Cust **********************************************************************************************************************
 xcopy %PosDebugExtPath%\..\Tools\Libs\SafePay\ccc*.dll %PosDebugCustPath%\Output\Debug\Product\ /y
 Echo:
 
