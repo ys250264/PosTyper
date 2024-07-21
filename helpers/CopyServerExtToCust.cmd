@@ -39,7 +39,7 @@ Echo ********** Copy Ext to Cust ***********************************************
 xcopy %ServerDebugExtPath%\App\Output\Debug\Product\*.* %ServerDebugCustPath%\App\Src\ServiceHost\GPOSWebService\Extensions\ /y /e
 
 :DELETE_FUEL_COMPONENTS_CASTLE_FILE
-IF not exist %ServerDebugCustPath%\App\Src\ServiceHost\GPOSWebService\Extensions\ConfigAdditions\FuelComponents.xml goto APPPOOLS_START
+IF exist %ServerDebugCustPath%\App\Src\ServiceHost\GPOSWebService\Modules\Fuel\ goto APPPOOLS_START
 Echo:
 Echo ********** Delete Extensions\ConfigAdditions\FuelComponents.xml *************************************************************************************
 del /S /F /Q %ServerDebugCustPath%\App\Src\ServiceHost\GPOSWebService\Extensions\ConfigAdditions\FuelComponents.xml
