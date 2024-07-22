@@ -19,7 +19,7 @@ xcopy %PosDebugCustPath%\Output\Debug\POSApp\*.* %PosDebugCustPath%\Output\Debug
 Echo:
 
 :COPY_COMMON_TO_CUST_AND_EXT
-rem call .\helpers\CopyPosCommonToCustAndExt.cmd %1 %2
+call .\helpers\CopyPosCommonToCustAndExt.cmd %1 %2
 
 :COPY_EXT_TO_CUST
 Echo:
